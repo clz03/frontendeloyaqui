@@ -37,7 +37,7 @@ const categorias = [
   const [idcategoria, setIdcategoria] = useState("");
 
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
       const data = new FormData();
 
       data.append('nome',nome);
@@ -60,7 +60,11 @@ const categorias = [
       data.append('idcategoria',idcategoria);
 
 
-    api.post('/estabelecimentos', { data })
+    api.post('/estabelecimentos', { data }, {
+      headers: {
+          'Content-Type': 'application/json',
+      }
+  })
       .then(function (response) {
         console.log(response);
       })
