@@ -63,7 +63,7 @@ body, input, button {
   margin-bottom: 8px;
 }
 
-.content form input {
+.content form input, select{
   margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 2px;
