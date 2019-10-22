@@ -38,40 +38,32 @@ const categorias = [
 
 
   async function handleSubmit(event) {
-      const data = new FormData();
+      
+      event.preventDefault();
 
-      data.append('nome',nome);
-      data.append('descr',descr);
-      data.append('tipo',tipo);
-      data.append('subtipo',subtipo);
-      data.append('imagem',imagem);
-      data.append('imagemcapa',imagemcapa);
-      data.append('rua',rua);
-      data.append('bairro',bairro);
-      data.append('cep',cep);
-      data.append('fone1',fone1);
-      data.append('fone2',fone2);
-      data.append('pedonline',pedonline);
-      data.append('plano',plano);
-      data.append('email',email);
-      data.append('facebook',facebook);
-      data.append('instagram',instagram);
-      data.append('whatsapp',whatsapp);
-      data.append('idcategoria',idcategoria);
+      const dataobj = { 
+        nome: nome, 
+        descr: descr,
+        tipo: tipo,
+        subtipo: subtipo,
+        imagem: imagem,
+        imagemcapa: imagemcapa,
+        rua: rua,
+        numero: numero,
+        bairro: bairro,
+        cep: cep,
+        fone1: fone1,
+        fone2: fone2,
+        pedonline: pedonline,
+        plano: plano,
+        email: email,
+        facebook: facebook,
+        instagram: instagram,
+        whatsapp: whatsapp,
+        idcategoria: idcategoria
+      };
 
-
-    api.post('/estabelecimentos', { data }, {
-      headers: {
-          'Content-Type': 'application/json',
-      }
-  })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
+      await api.post('/estabelecimentos', dataobj)
       history.push('/painel')
 
   }
@@ -83,10 +75,10 @@ const categorias = [
         <label htmlFor="idcategoria">Categoria*</label>
         <select
             id="idcategoria"
-            onchange={event => setIdcategoria(event.target.value)}
+            onChange={event => setIdcategoria(event.target[event.target.selectedIndex].value)}
         >
             {categorias.map((categoria) =>
-                <option key={categoria.value}>{categoria.label}</option>
+                <option key={categoria.value} value={categoria.value}>{categoria.label}</option>
             )}
         </select>
         
@@ -96,7 +88,7 @@ const categorias = [
           id="nome"
           placeholder="Nome do Estabelecimento"
           value={nome}
-          onchange={event => setNome(event.target.value)}
+          onChange={event => setNome(event.target.value)}
         />
 
         <label htmlFor="descr">Descrição*</label>
@@ -104,7 +96,7 @@ const categorias = [
           id="descr"
           placeholder="Descrição do Estabelecimento"
           value={descr}
-          onchange={event => setDescr(event.target.value)}
+          onChange={event => setDescr(event.target.value)}
         />
 
         <label htmlFor="tipo">Tipo*</label>
@@ -112,7 +104,7 @@ const categorias = [
           id="tipo"
           placeholder="Tipo do Estabelecimento"
           value={tipo}
-          onchange={event => setTipo(event.target.value)}
+          onChange={event => setTipo(event.target.value)}
         />
 
         <label htmlFor="subtipo">Subtipo*</label>
@@ -120,7 +112,7 @@ const categorias = [
           id="subtipo"
           placeholder="Subtipo do Estabelecimento"
           value={subtipo}
-          onchange={event => setSubtipo(event.target.value)}
+          onChange={event => setSubtipo(event.target.value)}
         />
 
         <label htmlFor="imagem">URL da Imagem</label>
@@ -128,7 +120,7 @@ const categorias = [
           id="imagem"
           placeholder="URL da imagem do Estabelecimento"
           value={imagem}
-          onchange={event => setImagem(event.target.value)}
+          onChange={event => setImagem(event.target.value)}
         />
 
         <label htmlFor="imagemcapa">URL da Imagem Capa</label>
@@ -136,7 +128,7 @@ const categorias = [
           id="imagemcapa"
           placeholder="URL da imagem Capa do Estabelecimento"
           value={imagemcapa}
-          onchange={event => setImagemcapa(event.target.value)}
+          onChange={event => setImagemcapa(event.target.value)}
         />
 
         <label htmlFor="rua">Rua</label>
@@ -144,7 +136,7 @@ const categorias = [
           id="rua"
           placeholder="Rua do Estabelecimento"
           value={rua}
-          onchange={event => setRua(event.target.value)}
+          onChange={event => setRua(event.target.value)}
         />
 
         <label htmlFor="numero">Número</label>
@@ -152,7 +144,7 @@ const categorias = [
           id="numero"
           placeholder="Número do Estabelecimento"
           value={numero}
-          onchange={event => setNumero(event.target.value)}
+          onChange={event => setNumero(event.target.value)}
         />
 
         <label htmlFor="bairro">Bairro</label>
@@ -160,7 +152,7 @@ const categorias = [
           id="bairro"
           placeholder="Bairro do Estabelecimento"
           value={bairro}
-          onchange={event => setBairro(event.target.value)}
+          onChange={event => setBairro(event.target.value)}
         />
 
         <label htmlFor="cep">CEP</label>
@@ -168,7 +160,7 @@ const categorias = [
           id="cep"
           placeholder="CEP do Estabelecimento"
           value={cep}
-          onchange={event => setCEP(event.target.value)}
+          onChange={event => setCEP(event.target.value)}
         />
 
         <label htmlFor="fone1">Telefone</label>
@@ -176,7 +168,7 @@ const categorias = [
           id="fone1"
           placeholder="Telefone do Estabelecimento"
           value={fone1}
-          onchange={event => setFone1(event.target.value)}
+          onChange={event => setFone1(event.target.value)}
         />
 
         <label htmlFor="fone2">Telefone 2</label>
@@ -184,7 +176,7 @@ const categorias = [
           id="fone2"
           placeholder="Telefone 2 do Estabelecimento"
           value={fone2}
-          onchange={event => setFone2(event.target.value)}
+          onChange={event => setFone2(event.target.value)}
         />
 
         <label htmlFor="pedonline">Tem Pedido Online?</label>
@@ -192,7 +184,7 @@ const categorias = [
           id="pedonline"
           placeholder="1=Sim / 0=Nao"
           value={pedonline}
-          onchange={event => setPedonline(event.target.value)}
+          onChange={event => setPedonline(event.target.value)}
         />
 
         <label htmlFor="plano">Qual o Plano de assinatura?</label>
@@ -200,7 +192,7 @@ const categorias = [
           id="plano"
           placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
           value={plano}
-          onchange={event => setPlano(event.target.value)}
+          onChange={event => setPlano(event.target.value)}
         />  
 
         <label htmlFor="email">E-mail</label>
@@ -208,7 +200,7 @@ const categorias = [
           id="email"
           placeholder="E-mail do estabelecimento"
           value={email}
-          onchange={event => setEmail(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
         />  
 
         <label htmlFor="facebook">Facebook</label>
@@ -216,7 +208,7 @@ const categorias = [
           id="facebook"
           placeholder="Facebook do estabelecimento"
           value={facebook}
-          onchange={event => setFacebook(event.target.value)}
+          onChange={event => setFacebook(event.target.value)}
         />  
 
         <label htmlFor="instagram">Instagram</label>
@@ -224,7 +216,7 @@ const categorias = [
           id="instagram"
           placeholder="Instagram do estabelecimento"
           value={instagram}
-          onchange={event => setInstagram(event.target.value)}
+          onChange={event => setInstagram(event.target.value)}
         />  
 
         <label htmlFor="whatsapp">Whatsapp</label>
@@ -232,7 +224,7 @@ const categorias = [
           id="whatsapp"
           placeholder="Whatsapp do estabelecimento"
           value={whatsapp}
-          onchange={event => setWhatsapp(event.target.value)}
+          onChange={event => setWhatsapp(event.target.value)}
         /> 
 
         <button type="submit" className="btn">Salvar</button> 
