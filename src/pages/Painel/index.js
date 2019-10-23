@@ -9,10 +9,13 @@ export default function Painel({ history }) {
 
   return (
     <div className="content">
-        <form onSubmit={handleSubmit("/estabelecimentos")}>
+        <form onSubmit={handleSubmit("/estabelecimentos/novo")}>
             <button type="submit" className="btn">Cadastrar Novo Estabelecimento</button>
+        </form>
+        <form onSubmit={handleSubmit("/estabelecimentos/listar")}>
             <button type="submit" className="btn">Visualizar Estabelecimentos</button>
         </form>
+        
         <form onSubmit={handleSubmit("/produtos")}>
             <button type="submit" className="btn">Cadastrar Novo Produto</button>
             <button type="submit" className="btn">Visualizar Produtos</button>

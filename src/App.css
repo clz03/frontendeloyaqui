@@ -113,3 +113,12 @@ body, input, button {
   cursor: pointer;
   margin-bottom: 5px;
 }
+
+.content table {
+  border-collapse: collapse;
+}
+.content th, td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}
