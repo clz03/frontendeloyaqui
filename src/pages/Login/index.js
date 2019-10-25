@@ -6,9 +6,16 @@ import googlestore from "../../assets/google-play.png"
 export default function Login({ history }) {
 
     const [email, setEmail] = useState('');
+    const [pwd, setPwd] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        //api para validar usuario e senha
+        //retorna se é valido ou invalid o login
+        //caso positivo, direciona para a pagina painel
+        //caso negativo mostra mensagem de erro 
+
         localStorage.setItem('user_eloy', email);
         history.push('/painel')
       }
@@ -16,31 +23,35 @@ export default function Login({ history }) {
     return (
         <>
         <div className="content">
-            {/* <p>O melhor do bairro está aqui !!</p> */}
 
             <form onSubmit={handleSubmit}>
-            <label htmlFor="email">E-MAIL *</label>
-            <input
-                id="email"
-                type="email"
-                placeholder="seuemail@dominio.com.br"
-            />
-            <label htmlFor="email">SENHA *</label>
-            <input
-                id="senha"
-                type="senha"
-                placeholder="sua senha"
-                value={email}
-                onchange={event => setEmail(event.target.value)}
-            />
-            <button type="submit" className="btn">Entrar</button> 
+                <label htmlFor="email">E-MAIL *</label>
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="seuemail@dominio.com.br"
+                    value={email}
+                    required
+                    onChange={event => setEmail(event.target.value)}
+                />
+                <label htmlFor="email">SENHA *</label>
+                <input
+                    id="senha"
+                    type="password"
+                    placeholder="sua senha"
+                    required
+                    value={pwd}
+                    onChange={event => setPwd(event.target.value)}
+                />
+                <button type="submit" className="btn">Entrar</button> 
             </form>
-        
         </div>
+
         <div className="footer">
             <img src={appstore} alt="EloyAqui" width="200px"></img>
             <img src={googlestore} alt="EloyAqui" width="200px"></img>
         </div>
+
       </>
     )
 }

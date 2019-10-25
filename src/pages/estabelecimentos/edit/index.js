@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import "../../App.css";
-import api from '../../services/api';
+import React, { useState, useEffect } from "react";
+import "../../../App.css";
+import api from '../../../services/api';
 
-export default function Novo_Estab({ history }) {
+export default function Edit_Estab({ history }) {
 
 const categorias = [
     { label: "Almoço", value: "5d929cbac39dcd00176af304" },
@@ -15,7 +15,6 @@ const categorias = [
     { label: "Saúde", value: "5d92a4f7c39dcd00176af30b" },
     { label: "Educaçao", value: "5d92a516c39dcd00176af30c" }
 ];
-
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
   const [tipo, setTipo] = useState("");
@@ -35,6 +34,49 @@ const categorias = [
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
+
+  const url_string = window.location.href;
+  const param = url_string.split("/");
+
+  useEffect(() => {
+    async function loadEstab() {
+
+      const response = await api.get('/estabelecimentos/'+param[5]);
+      const data = await response.data;
+
+      setNome(data[0].nome);
+      setDescr(data[0].descr);
+      setTipo(data[0].tipo);
+      setSubtipo(data[0].subtipo);
+      setImagem(data[0].imagem);
+      setRua(data[0].rua);
+      setNumero(data[0].numero);
+      setBairro(data[0].bairro);
+      setCEP(data[0].cep);
+      setFone1(data[0].fone1);
+      setFone2(data[0].fone2);
+      setPedonline(data[0].pedonline);
+      setPlano(data[0].plano);
+      setEmail(data[0].email);
+      setFacebook(data[0].facebook);
+      setInstagram(data[0].instagram);
+      setWhatsapp(data[0].whatsapp);
+      setIdcategoria(data[0].idcategoria);
+    }
+    
+    loadEstab();
+  },[]);
+
+  function handleSelectMulti(event){
+      var options = event.target.options;
+      var value = [];
+      for (var i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
+      }
+    setIdcategoria(value);
+  }
 
 
   async function handleSubmit(event) {
@@ -63,10 +105,11 @@ const categorias = [
         idcategoria: idcategoria
       };
 
-      await api.post('/estabelecimentos', dataobj)
+      await api.put('/estabelecimentos/'+param[5], dataobj)
       history.push('/painel')
 
   }
+
 
   return (
     <div className="content">
@@ -75,7 +118,9 @@ const categorias = [
         <label htmlFor="idcategoria">Categoria*</label>
         <select
             id="idcategoria"
-            onChange={event => setIdcategoria(event.target[event.target.selectedIndex].value)}
+            multiple="multiple"
+            value={idcategoria}
+            onChange={handleSelectMulti}
         >
             {categorias.map((categoria) =>
                 <option key={categoria.value} value={categoria.value}>{categoria.label}</option>
@@ -88,6 +133,7 @@ const categorias = [
           id="nome"
           placeholder="Nome do Estabelecimento"
           value={nome}
+          required
           onChange={event => setNome(event.target.value)}
         />
 
@@ -96,6 +142,7 @@ const categorias = [
           id="descr"
           placeholder="Descrição do Estabelecimento"
           value={descr}
+          required
           onChange={event => setDescr(event.target.value)}
         />
 
@@ -104,6 +151,7 @@ const categorias = [
           id="tipo"
           placeholder="Tipo do Estabelecimento"
           value={tipo}
+          required
           onChange={event => setTipo(event.target.value)}
         />
 
@@ -112,6 +160,7 @@ const categorias = [
           id="subtipo"
           placeholder="Subtipo do Estabelecimento"
           value={subtipo}
+          required
           onChange={event => setSubtipo(event.target.value)}
         />
 
@@ -136,6 +185,7 @@ const categorias = [
           id="rua"
           placeholder="Rua do Estabelecimento"
           value={rua}
+          required
           onChange={event => setRua(event.target.value)}
         />
 
@@ -144,6 +194,7 @@ const categorias = [
           id="numero"
           placeholder="Número do Estabelecimento"
           value={numero}
+          required
           onChange={event => setNumero(event.target.value)}
         />
 
@@ -152,6 +203,7 @@ const categorias = [
           id="bairro"
           placeholder="Bairro do Estabelecimento"
           value={bairro}
+          required
           onChange={event => setBairro(event.target.value)}
         />
 
@@ -160,6 +212,7 @@ const categorias = [
           id="cep"
           placeholder="CEP do Estabelecimento"
           value={cep}
+          required
           onChange={event => setCEP(event.target.value)}
         />
 
@@ -168,6 +221,7 @@ const categorias = [
           id="fone1"
           placeholder="Telefone do Estabelecimento"
           value={fone1}
+          required
           onChange={event => setFone1(event.target.value)}
         />
 
@@ -192,6 +246,7 @@ const categorias = [
           id="plano"
           placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
           value={plano}
+          required
           onChange={event => setPlano(event.target.value)}
         />  
 
@@ -228,7 +283,7 @@ const categorias = [
         /> 
 
         <button type="submit" className="btn">Salvar</button> 
-
+        <button className="btn2" onClick={history.goBack}>Cancelar</button>
       </form>
     </div>
   );

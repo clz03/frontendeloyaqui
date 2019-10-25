@@ -17,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 
-body, input, button {
+body, input, button, select, textarea {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
@@ -53,7 +53,10 @@ body, input, button {
 .content form {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+}
+
+.content .formcontent {
+  margin-top: 10px;
 }
 
 .content form label {
@@ -63,11 +66,20 @@ body, input, button {
   margin-bottom: 8px;
 }
 
-.content form input, select{
+.content form input{
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #c1c1c1;
   border-radius: 2px;
   height: 45px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.content select, textarea{
+  margin-bottom: 20px;
+  border: 1px solid #c1c1c1;
+  border-radius: 2px;
+  height: 180px;
   padding: 0 15px;
   font-size: 16px;
 }
@@ -112,6 +124,7 @@ body, input, button {
   color:#fff;
   cursor: pointer;
   margin-bottom: 5px;
+  margin-top: 20px;
 }
 
 .content table {

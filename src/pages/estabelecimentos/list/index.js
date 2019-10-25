@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../App.css";
-import api from '../../services/api';
+import "../../../App.css";
+import api from '../../../services/api';
 
 export default function List_Estab({ history }) {
 const [estab, setEstab] = useState([]);
@@ -32,6 +32,7 @@ const [estab, setEstab] = useState([]);
             </tr>
         )}
       </table>
+      <button className="btn3" onClick={history.goBack}>Voltar</button>
     </div>
   );
 }
