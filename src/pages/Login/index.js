@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import appstore from "../../assets/app-store.png"
 import googlestore from "../../assets/google-play.png"
-
+//index
 export default function Login({ history }) {
 
     const [email, setEmail] = useState('');
@@ -51,7 +51,7 @@ export default function Login({ history }) {
             <img src={appstore} alt="EloyAqui" width="200px"></img>
             <img src={googlestore} alt="EloyAqui" width="200px"></img>
         </div>
-
+ 
       </>
     )
 }

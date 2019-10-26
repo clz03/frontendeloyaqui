@@ -1,5 +1,5 @@
 import React from "react";
-
+//painel
 export default function Painel({ history }) {
     
     const handleSubmit = pagina=> event=> {
