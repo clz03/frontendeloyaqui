@@ -14,9 +14,10 @@ export default function Novo_Noticia({ history }) {
 
   useEffect(() => {
     async function loadNoticia() {
-
+      console.log(param[5]);
       const response = await api.get('/noticias/'+param[5]);
-      const data = await response.data.result;
+      const data = await response.data;
+      console.log(data);
 
       setTitulo(data[0].titulo);
       setDescr(data[0].descr);
