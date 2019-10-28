@@ -16,7 +16,7 @@ export default function Novo_Estab({ history }) {
     async function loadCupom() {
 
       const response = await api.get('/cupons/'+param[5]);
-      const data = await response.data;
+      const data = await response.data.result;
 
       setValidade(data[0].validade);
       setPremio(data[0].premio);

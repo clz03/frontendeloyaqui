@@ -16,7 +16,7 @@ export default function Novo_Noticia({ history }) {
     async function loadNoticia() {
 
       const response = await api.get('/noticias/'+param[5]);
-      const data = await response.data;
+      const data = await response.data.result;
 
       setTitulo(data[0].titulo);
       setDescr(data[0].descr);

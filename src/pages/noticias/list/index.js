@@ -8,7 +8,7 @@ const [noticia, setNoticia] = useState([]);
   useEffect(() => {
     async function loadNoticia() {
       const response = await api.get('/noticias');
-      const data = await response.data;
+      const data = await response.data.result;
       setNoticia(data);
     }
     

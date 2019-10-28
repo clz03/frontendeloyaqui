@@ -8,7 +8,7 @@ const [cupom, setCupom] = useState([]);
   useEffect(() => {
     async function loadCupom() {
       const response = await api.get('/cupons');
-      const data = await response.data;
+      const data = await response.data.result;
       setCupom(data);
     }
     
