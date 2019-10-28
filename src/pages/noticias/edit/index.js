@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import api from '../../../services/api';
 
-export default function Novo_Noticia({ history }) {
+export default function Edit_Noticia({ history }) {
 
   const [titulo, setTitulo] = useState("");
   const [descr, setDescr] = useState("");
@@ -14,10 +14,9 @@ export default function Novo_Noticia({ history }) {
 
   useEffect(() => {
     async function loadNoticia() {
-      console.log(param[5]);
+
       const response = await api.get('/noticias/'+param[5]);
       const data = await response.data;
-      console.log(data);
 
       setTitulo(data[0].titulo);
       setDescr(data[0].descr);
@@ -40,7 +39,9 @@ export default function Novo_Noticia({ history }) {
         imagem: imagem
       };
 
-      await api.put('/noticias'+param[5], dataobj)
+      console.log(dataobj);
+
+      await api.put('/noticias/'+param[5], dataobj)
       history.push('/painel')
 
   }

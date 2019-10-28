@@ -44,7 +44,7 @@ export default function Novo_Estab({ history }) {
         idestab: idestab
       };
 
-      await api.put('/produtos'+param[5], dataobj)
+      await api.put('/produtos/'+param[5], dataobj)
       history.push('/painel')
 
   }
