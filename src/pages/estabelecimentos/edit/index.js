@@ -12,8 +12,11 @@ const categorias = [
     { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
     { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
     { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
-    { label: "Saúde", value: "5d92a4f7c39dcd00176af30b" },
-    { label: "Educaçao", value: "5d92a516c39dcd00176af30c" }
+    { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
+    { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
+    { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
+    { label: "Construção", value: "5db97db3ca74d100178e45ad" },
+    { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
 ];
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
@@ -49,6 +52,7 @@ const categorias = [
       setTipo(data[0].tipo);
       setSubtipo(data[0].subtipo);
       setImagem(data[0].imagem);
+      setImagemcapa(data[0].imagemcapa);
       setRua(data[0].rua);
       setNumero(data[0].numero);
       setBairro(data[0].bairro);
