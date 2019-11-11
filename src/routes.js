@@ -20,6 +20,14 @@ import New_Noticia from './pages/noticias/new';
 import List_Noticia from './pages/noticias/list';
 import Edit_Noticia from './pages/noticias/edit';
 
+import New_Usuario from './pages/usuarios/new';
+import List_Usuario from './pages/usuarios/list';
+import Edit_Usuario from './pages/usuarios/edit';
+
+import New_Administrador from './pages/administradores/new';
+import List_Administrador from './pages/administradores/list';
+import Edit_Administrador from './pages/administradores/edit';
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -43,6 +51,14 @@ export default function Routes() {
                 <Route path="/noticias/novo" component={New_Noticia}/>
                 <Route path="/noticias/listar" component={List_Noticia}/>
                 <Route path="/noticias/:id" component={Edit_Noticia}/>
+
+                <Route path="/usuarios/novo" component={New_Usuario}/>
+                <Route path="/usuarios/listar" component={List_Usuario}/>
+                <Route path="/usuarios/:id" component={Edit_Usuario}/>
+
+                <Route path="/administradores/novo" component={New_Administrador}/>
+                <Route path="/administradores/listar" component={List_Administrador}/>
+                <Route path="/administradores/:id" component={Edit_Administrador}/>
             </Switch>
         </BrowserRouter>
     )

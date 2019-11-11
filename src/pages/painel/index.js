@@ -49,8 +49,20 @@ export default function Painel({ history }) {
         </div>
 
         <div className="formcontent">
+            <form onSubmit={handleSubmit("/usuarios/novo")}>
+                <button type="submit" className="btn">Cadastrar Novo Usuario</button>
+            </form>
             <form onSubmit={handleSubmit("/usuarios/listar")}>
                 <button type="submit" className="btn">Visualizar Usuários</button>
+            </form>
+        </div>
+
+        <div className="formcontent">
+            <form onSubmit={handleSubmit("/administradores/novo")}>
+                <button type="submit" className="btn">Cadastrar Novo Administrador</button>
+            </form>
+            <form onSubmit={handleSubmit("/administradores/listar")}>
+                <button type="submit" className="btn">Visualizar Administradores</button>
             </form>
         </div>
     </div>

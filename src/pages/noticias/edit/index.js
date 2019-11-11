@@ -39,10 +39,8 @@ export default function Edit_Noticia({ history }) {
         imagem: imagem
       };
 
-      console.log(dataobj);
-
       await api.put('/noticias/'+param[5], dataobj)
-      history.push('/painel')
+      history.push('/noticias/listar')
 
   }
 

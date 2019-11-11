@@ -29,7 +29,7 @@ const [noticia, setNoticia] = useState([]);
             </tr>
         )}
       </table>
-      <button className="btn3" onClick={history.goBack}>Voltar</button>
+      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
     </div>
   );
 }

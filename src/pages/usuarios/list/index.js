@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import api from '../../../services/api';
 
-export default function List_Estab({ history }) {
+export default function List_Usuario({ history }) {
 const [usuario, setUsuario] = useState([]);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const [usuario, setUsuario] = useState([]);
     loadUsuario();
   }, []);
 
+
   return (
     <div className="content">
        <table>
@@ -23,10 +24,21 @@ const [usuario, setUsuario] = useState([]);
               <td>
                 <a href={'/usuarios/id/' + usuario._id}>{usuario.email}</a>
               </td>
+              <td>
+                {usuario.nome}
+              </td>
+              <td>
+                {usuario.pwd}
+              </td>
+              <td>
+                {usuario.validado ? "Sim" : "Não"}
+              </td>
             </tr>
         )}
       </table>
-      <button className="btn3" onClick={history.goBack}>Voltar</button>
+      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
+
+      
     </div>
   );
 }
