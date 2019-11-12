@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../../App.css";
+import carregando from "../../../assets/loading.gif";
 import api from '../../../services/api';
 
 export default function Edit_Estab({ history }) {
@@ -96,6 +97,7 @@ const horarios_fim = [
   const [hrinicio_domingo, setHrinicio_domingo] = useState("");
   const [hrfim_domingo, setHrfim_domingo] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
+  const [loading, setLoading] = useState("");
 
   const url_string = window.location.href;
   const param = url_string.split("/");
@@ -131,8 +133,9 @@ const horarios_fim = [
       setHrinicio_domingo(data[0].hrinicio_domingo);
       setHrfim_domingo(data[0].hrfim_domingo);
       setIdcategoria(data[0].idcategoria);
+      setLoading(false);
     }
-    
+    setLoading(true);
     loadEstab();
   },[]);
 
@@ -149,7 +152,7 @@ const horarios_fim = [
 
 
   async function handleSubmit(event) {
-      
+      setLoading(true);
       event.preventDefault();
 
       const dataobj = { 
@@ -180,14 +183,22 @@ const horarios_fim = [
         idcategoria: idcategoria
       };
 
-      await api.put('/estabelecimentos/'+param[5], dataobj)
-      history.push('/painel')
+      await api.put('/estabelecimentos/'+param[5], dataobj);
+      setLoading(false);
+      history.push('/painel');
 
   }
 
 
   return (
     <div className="content">
+
+      {loading && 
+        <div className="center">
+          <img src={carregando} width="80"></img>
+        </div>
+      }
+
       <form onSubmit={handleSubmit}>
 
         <label htmlFor="idcategoria">Categoria*</label>

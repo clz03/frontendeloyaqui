@@ -39,6 +39,11 @@ body, input, button, select, textarea {
   padding: 30px;
 }
 
+.content .center {
+  align-items: center;
+  text-align: center;
+}
+
 .footer {
   width: 100%;
   margin-top: 10px;
