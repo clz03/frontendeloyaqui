@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import api from '../../services/api';
 import appstore from "../../assets/app-store.png"
 import googlestore from "../../assets/google-play.png"
 //index
@@ -8,16 +8,38 @@ export default function Login({ history }) {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
 
-    function handleSubmit(event) {
+
+    async function handleSubmit(event) {
+
+        var erro = '';
         event.preventDefault();
 
-        //api para validar usuario e senha
-        //retorna se é valido ou invalid o login
-        //caso positivo, direciona para a pagina painel
-        //caso negativo mostra mensagem de erro 
+        const dataobj = { 
+            email: email,
+            senha: pwd
+          };
 
-        localStorage.setItem('user_eloy', email);
-        history.push('/painel')
+
+          console.log(dataobj);
+          console.log("vai entrar");
+
+        const response = await api.post('/admauthenticate', dataobj)
+        .catch(function (error) {
+            if (error.response){
+                erro = error.response.data.error;
+            };
+        });
+
+        alert(erro);
+        if(erro != '')
+            return;
+
+        const data = await response.data;
+        
+        localStorage.setItem('eloyuseremail', email);
+        localStorage.setItem('eloyusernome', data.nome);
+        history.push('/painel');
+       
       }
 
     return (
