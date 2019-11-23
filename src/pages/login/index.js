@@ -30,7 +30,6 @@ export default function Login({ history }) {
             };
         });
 
-        alert(erro);
         if(erro != '')
             return;
 

@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/login';
 import Painel from './pages/painel';
+import ValidaUsuario from './pages/validausuario';
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
@@ -35,6 +36,7 @@ export default function Routes() {
                 <Route path="/" exact component={Login}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/painel" component={Painel}/>
+                <Route path="/validausuario" component={ValidaUsuario}/>
 
                 <Route path="/estabelecimentos/novo" component={New_Estab}/>
                 <Route path="/estabelecimentos/listar" component={List_Estab}/>
