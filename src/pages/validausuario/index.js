@@ -8,46 +8,29 @@ export default function ValidaUsuario() {
 
     const url_string = window.location.href;
     const param = url_string.split("/");
+    const [statusUser, SetStatusUser] = useState('processando...');
 
-    async function validausuario(event){
-
-        event.preventDefault();
-        console.log('entrou');
+    async function validacadastro(){
         const dataobj = { 
             idusuario: param[4]
         };
-        console.log(dataobj);
-    
-        try {
-            console.log('0');
-            // const response = await api.post('/validacadastro', dataobj);
-            const response = await api.post('/validacadastro', dataobj)
-            .catch(function (error) {
-                console.log('1' + error);
-            });
 
-            console.log('2' + response);
-        } catch (error) {
-            console.log('3' + error);
-        }
+        await api.post('/validacadastro', dataobj)
+        .then((res) => {
+            SetStatusUser(res.data.msg);
+        }).catch((error) => {
+            SetStatusUser(error);
+        });
     }
 
     useEffect(() => {
-
-        //validausuario();
-
+        validacadastro();
     },[]);
 
     return (
         <>
         <div className="content">
-
-          <p>Usuário validado</p>
-
-          <form onSubmit={validausuario}>
-            <button type="submit" className="btn">Entrar</button> 
-          </form>
-
+            <p>{statusUser}</p>
         </div>
 
         <div className="footer">

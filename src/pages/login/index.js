@@ -20,9 +20,6 @@ export default function Login({ history }) {
           };
 
 
-          console.log(dataobj);
-          console.log("vai entrar");
-
         const response = await api.post('/admauthenticate', dataobj)
         .catch(function (error) {
             if (error.response){
