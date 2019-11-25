@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import api from '../../services/api';
 import appstore from "../../assets/app-store.png"
+import carregando from "../../assets/loading.gif";
 import googlestore from "../../assets/google-play.png"
 //index
 export default function Login({ history }) {
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-
+    const [loading, setLoading] = useState("");
 
     async function handleSubmit(event) {
-
-        var erro = '';
+        
+        setLoading(true);
         event.preventDefault();
 
         const dataobj = { 
@@ -19,23 +20,24 @@ export default function Login({ history }) {
             senha: pwd
           };
 
-
-        const response = await api.post('/admauthenticate', dataobj)
-        .catch(function (error) {
-            if (error.response){
-                erro = error.response.data.error;
-            };
-        });
-
-        if(erro != '')
+        await api.post('/admauthenticate', dataobj)
+        .then((res) => {
+            if(res.data.error != undefined){
+                alert(res.data.error);
+                setLoading(false);
+                return;
+            }else{
+                setLoading(false);
+                localStorage.setItem('eloyuseremail', email);
+                localStorage.setItem('eloyusernome', res.data.nome);
+                localStorage.setItem('eloyuserid', res.data._id);
+                history.push('/painel');
+            }
+        }).catch((error) => {
+            alert(error);
+            setLoading(false);
             return;
-
-        const data = await response.data;
-        
-        localStorage.setItem('eloyuseremail', email);
-        localStorage.setItem('eloyusernome', data.nome);
-        history.push('/painel');
-       
+        });    
       }
 
     return (
@@ -62,6 +64,11 @@ export default function Login({ history }) {
                     onChange={event => setPwd(event.target.value)}
                 />
                 <button type="submit" className="btn">Entrar</button> 
+                {loading && 
+                    <div className="center">
+                    <img src={carregando} width="80"></img>
+                    </div>
+                }
             </form>
         </div>
 
