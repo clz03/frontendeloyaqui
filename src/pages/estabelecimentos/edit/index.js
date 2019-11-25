@@ -5,72 +5,73 @@ import api from '../../../services/api';
 
 export default function Edit_Estab({ history }) {
 
-const categorias = [
-    { label: "Almoço", value: "5d929cbac39dcd00176af304" },
-    { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
-    { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
-    { label: "Esportes", value: "5d92a240c39dcd00176af307" },
-    { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
-    { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
-    { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
-    { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
-    { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
-    { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
-    { label: "Construção", value: "5db97db3ca74d100178e45ad" },
-    { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
-];
+  const usertype = localStorage.getItem('eloyusertype');
+  const categorias = [
+      { label: "Almoço", value: "5d929cbac39dcd00176af304" },
+      { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
+      { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
+      { label: "Esportes", value: "5d92a240c39dcd00176af307" },
+      { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
+      { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
+      { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
+      { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
+      { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
+      { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
+      { label: "Construção", value: "5db97db3ca74d100178e45ad" },
+      { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
+  ];
 
-const horarios_inicio = [
-  { label: "Abre as 08:00", value: "8" },
-  { label: "Abre as 08:30", value: "8.5" },
-  { label: "Abre as 09:00", value: "9" },
-  { label: "Abre as 09:30", value: "9.5" },
-  { label: "Abre as 10:00", value: "10" },
-  { label: "Abre as 10:30", value: "10.5" },
-  { label: "Abre as 11:00", value: "11" },
-  { label: "Abre as 11:30", value: "11.5" },
-  { label: "Abre as 12:00", value: "12" },
-  { label: "Abre as 12:30", value: "12.5" },
-  { label: "Abre as 13:00", value: "13" },
-  { label: "Abre as 13:30", value: "13.5" },
-  { label: "Abre as 14:00", value: "14" },
-  { label: "Abre as 14:30", value: "14.5" },
-  { label: "Abre as 15:00", value: "15" },
-  { label: "Abre as 15:30", value: "15.5" },
-  { label: "Abre as 16:00", value: "16" },
-  { label: "Abre as 16:30", value: "16.5" },
-  { label: "Abre as 17:00", value: "17" },
-  { label: "Abre as 17:30", value: "17.5" },
-  { label: "Abre as 18:00", value: "18" },
-  { label: "Sem Funcionamento", value: "-1" },
-];
+  const horarios_inicio = [
+    { label: "Abre as 08:00", value: "8" },
+    { label: "Abre as 08:30", value: "8.5" },
+    { label: "Abre as 09:00", value: "9" },
+    { label: "Abre as 09:30", value: "9.5" },
+    { label: "Abre as 10:00", value: "10" },
+    { label: "Abre as 10:30", value: "10.5" },
+    { label: "Abre as 11:00", value: "11" },
+    { label: "Abre as 11:30", value: "11.5" },
+    { label: "Abre as 12:00", value: "12" },
+    { label: "Abre as 12:30", value: "12.5" },
+    { label: "Abre as 13:00", value: "13" },
+    { label: "Abre as 13:30", value: "13.5" },
+    { label: "Abre as 14:00", value: "14" },
+    { label: "Abre as 14:30", value: "14.5" },
+    { label: "Abre as 15:00", value: "15" },
+    { label: "Abre as 15:30", value: "15.5" },
+    { label: "Abre as 16:00", value: "16" },
+    { label: "Abre as 16:30", value: "16.5" },
+    { label: "Abre as 17:00", value: "17" },
+    { label: "Abre as 17:30", value: "17.5" },
+    { label: "Abre as 18:00", value: "18" },
+    { label: "Sem Funcionamento", value: "-1" },
+  ];
 
-const horarios_fim = [
-  { label: "Fecha as 11:00", value: "11" },
-  { label: "Fecha as 11:30", value: "11.5" },
-  { label: "Fecha as 12:00", value: "12" },
-  { label: "Fecha as 12:30", value: "12.5" },
-  { label: "Fecha as 13:00", value: "13" },
-  { label: "Fecha as 13:30", value: "13.5" },
-  { label: "Fecha as 14:00", value: "14" },
-  { label: "Fecha as 14:30", value: "14.5" },
-  { label: "Fecha as 15:00", value: "15" },
-  { label: "Fecha as 15:30", value: "15.5" },
-  { label: "Fecha as 16:00", value: "16" },
-  { label: "Fecha as 16:30", value: "16.5" },
-  { label: "Fecha as 17:00", value: "17" },
-  { label: "Fecha as 17:30", value: "17.5" },
-  { label: "Fecha as 18:00", value: "18" },
-  { label: "Fecha as 18:30", value: "18.5" },
-  { label: "Fecha as 19:00", value: "19" },
-  { label: "Fecha as 19:30", value: "19.5" },
-  { label: "Fecha as 20:00", value: "20" },
-  { label: "Fecha as 20:30", value: "20.5" },
-  { label: "Fecha as 21:00", value: "21" },
-  { label: "Fecha as 21:30", value: "21.5" },
-  { label: "Fecha as 22:00", value: "22" },
-  { label: "Sem Funcionamento", value: "-1" },
-];
+  const horarios_fim = [
+    { label: "Fecha as 11:00", value: "11" },
+    { label: "Fecha as 11:30", value: "11.5" },
+    { label: "Fecha as 12:00", value: "12" },
+    { label: "Fecha as 12:30", value: "12.5" },
+    { label: "Fecha as 13:00", value: "13" },
+    { label: "Fecha as 13:30", value: "13.5" },
+    { label: "Fecha as 14:00", value: "14" },
+    { label: "Fecha as 14:30", value: "14.5" },
+    { label: "Fecha as 15:00", value: "15" },
+    { label: "Fecha as 15:30", value: "15.5" },
+    { label: "Fecha as 16:00", value: "16" },
+    { label: "Fecha as 16:30", value: "16.5" },
+    { label: "Fecha as 17:00", value: "17" },
+    { label: "Fecha as 17:30", value: "17.5" },
+    { label: "Fecha as 18:00", value: "18" },
+    { label: "Fecha as 18:30", value: "18.5" },
+    { label: "Fecha as 19:00", value: "19" },
+    { label: "Fecha as 19:30", value: "19.5" },
+    { label: "Fecha as 20:00", value: "20" },
+    { label: "Fecha as 20:30", value: "20.5" },
+    { label: "Fecha as 21:00", value: "21" },
+    { label: "Fecha as 21:30", value: "21.5" },
+    { label: "Fecha as 22:00", value: "22" },
+    { label: "Sem Funcionamento", value: "-1" },
+  ];
 
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
@@ -135,6 +136,7 @@ const horarios_fim = [
       setIdcategoria(data[0].idcategoria);
       setLoading(false);
     }
+    if(usertype == null) history.push('/login');
     setLoading(true);
     loadEstab();
   },[]);
@@ -201,18 +203,22 @@ const horarios_fim = [
 
       <form onSubmit={handleSubmit}>
 
-        <label htmlFor="idcategoria">Categoria*</label>
-        <select
-            id="idcategoria"
-            multiple="multiple"
-            className="select1"
-            value={idcategoria}
-            onChange={handleSelectMulti}
-        >
-            {categorias.map((categoria) =>
-                <option key={categoria.value} value={categoria.value}>{categoria.label}</option>
-            )}
-        </select>
+          {usertype > 0 && 
+            <React.Fragment>
+              <label htmlFor="idcategoria">Categoria*</label>
+              <select
+                  id="idcategoria"
+                  multiple="multiple"
+                  className="select1"
+                  value={idcategoria}
+                  onChange={handleSelectMulti}
+              >
+                  {categorias.map((categoria) =>
+                      <option key={categoria.value} value={categoria.value}>{categoria.label}</option>
+                  )}
+              </select>
+            </React.Fragment>
+          }       
         
 
         <label htmlFor="nome">Nome*</label>
@@ -220,24 +226,17 @@ const horarios_fim = [
           id="nome"
           placeholder="Nome do Estabelecimento"
           value={nome}
+          disabled={usertype==0 ? true : false}
           required
           onChange={event => setNome(event.target.value)}
         />
-
-        <label htmlFor="descr">Descrição*</label>
-        <textarea
-          id="descr"
-          placeholder="Descrição do Estabelecimento"
-          value={descr}
-          required
-          onChange={event => setDescr(event.target.value)}
-        />
-
+        
         <label htmlFor="tipo">Tipo*</label>
         <input
           id="tipo"
           placeholder="Tipo do Estabelecimento"
           value={tipo}
+          disabled={usertype==0 ? true : false}
           required
           onChange={event => setTipo(event.target.value)}
         />
@@ -247,9 +246,20 @@ const horarios_fim = [
           id="subtipo"
           placeholder="Subtipo do Estabelecimento"
           value={subtipo}
+          disabled={usertype==0 ? true : false}
           required
           onChange={event => setSubtipo(event.target.value)}
         />
+        <label htmlFor="descr">Descrição*</label>
+        <textarea
+          id="descr"
+          placeholder="Descrição do Estabelecimento"
+          value={descr}
+          required
+          onChange={event => setDescr(event.target.value)}
+        />
+
+        
 
         <label htmlFor="imagem">URL da Imagem</label>
         <input
@@ -408,15 +418,18 @@ const horarios_fim = [
           onChange={event => setPedonline(false)}
         />
 
-
-        <label htmlFor="plano">Qual o Plano de assinatura?</label>
-        <input
-          id="plano"
-          placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
-          value={plano}
-          required
-          onChange={event => setPlano(event.target.value)}
-        />  
+        {usertype > 0 && 
+          <React.Fragment>
+           <label htmlFor="plano">Qual o Plano de assinatura?</label>
+            <input
+              id="plano"
+              placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
+              value={plano}
+              required
+              onChange={event => setPlano(event.target.value)}
+            />  
+          </React.Fragment>
+        }
 
         <label htmlFor="email">E-mail</label>
         <input
@@ -442,7 +455,7 @@ const horarios_fim = [
           onChange={event => setInstagram(event.target.value)}
         />  
 
-        <label htmlFor="whatsapp">Whatsapp</label>
+        <label htmlFor="whatsapp">Whatsapp (ex: 1199999-9999)</label>
         <input
           id="whatsapp"
           placeholder="Whatsapp do estabelecimento"

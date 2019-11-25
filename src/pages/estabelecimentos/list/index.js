@@ -7,13 +7,19 @@ export default function List_Estab({ history }) {
 const [estab, setEstab] = useState([]);
 const [loading, setLoading] = useState("");
 
+const userestab = localStorage.getItem('eloyuserestab');
+const usertype = localStorage.getItem('eloyusertype');
+
   useEffect(() => {
     async function loadEstab() {
-      const response = await api.get('/estabelecimentos/Todos');
+      const query = usertype > 0 ? '/estabelecimentos/Todos' : '/estabelecimentos/'+ userestab;
+      const response = await api.get(query);
       const data = await response.data;
       setEstab(data);
       setLoading(false);
     }
+
+    if(usertype == null) history.push('/login');
     setLoading(true);
     loadEstab();
   }, []);

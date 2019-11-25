@@ -24,7 +24,7 @@ body, input, button, select, textarea {
 
 .container {
   margin:80px auto 0;
-  max-width: 450px;
+  max-width: 600px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -37,6 +37,19 @@ body, input, button, select, textarea {
   margin-top: 50px;
   border-radius: 4px;
   padding: 30px;
+}
+
+.content .linkanchor {
+  border:0;
+  border-radius: 2px;
+  width: 100%;
+  height: 32px;
+  padding:0 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #860a0a;
+  color:#fff;
+  cursor: pointer;
 }
 
 .content .center {
@@ -53,6 +66,7 @@ body, input, button, select, textarea {
 
 .content > p {
   font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .content form {
@@ -161,6 +175,7 @@ body, input, button, select, textarea {
 
 .content table {
   border-collapse: collapse;
+  width: 100%;
 }
 .content th, td {
   border: 1px solid black;

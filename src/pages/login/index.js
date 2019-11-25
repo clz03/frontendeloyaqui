@@ -27,11 +27,17 @@ export default function Login({ history }) {
                 setLoading(false);
                 return;
             }else{
-                setLoading(false);
                 localStorage.setItem('eloyuseremail', email);
                 localStorage.setItem('eloyusernome', res.data.nome);
                 localStorage.setItem('eloyuserid', res.data._id);
-                history.push('/painel');
+                localStorage.setItem('eloyusertype', res.data.tipo);
+                localStorage.setItem('eloyuserestab', res.data.idestabelecimento);
+                setLoading(false);
+                if(res.data.tipo > 0){
+                    history.push('/admpainel');
+                } else {
+                    history.push('/painel');
+                }  
             }
         }).catch((error) => {
             alert(error);
