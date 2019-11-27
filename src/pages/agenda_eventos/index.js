@@ -77,7 +77,6 @@ export default function Agenda({ history }) {
            <th>Data</th>
            <th>Hora</th>
            <th>Nome</th>
-           <th>Email</th>
          </tr>
         {evento.length ? evento.map(evento => 
             <tr>
@@ -89,9 +88,6 @@ export default function Agenda({ history }) {
               </td>
               <td>
                 {evento.idusuario.nome}
-              </td>
-              <td>
-                {evento.idusuario.email}
               </td>
             </tr>
         ) : "Nenhum agendamento neste mês"}

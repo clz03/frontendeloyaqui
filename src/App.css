@@ -30,7 +30,7 @@ h1 {
 
 .container {
   margin:80px auto 0;
-  max-width: 600px;
+  max-width: 520px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -67,7 +67,7 @@ h1 {
   width: 100%;
   margin-top: 10px;
   flex-direction: row;
-  margin-left: 45px;
+  margin-left: 100px;
 }
 
 .content > p {
