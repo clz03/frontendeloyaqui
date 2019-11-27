@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import api from '../../../services/api';
 
-export default function Novo_Estab({ history }) {
+export default function Novo_Prod({ history }) {
 
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
@@ -10,6 +10,10 @@ export default function Novo_Estab({ history }) {
   const [imagem, setImagem] = useState("");
   const [promocao, setPromocao] = useState("");
   const [idestab, setIdestab] = useState("");
+  const [ishidden, setIshidden] = useState("");
+
+  const userestab = localStorage.getItem('eloyuserestab');
+  const usertype = localStorage.getItem('eloyusertype');
 
   async function handleSubmit(event) {
       
@@ -21,13 +25,20 @@ export default function Novo_Estab({ history }) {
         preco: preco,
         imagem: imagem,
         promocao: promocao,
-        idestab: idestab
+        idestabelecimento: idestab
       };
 
       await api.post('/produtos', dataobj)
       history.push('/painel')
 
   }
+
+  useEffect(() => {
+    if(usertype < 1){
+      setIdestab(userestab);
+      setIshidden(true);
+    }
+  }, []);
 
   return (
     <div className="content">
@@ -36,7 +47,7 @@ export default function Novo_Estab({ history }) {
         <label htmlFor="nome">Nome*</label>
         <input
           id="nome"
-          placeholder="Nome do Estabelecimento"
+          placeholder="Nome do Produto"
           value={nome}
           onChange={event => setNome(event.target.value)}
         />
@@ -44,7 +55,7 @@ export default function Novo_Estab({ history }) {
         <label htmlFor="descr">Descrição*</label>
         <input
           id="descr"
-          placeholder="Descrição do Estabelecimento"
+          placeholder="Descrição do Produto"
           value={descr}
           onChange={event => setDescr(event.target.value)}
         />
@@ -73,10 +84,11 @@ export default function Novo_Estab({ history }) {
           onChange={event => setPromocao(event.target.value)}
         />
 
-        <label htmlFor="idestab">Estabelecimento</label>
+        <label htmlFor="idestab" hidden={ishidden}>Estabelecimento</label>
         <input
           id="idestab"
           placeholder="Estabelecimento"
+          hidden={ishidden}
           value={idestab}
           onChange={event => setIdestab(event.target.value)}
         />

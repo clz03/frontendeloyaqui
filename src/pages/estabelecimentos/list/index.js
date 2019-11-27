@@ -37,7 +37,7 @@ const usertype = localStorage.getItem('eloyusertype');
         {estab.map(estab => 
             <tr>
               <td>
-                <a href={'/estabelecimentos/id/' + estab._id}>{estab.nome}</a>
+                <a href={'/estabelecimentos/editar/id/' + estab._id}>{estab.nome}</a>
               </td>
               <td>
                 {estab.tipo}

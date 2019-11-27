@@ -5,7 +5,6 @@ import api from '../../../services/api';
 
 export default function Edit_Estab({ history }) {
 
-  const usertype = localStorage.getItem('eloyusertype');
   const categorias = [
       { label: "Almoço", value: "5d929cbac39dcd00176af304" },
       { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
@@ -100,13 +99,16 @@ export default function Edit_Estab({ history }) {
   const [idcategoria, setIdcategoria] = useState("");
   const [loading, setLoading] = useState("");
 
+  const usertype = localStorage.getItem('eloyusertype');
+  var userestab = localStorage.getItem('eloyuserestab');
   const url_string = window.location.href;
   const param = url_string.split("/");
+  if(usertype > 0) userestab = param[6];
 
   useEffect(() => {
     async function loadEstab() {
 
-      const response = await api.get('/estabelecimentos/'+param[5]);
+      const response = await api.get('/estabelecimentos/'+ userestab);
       const data = await response.data;
 
       setNome(data[0].nome);
@@ -185,7 +187,7 @@ export default function Edit_Estab({ history }) {
         idcategoria: idcategoria
       };
 
-      await api.put('/estabelecimentos/'+param[5], dataobj);
+      await api.put('/estabelecimentos/'+ userestab, dataobj);
       setLoading(false);
       history.push('/painel');
 
@@ -200,7 +202,7 @@ export default function Edit_Estab({ history }) {
           <img src={carregando} width="80"></img>
         </div>
       }
-
+      <h1 className="center">Meu Estabelecimento</h1>
       <form onSubmit={handleSubmit}>
 
           {usertype > 0 && 

@@ -27,7 +27,6 @@ export default function Agenda({ history }) {
     const userestab = localStorage.getItem('eloyuserestab');
     const usertype = localStorage.getItem('eloyusertype');
 
-  useEffect(() => {
     async function loadEvento(hojemes) {
       const response = await api.get('/eventos/estabelecimento/'+ userestab + '/' + hojemes );
       const data = await response.data;
@@ -36,6 +35,13 @@ export default function Agenda({ history }) {
       setLoading(false);
     }
 
+    function handleMes(event){
+      setLoading(true);
+      setMes(event.target.value);
+      loadEvento(event.target.value);
+    };
+
+  useEffect(() => {
     if(usertype == null) history.push('/login');
     setLoading(true);
     const hoje = new Date();
@@ -57,9 +63,9 @@ export default function Agenda({ history }) {
       <label htmlFor="meses">Selecione o Mês:</label>
       <select
           id="meses"
-          className="select3"
+          className="select1"
           value={mes}
-          onChange={event => setMes(event.target.value)}
+          onChange={handleMes}
       >
           {meses.map((meses) =>
               <option key={meses.value} value={meses.value}>{meses.label}</option>
@@ -73,7 +79,7 @@ export default function Agenda({ history }) {
            <th>Nome</th>
            <th>Email</th>
          </tr>
-        {evento.map(evento => 
+        {evento.length ? evento.map(evento => 
             <tr>
               <td>
                 {evento.data.substring(8,10) + "/" + evento.data.substring(5,7) + "/" + evento.data.substring(0,4)}
@@ -88,7 +94,7 @@ export default function Agenda({ history }) {
                 {evento.idusuario.email}
               </td>
             </tr>
-        )}
+        ) : "Nenhum agendamento neste mês"}
       </table>
       <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
     </div>

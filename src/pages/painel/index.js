@@ -3,7 +3,6 @@ import React, {useState,useEffect} from "react";
 export default function Painel({ history }) {
     
     const usertype = localStorage.getItem('eloyusertype');
-    const userestab = localStorage.getItem('eloyuserestab');
     const [usernome, setUsernome] = useState("");
 
     const handleSubmit = pagina=> event=> {
@@ -35,7 +34,7 @@ export default function Painel({ history }) {
     <div className="content">
         <p className="center">Seja Bem Vindo(a) {usernome}</p>
         <div className="formcontent">
-            <form onSubmit={handleSubmit('/estabelecimentos/id/' + userestab)}>
+            <form onSubmit={handleSubmit('/estabelecimentos/editar')}>
                 <button type="submit" className="btn">Meu Estabelecimento</button>
             </form>
             <form onSubmit={handleSubmit("/agenda")}>
