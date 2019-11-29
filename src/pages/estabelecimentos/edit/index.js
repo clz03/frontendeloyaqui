@@ -189,8 +189,7 @@ export default function Edit_Estab({ history }) {
 
       await api.put('/estabelecimentos/'+ userestab, dataobj);
       setLoading(false);
-      history.push('/painel');
-
+      usertype > 0 ? history.push('/admpainel') : history.push('/painel');
   }
 
 

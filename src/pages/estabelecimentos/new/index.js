@@ -141,7 +141,7 @@ export default function Novo_Estab({ history }) {
       };
 
       await api.post('/estabelecimentos', dataobj)
-      history.push('/painel')
+      history.push('/admpainel')
 
   }
 
