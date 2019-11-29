@@ -10,6 +10,10 @@ export default function Novo_Estab({ history }) {
   const [imagem, setImagem] = useState("");
   const [promocao, setPromocao] = useState("");
   const [idestab, setIdestab] = useState("");
+  const [ishidden, setIshidden] = useState("");
+
+  const userestab = localStorage.getItem('eloyuserestab');
+  const usertype = localStorage.getItem('eloyusertype');
 
   const url_string = window.location.href;
   const param = url_string.split("/");
@@ -29,7 +33,12 @@ export default function Novo_Estab({ history }) {
     }
     
     loadProd();
+    if(usertype < 1){
+      setIdestab(userestab);
+      setIshidden(true);
+    }
   },[]);
+
 
   async function handleSubmit(event) {
       
@@ -45,7 +54,7 @@ export default function Novo_Estab({ history }) {
       };
 
       await api.put('/produtos/'+param[5], dataobj)
-      history.push('/painel')
+      history.push('/produtos/listar')
 
   }
 
@@ -56,16 +65,18 @@ export default function Novo_Estab({ history }) {
         <label htmlFor="nome">Nome*</label>
         <input
           id="nome"
-          placeholder="Nome do Estabelecimento"
+          placeholder="Nome do Produto"
           value={nome}
+          maxLength={40}
           onChange={event => setNome(event.target.value)}
         />
 
         <label htmlFor="descr">Descrição*</label>
         <input
           id="descr"
-          placeholder="Descrição do Estabelecimento"
+          placeholder="Descrição do Produto"
           value={descr}
+          maxLength={100}
           onChange={event => setDescr(event.target.value)}
         />
 
@@ -73,6 +84,7 @@ export default function Novo_Estab({ history }) {
         <input
           id="preco"
           placeholder="XX,XX"
+          maxLength={8}
           value={preco}
           onChange={event => setPreco(event.target.value)}
         />
@@ -82,6 +94,7 @@ export default function Novo_Estab({ history }) {
           id="imagem"
           placeholder="URL da imagem do Estabelecimento"
           value={imagem}
+          maxLength={100}
           onChange={event => setImagem(event.target.value)}
         />
 
@@ -90,19 +103,22 @@ export default function Novo_Estab({ history }) {
           id="promocao"
           placeholder="1=SIM / 0=NÃO"
           value={promocao}
+          maxLength={1}
           onChange={event => setPromocao(event.target.value)}
         />
 
-        <label htmlFor="idestab">Estabelecimento</label>
+        <label htmlFor="idestab" hidden={ishidden}>Estabelecimento</label>
         <input
           id="idestab"
+          hidden={ishidden}
           placeholder="Estabelecimento"
+          maxLength={50}
           value={idestab}
           onChange={event => setIdestab(event.target.value)}
         />
 
         <button type="submit" className="btn">Salvar</button> 
-        <button className="btn2" onClick={history.goBack}>Cancelar</button>
+        <button className="btn2" onClick={() => history.push('/produtos/listar')}>Cancelar</button>
 
       </form>
     </div>

@@ -29,7 +29,7 @@ export default function Novo_Prod({ history }) {
       };
 
       await api.post('/produtos', dataobj)
-      history.push('/painel')
+      history.push('/produtos/listar')
 
   }
 
@@ -44,11 +44,12 @@ export default function Novo_Prod({ history }) {
     <div className="content">
       <form onSubmit={handleSubmit}>
 
-        <label htmlFor="nome">Nome*</label>
+      <label htmlFor="nome">Nome*</label>
         <input
           id="nome"
           placeholder="Nome do Produto"
           value={nome}
+          maxLength={40}
           onChange={event => setNome(event.target.value)}
         />
 
@@ -57,6 +58,7 @@ export default function Novo_Prod({ history }) {
           id="descr"
           placeholder="Descrição do Produto"
           value={descr}
+          maxLength={100}
           onChange={event => setDescr(event.target.value)}
         />
 
@@ -64,6 +66,7 @@ export default function Novo_Prod({ history }) {
         <input
           id="preco"
           placeholder="XX,XX"
+          maxLength={8}
           value={preco}
           onChange={event => setPreco(event.target.value)}
         />
@@ -73,6 +76,7 @@ export default function Novo_Prod({ history }) {
           id="imagem"
           placeholder="URL da imagem do Estabelecimento"
           value={imagem}
+          maxLength={100}
           onChange={event => setImagem(event.target.value)}
         />
 
@@ -81,20 +85,22 @@ export default function Novo_Prod({ history }) {
           id="promocao"
           placeholder="1=SIM / 0=NÃO"
           value={promocao}
+          maxLength={1}
           onChange={event => setPromocao(event.target.value)}
         />
 
         <label htmlFor="idestab" hidden={ishidden}>Estabelecimento</label>
         <input
           id="idestab"
-          placeholder="Estabelecimento"
           hidden={ishidden}
+          placeholder="Estabelecimento"
+          maxLength={50}
           value={idestab}
           onChange={event => setIdestab(event.target.value)}
         />
 
         <button type="submit" className="btn">Salvar</button> 
-        <button className="btn2" onClick={history.goBack}>Cancelar</button>
+        <button className="btn2" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
 
       </form>
     </div>

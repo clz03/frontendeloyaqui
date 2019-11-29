@@ -19,7 +19,7 @@ export default function Novo_Estab({ history }) {
       event.preventDefault();
 
       const dataobj = { 
-        validade: validade, 
+        validade: validade.substring(6,10) + "-" + validade.substring(3,5) + "-" + validade.substring(0,2), 
         premio: premio,
         regra: regra,
         expirado: expirado,
@@ -27,7 +27,7 @@ export default function Novo_Estab({ history }) {
       };
 
       await api.post('/cupons', dataobj)
-      history.push('/painel')
+      history.push('/cupons/listar')
 
   }
 
@@ -45,7 +45,8 @@ export default function Novo_Estab({ history }) {
         <label htmlFor="validade">Validade*</label>
         <input
           id="validade"
-          placeholder="AAAA-MM-DD"
+          placeholder="DD/MM/AAAA"
+          maxLength={10}
           value={validade}
           onChange={event => setValidade(event.target.value)}
         />
@@ -54,6 +55,7 @@ export default function Novo_Estab({ history }) {
         <input
           id="premio"
           placeholder="Titulo do Cupom"
+          maxLength={50}
           value={premio}
           onChange={event => setPremio(event.target.value)}
         />
@@ -62,6 +64,7 @@ export default function Novo_Estab({ history }) {
         <input
           id="regra"
           placeholder="Regra do Cupom"
+          maxLength={80}
           value={regra}
           onChange={event => setRegra(event.target.value)}
         />
@@ -70,6 +73,7 @@ export default function Novo_Estab({ history }) {
         <input
           id="expirado"
           placeholder="1=SIM / 0=Não"
+          maxLength={1}
           value={expirado}
           onChange={event => setExpirado(event.target.value)}
         />
@@ -79,12 +83,13 @@ export default function Novo_Estab({ history }) {
           id="idestab"
           hidden={ishidden}
           placeholder="Estabelecimento"
+          maxLength={50}
           value={idestab}
           onChange={event => setIdestab(event.target.value)}
         />
 
         <button type="submit" className="btn">Salvar</button> 
-        <button className="btn2" onClick={history.goBack}>Cancelar</button>
+        <button className="btn2" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
 
       </form>
     </div>

@@ -127,6 +127,15 @@ h1 {
   font-size: 16px;
 }
 
+.content .select3{
+  margin-bottom: 20px;
+  border: 1px solid #c1c1c1;
+  border-radius: 2px;
+  height: 45px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
 .content .select4{
   width: 150px;
   margin-bottom: 20px;
@@ -134,15 +143,6 @@ h1 {
   border: 1px solid #c1c1c1;
   border-radius: 2px;
   height: 35px;
-  padding: 0 15px;
-  font-size: 16px;
-}
-
-.content .select3{
-  margin-bottom: 20px;
-  border: 1px solid #c1c1c1;
-  border-radius: 2px;
-  height: 45px;
   padding: 0 15px;
   font-size: 16px;
 }
@@ -198,4 +198,8 @@ h1 {
   border: 1px solid black;
   padding: 10px;
   text-align: left;
+}
+
+.noborder {
+  border: 1px solid white !important;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import api from '../../../services/api';
 
@@ -97,6 +97,8 @@ export default function Novo_Estab({ history }) {
   const [hrfim_domingo, setHrfim_domingo] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
 
+  const usertype = localStorage.getItem('eloyusertype');
+
   function handleSelectMulti(event){
     var options = event.target.options;
     var value = [];
@@ -144,6 +146,11 @@ export default function Novo_Estab({ history }) {
       history.push('/admpainel')
 
   }
+
+  useEffect(() => {
+    if(usertype == null) history.push('/login');
+    if(usertype < 1) history.push('/painel');
+  },[]);
 
   return (
     <div className="content">
@@ -387,7 +394,7 @@ export default function Novo_Estab({ history }) {
         /> 
 
         <button type="submit" className="btn">Salvar</button> 
-        <button className="btn2" onClick={history.goBack}>Cancelar</button>
+        <button className="btn2" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
       </form>
     </div>
   );

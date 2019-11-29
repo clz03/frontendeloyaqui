@@ -13,7 +13,7 @@ export default function List_Cupom({ history }) {
 
   useEffect(() => {
     async function loadCupom() {
-      const query = usertype > 0 ? '/cupons' : '/cupons/estabelecimento/'+ userestab;
+      const query = usertype > 0 ? '/cupons/Todos' : '/cupons/estabelecimento/'+ userestab;
       const response = await api.get(query);
       const data = await response.data;
       setCupom(data);
@@ -47,12 +47,12 @@ export default function List_Cupom({ history }) {
                 {cupom.regra}
               </td>
               <td>
-                {cupom.validade}
+                {cupom.validade.substring(8,10) + "/" + cupom.validade.substring(5,7) + "/" + cupom.validade.substring(0,4)}
               </td>
             </tr>
         ) : msgvazio}
       </table>
-      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
+      <button className="btn3" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
     </div>
   );
 }

@@ -25,11 +25,10 @@ export default function AdmPainel({ history }) {
     const [usernome, setUsernome] = useState("");
 
     useEffect(() => {
-        if(usertype == null || usertype < 1)
-        history.push('/login');
-        else
+        if(usertype == null) history.push('/login');
+        if(usertype < 1) history.push('/painel');
         setUsernome(localStorage.getItem('eloyusernome'));
-      }, []);
+      },[]);
 
 
   return (

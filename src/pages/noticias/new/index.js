@@ -21,7 +21,7 @@ export default function Novo_Noticia({ history }) {
     };
 
     await api.post('/noticias', dataobj)
-    history.push('/painel')
+    history.push('/admpainel')
 
 }
 

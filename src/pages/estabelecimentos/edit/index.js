@@ -227,6 +227,7 @@ export default function Edit_Estab({ history }) {
           id="nome"
           placeholder="Nome do Estabelecimento"
           value={nome}
+          maxLength={80}
           disabled={usertype==0 ? true : false}
           required
           onChange={event => setNome(event.target.value)}
@@ -237,6 +238,7 @@ export default function Edit_Estab({ history }) {
           id="tipo"
           placeholder="Tipo do Estabelecimento"
           value={tipo}
+          maxLength={40}
           disabled={usertype==0 ? true : false}
           required
           onChange={event => setTipo(event.target.value)}
@@ -247,6 +249,7 @@ export default function Edit_Estab({ history }) {
           id="subtipo"
           placeholder="Subtipo do Estabelecimento"
           value={subtipo}
+          maxLength={40}
           disabled={usertype==0 ? true : false}
           required
           onChange={event => setSubtipo(event.target.value)}
@@ -256,6 +259,7 @@ export default function Edit_Estab({ history }) {
           id="descr"
           placeholder="Descrição do Estabelecimento"
           value={descr}
+          maxLength={250}
           required
           onChange={event => setDescr(event.target.value)}
         />
@@ -267,6 +271,7 @@ export default function Edit_Estab({ history }) {
           id="imagem"
           placeholder="URL da imagem do Estabelecimento"
           value={imagem}
+          maxLength={250}
           onChange={event => setImagem(event.target.value)}
         />
 
@@ -275,6 +280,7 @@ export default function Edit_Estab({ history }) {
           id="imagemcapa"
           placeholder="URL da imagem Capa do Estabelecimento"
           value={imagemcapa}
+          maxLength={250}
           onChange={event => setImagemcapa(event.target.value)}
         />
 
@@ -283,6 +289,7 @@ export default function Edit_Estab({ history }) {
           id="rua"
           placeholder="Rua do Estabelecimento"
           value={rua}
+          maxLength={100}
           required
           onChange={event => setRua(event.target.value)}
         />
@@ -292,6 +299,7 @@ export default function Edit_Estab({ history }) {
           id="numero"
           placeholder="Número do Estabelecimento"
           value={numero}
+          maxLength={10}
           required
           onChange={event => setNumero(event.target.value)}
         />
@@ -301,6 +309,7 @@ export default function Edit_Estab({ history }) {
           id="bairro"
           placeholder="Bairro do Estabelecimento"
           value={bairro}
+          maxLength={80}
           required
           onChange={event => setBairro(event.target.value)}
         />
@@ -310,6 +319,7 @@ export default function Edit_Estab({ history }) {
           id="cep"
           placeholder="CEP do Estabelecimento"
           value={cep}
+          maxLength={10}
           required
           onChange={event => setCEP(event.target.value)}
         />
@@ -319,6 +329,7 @@ export default function Edit_Estab({ history }) {
           id="fone1"
           placeholder="Telefone do Estabelecimento"
           value={fone1}
+          maxLength={30}
           required
           onChange={event => setFone1(event.target.value)}
         />
@@ -328,6 +339,7 @@ export default function Edit_Estab({ history }) {
           id="fone2"
           placeholder="Telefone 2 do Estabelecimento"
           value={fone2}
+          maxLength={30}
           onChange={event => setFone2(event.target.value)}
         />
         <label htmlFor="hrinicio_semana">Horário Semanal</label>
@@ -400,24 +412,35 @@ export default function Edit_Estab({ history }) {
         </select>
 
         <label>Disponibiliza Agendamento Online?</label>
-        <label htmlFor="pedonline">Sim</label>
-        <input
-          id="pedonline"
-          type="radio"
-          value="Sim"
-          label="Sim"
-          checked={pedonline === true}
-          onChange={event => setPedonline(true)}
-        />
-        <label htmlFor="pedonline2">Não</label>
-         <input
-          id="pedonline2"
-          type="radio"
-          value="Não"
-          label="Não"
-          checked={pedonline === false}
-          onChange={event => setPedonline(false)}
-        />
+
+        <table>
+          <tr>
+            <td className="noborder">
+            <input
+              id="pedonline"
+              type="radio"
+              value="Sim"
+              label="Sim"
+              name="Sim"
+              checked={pedonline === true}
+              onChange={event => setPedonline(true)}
+            />
+            <span>Sim</span>
+            </td>
+            <td className="noborder">
+            <input
+              id="pedonline2"
+              type="radio"
+              value="Não"
+              label="Não"
+              checked={pedonline === false}
+              onChange={event => setPedonline(false)}
+            />
+            <span>Não</span>
+            </td>
+          </tr>
+        </table>
+       
 
         {usertype > 0 && 
           <React.Fragment>
@@ -426,6 +449,7 @@ export default function Edit_Estab({ history }) {
               id="plano"
               placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
               value={plano}
+              maxLength={1}
               required
               onChange={event => setPlano(event.target.value)}
             />  
@@ -437,6 +461,7 @@ export default function Edit_Estab({ history }) {
           id="email"
           placeholder="E-mail do estabelecimento"
           value={email}
+          maxLength={80}
           onChange={event => setEmail(event.target.value)}
         />  
 
@@ -445,6 +470,7 @@ export default function Edit_Estab({ history }) {
           id="facebook"
           placeholder="Facebook do estabelecimento"
           value={facebook}
+          maxLength={30}
           onChange={event => setFacebook(event.target.value)}
         />  
 
@@ -453,6 +479,7 @@ export default function Edit_Estab({ history }) {
           id="instagram"
           placeholder="Instagram do estabelecimento"
           value={instagram}
+          maxLength={30}
           onChange={event => setInstagram(event.target.value)}
         />  
 
@@ -461,6 +488,7 @@ export default function Edit_Estab({ history }) {
           id="whatsapp"
           placeholder="Whatsapp do estabelecimento"
           value={whatsapp}
+          maxLength={30}
           onChange={event => setWhatsapp(event.target.value)}
         /> 
 

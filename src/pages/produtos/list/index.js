@@ -52,7 +52,7 @@ const usertype = localStorage.getItem('eloyusertype');
             </tr>
         ) : msgvazio}
       </table>
-      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
+      <button className="btn3" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
     </div>
   );
 }

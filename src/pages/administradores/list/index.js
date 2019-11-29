@@ -50,7 +50,7 @@ const [loading, setLoading] = useState("");
             </tr>
         )}
       </table>
-      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
+      <button className="btn3" onClick={() => { history.push('/admpainel') }}>Voltar</button>
 
       
     </div>

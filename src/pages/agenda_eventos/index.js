@@ -63,7 +63,7 @@ export default function Agenda({ history }) {
       <label htmlFor="meses">Selecione o Mês:</label>
       <select
           id="meses"
-          className="select1"
+          className="select4"
           value={mes}
           onChange={handleMes}
       >
