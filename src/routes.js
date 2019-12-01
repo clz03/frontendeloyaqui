@@ -6,6 +6,7 @@ import Painel from './pages/painel';
 import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
 import ValidaUsuario from './pages/validausuario';
+import RedefinirSenha from './pages/redefinirsenha';
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
@@ -40,6 +41,7 @@ export default function Routes() {
                 <Route path="/painel" component={Painel}/>
                 <Route path="/admpainel" component={AdmPainel}/>
                 <Route path="/validausuario" component={ValidaUsuario}/>
+                <Route path="/redefinirsenha" component={RedefinirSenha}/>
                 <Route path="/agenda" component={AgendaEventos}/>
 
                 <Route path="/estabelecimentos/novo" component={New_Estab}/>
