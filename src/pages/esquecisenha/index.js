@@ -4,10 +4,9 @@ import appstore from "../../assets/app-store.png"
 import carregando from "../../assets/loading.gif";
 import googlestore from "../../assets/google-play.png"
 //index
-export default function Login({ history }) {
+export default function EsqueciSenha({ history }) {
 
     const [email, setEmail] = useState('');
-    const [pwd, setPwd] = useState('');
     const [loading, setLoading] = useState("");
 
     async function handleSubmit(event) {
@@ -16,31 +15,22 @@ export default function Login({ history }) {
         event.preventDefault();
 
         const dataobj = { 
-            email: email,
-            senha: pwd
+            email: email
           };
 
-        await api.post('/admauthenticate', dataobj)
+        await api.post('/admforgotpwd', dataobj)
         .then((res) => {
             if(res.data.error != undefined){
                 alert(res.data.error);
                 setLoading(false);
                 return;
             }else{
-                localStorage.setItem('eloyuseremail', email);
-                localStorage.setItem('eloyusernome', res.data.nome);
-                localStorage.setItem('eloyuserid', res.data._id);
-                localStorage.setItem('eloyusertype', res.data.tipo);
-                localStorage.setItem('eloyuserestab', res.data.idestabelecimento);
+                alert(res.data.success);
                 setLoading(false);
-                if(res.data.tipo > 0){
-                    history.push('/admpainel');
-                } else {
-                    history.push('/painel');
-                }  
+                history.push('/login');
             }
         }).catch((error) => {
-            alert(error);
+            alert(error.data);
             setLoading(false);
             return;
         });    
@@ -60,23 +50,14 @@ export default function Login({ history }) {
                     required
                     onChange={event => setEmail(event.target.value)}
                 />
-                <label htmlFor="email">SENHA *</label>
-                <input
-                    id="senha"
-                    type="password"
-                    placeholder="sua senha"
-                    required
-                    value={pwd}
-                    onChange={event => setPwd(event.target.value)}
-                />
-                <a className="right" href="/esquecisenha">esqueci minha senha</a>
-                <button type="submit" className="btn">Entrar</button> 
+                <button type="submit" className="btn">Enviar Nova Senha</button> 
                 {loading && 
                     <div className="center">
-                        <img src={carregando} width="80"></img>
+                    <img src={carregando} width="80"></img>
                     </div>
                 }
             </form>
+            <button className="btn3" onClick={() => history.push('/login')}>Voltar</button>
             <h3 className="center">
                 <a href="/precadastro">Ainda não está aqui ? Cadastre seu estabelecimento</a>
             </h3>

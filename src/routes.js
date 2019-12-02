@@ -7,6 +7,9 @@ import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
 import ValidaUsuario from './pages/validausuario';
 import RedefinirSenha from './pages/redefinirsenha';
+import AdmRedefinirSenha from './pages/admredefinirsenha';
+import EsqueciSenha from './pages/esquecisenha';
+import PreCadastro from './pages/precadastro';
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
@@ -42,7 +45,10 @@ export default function Routes() {
                 <Route path="/admpainel" component={AdmPainel}/>
                 <Route path="/validausuario" component={ValidaUsuario}/>
                 <Route path="/redefinirsenha" component={RedefinirSenha}/>
+                <Route path="/admredefinirsenha" component={AdmRedefinirSenha}/>
+                <Route path="/esquecisenha" component={EsqueciSenha}/>
                 <Route path="/agenda" component={AgendaEventos}/>
+                <Route path="/precadastro" component={PreCadastro}/>
 
                 <Route path="/estabelecimentos/novo" component={New_Estab}/>
                 <Route path="/estabelecimentos/listar" component={List_Estab}/>

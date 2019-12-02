@@ -22,53 +22,36 @@ export default function Edit_Estab({ history }) {
 
   const horarios_inicio = [
     { label: "Abre as 08:00", value: "8" },
-    { label: "Abre as 08:30", value: "8.5" },
     { label: "Abre as 09:00", value: "9" },
-    { label: "Abre as 09:30", value: "9.5" },
     { label: "Abre as 10:00", value: "10" },
-    { label: "Abre as 10:30", value: "10.5" },
     { label: "Abre as 11:00", value: "11" },
-    { label: "Abre as 11:30", value: "11.5" },
     { label: "Abre as 12:00", value: "12" },
-    { label: "Abre as 12:30", value: "12.5" },
     { label: "Abre as 13:00", value: "13" },
-    { label: "Abre as 13:30", value: "13.5" },
     { label: "Abre as 14:00", value: "14" },
-    { label: "Abre as 14:30", value: "14.5" },
     { label: "Abre as 15:00", value: "15" },
-    { label: "Abre as 15:30", value: "15.5" },
     { label: "Abre as 16:00", value: "16" },
-    { label: "Abre as 16:30", value: "16.5" },
     { label: "Abre as 17:00", value: "17" },
-    { label: "Abre as 17:30", value: "17.5" },
     { label: "Abre as 18:00", value: "18" },
+    { label: "Abre as 19:00", value: "19" },
+    { label: "Abre as 20:00", value: "20" },
     { label: "Sem Funcionamento", value: "-1" },
   ];
 
   const horarios_fim = [
+    { label: "Fecha as 10:00", value: "10" },
     { label: "Fecha as 11:00", value: "11" },
-    { label: "Fecha as 11:30", value: "11.5" },
     { label: "Fecha as 12:00", value: "12" },
-    { label: "Fecha as 12:30", value: "12.5" },
     { label: "Fecha as 13:00", value: "13" },
-    { label: "Fecha as 13:30", value: "13.5" },
     { label: "Fecha as 14:00", value: "14" },
-    { label: "Fecha as 14:30", value: "14.5" },
     { label: "Fecha as 15:00", value: "15" },
-    { label: "Fecha as 15:30", value: "15.5" },
     { label: "Fecha as 16:00", value: "16" },
-    { label: "Fecha as 16:30", value: "16.5" },
     { label: "Fecha as 17:00", value: "17" },
-    { label: "Fecha as 17:30", value: "17.5" },
     { label: "Fecha as 18:00", value: "18" },
-    { label: "Fecha as 18:30", value: "18.5" },
     { label: "Fecha as 19:00", value: "19" },
-    { label: "Fecha as 19:30", value: "19.5" },
     { label: "Fecha as 20:00", value: "20" },
-    { label: "Fecha as 20:30", value: "20.5" },
     { label: "Fecha as 21:00", value: "21" },
-    { label: "Fecha as 21:30", value: "21.5" },
     { label: "Fecha as 22:00", value: "22" },
+    { label: "Fecha as 23:00", value: "23" },
     { label: "Sem Funcionamento", value: "-1" },
   ];
 
@@ -419,7 +402,7 @@ export default function Edit_Estab({ history }) {
             <input
               id="pedonline"
               type="radio"
-              value="Sim"
+              value="1"
               label="Sim"
               name="Sim"
               checked={pedonline === true}
@@ -431,7 +414,7 @@ export default function Edit_Estab({ history }) {
             <input
               id="pedonline2"
               type="radio"
-              value="Não"
+              value="0"
               label="Não"
               checked={pedonline === false}
               onChange={event => setPedonline(false)}

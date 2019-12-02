@@ -5,7 +5,7 @@ import googlestore from "../../assets/google-play.png"
 import carregando from "../../assets/loading.gif";
 
 
-export default function Redefinirsenha() {
+export default function Redefinirsenha({ history }) {
 
     const [pwd, setPwd] = useState('');
     const [pwd2, setPwd2] = useState('');
@@ -38,12 +38,12 @@ export default function Redefinirsenha() {
             pwd: pwd
         };
 
-        await api.put('/usuarios/' + param[4], dataobj)
+        await api.put('/administradores/' + param[4], dataobj)
         .then((res) => {
             if(res.status == 200){
                 setLoading(false);
                 setHidden(true);
-                SetStatusUser("Senha alterada com sucesso. Faça seu login no aplicativo");
+                SetStatusUser("Senha alterada com sucesso. Faça seu login novamente");
             }else{
                 SetStatusUser("Sua senha NÃO foi alterada, tente novamente");
                 setLoading(false);
@@ -79,6 +79,7 @@ export default function Redefinirsenha() {
                 onChange={event => setPwd2(event.target.value)}
             />
             <button type="submit" className="btn" hidden={hidden}>Redefinir</button> 
+            <button className="btn3" hidden={!hidden} onClick={() => history.push('/login')}>Ir para Login</button>
             {loading && 
                 <div className="center">
                 <img src={carregando} width="80"></img>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../../../App.css";
-import api from '../../../services/api';
+import "../../App.css";
+import api from '../../services/api';
 
-export default function Novo_Estab({ history }) {
+export default function Precadastro({ history }) {
 
   const categorias = [
     { label: "Almoço", value: "5d929cbac39dcd00176af304" },
@@ -19,47 +19,43 @@ export default function Novo_Estab({ history }) {
     { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
 ];
 
-const horarios_inicio = [
-  { label: "Abre as 08:00", value: "8" },
-  { label: "Abre as 09:00", value: "9" },
-  { label: "Abre as 10:00", value: "10" },
-  { label: "Abre as 11:00", value: "11" },
-  { label: "Abre as 12:00", value: "12" },
-  { label: "Abre as 13:00", value: "13" },
-  { label: "Abre as 14:00", value: "14" },
-  { label: "Abre as 15:00", value: "15" },
-  { label: "Abre as 16:00", value: "16" },
-  { label: "Abre as 17:00", value: "17" },
-  { label: "Abre as 18:00", value: "18" },
-  { label: "Abre as 19:00", value: "19" },
-  { label: "Abre as 20:00", value: "20" },
-  { label: "Sem Funcionamento", value: "-1" },
-];
+  const horarios_inicio = [
+    { label: "Abre as 08:00", value: "8" },
+    { label: "Abre as 09:00", value: "9" },
+    { label: "Abre as 10:00", value: "10" },
+    { label: "Abre as 11:00", value: "11" },
+    { label: "Abre as 12:00", value: "12" },
+    { label: "Abre as 13:00", value: "13" },
+    { label: "Abre as 14:00", value: "14" },
+    { label: "Abre as 15:00", value: "15" },
+    { label: "Abre as 16:00", value: "16" },
+    { label: "Abre as 17:00", value: "17" },
+    { label: "Abre as 18:00", value: "18" },
+    { label: "Abre as 19:00", value: "19" },
+    { label: "Abre as 20:00", value: "20" },
+    { label: "Sem Funcionamento", value: "-1" },
+  ];
 
-const horarios_fim = [
-  { label: "Fecha as 10:00", value: "10" },
-  { label: "Fecha as 11:00", value: "11" },
-  { label: "Fecha as 12:00", value: "12" },
-  { label: "Fecha as 13:00", value: "13" },
-  { label: "Fecha as 14:00", value: "14" },
-  { label: "Fecha as 15:00", value: "15" },
-  { label: "Fecha as 16:00", value: "16" },
-  { label: "Fecha as 17:00", value: "17" },
-  { label: "Fecha as 18:00", value: "18" },
-  { label: "Fecha as 19:00", value: "19" },
-  { label: "Fecha as 20:00", value: "20" },
-  { label: "Fecha as 21:00", value: "21" },
-  { label: "Fecha as 22:00", value: "22" },
-  { label: "Fecha as 23:00", value: "23" },
-  { label: "Sem Funcionamento", value: "-1" },
-];
+  const horarios_fim = [
+    { label: "Fecha as 10:00", value: "10" },
+    { label: "Fecha as 11:00", value: "11" },
+    { label: "Fecha as 12:00", value: "12" },
+    { label: "Fecha as 13:00", value: "13" },
+    { label: "Fecha as 14:00", value: "14" },
+    { label: "Fecha as 15:00", value: "15" },
+    { label: "Fecha as 16:00", value: "16" },
+    { label: "Fecha as 17:00", value: "17" },
+    { label: "Fecha as 18:00", value: "18" },
+    { label: "Fecha as 19:00", value: "19" },
+    { label: "Fecha as 20:00", value: "20" },
+    { label: "Fecha as 21:00", value: "21" },
+    { label: "Fecha as 22:00", value: "22" },
+    { label: "Fecha as 23:00", value: "23" },
+    { label: "Sem Funcionamento", value: "-1" },
+  ];
 
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
-  const [tipo, setTipo] = useState("");
-  const [subtipo, setSubtipo] = useState("");
-  const [imagem, setImagem] = useState("");
-  const [imagemcapa, setImagemcapa] = useState("");
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
   const [bairro, setBairro] = useState("");
@@ -67,7 +63,6 @@ const horarios_fim = [
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [pedonline, setPedonline] = useState("");
-  const [plano, setPlano] = useState("");
   const [email, setEmail] = useState("");
   const [facebook, setFacebook] = useState("");
   const [instagram, setInstagram] = useState("");
@@ -79,8 +74,6 @@ const horarios_fim = [
   const [hrinicio_domingo, setHrinicio_domingo] = useState("");
   const [hrfim_domingo, setHrfim_domingo] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
-
-  const usertype = localStorage.getItem('eloyusertype');
 
   function handleSelectMulti(event){
     var options = event.target.options;
@@ -100,10 +93,6 @@ const horarios_fim = [
       const dataobj = { 
         nome: nome, 
         descr: descr,
-        tipo: tipo,
-        subtipo: subtipo,
-        imagem: imagem,
-        imagemcapa: imagemcapa,
         rua: rua,
         numero: numero,
         bairro: bairro,
@@ -111,7 +100,6 @@ const horarios_fim = [
         fone1: fone1,
         fone2: fone2,
         pedonline: pedonline,
-        plano: plano,
         email: email,
         facebook: facebook,
         instagram: instagram,
@@ -125,15 +113,11 @@ const horarios_fim = [
         idcategoria: idcategoria
       };
 
-      await api.post('/estabelecimentos', dataobj)
-      history.push('/admpainel')
+      await api.post('/precadastro', dataobj);
+      alert("Cadastro efetuado com sucesso. Nossa equipe entrará em contato em breve.")
+      history.push('/login');
 
   }
-
-  useEffect(() => {
-    if(usertype == null) history.push('/login');
-    if(usertype < 1) history.push('/painel');
-  },[]);
 
   return (
     <div className="content">
@@ -157,6 +141,7 @@ const horarios_fim = [
         <input
           id="nome"
           placeholder="Nome do Estabelecimento"
+          maxLength={80}
           value={nome}
           required
           onChange={event => setNome(event.target.value)}
@@ -166,49 +151,17 @@ const horarios_fim = [
         <input
           id="descr"
           placeholder="Descrição do Estabelecimento"
+          maxLength={250}
           value={descr}
           required
           onChange={event => setDescr(event.target.value)}
-        />
-
-        <label htmlFor="tipo">Tipo*</label>
-        <input
-          id="tipo"
-          placeholder="Tipo do Estabelecimento"
-          value={tipo}
-          required
-          onChange={event => setTipo(event.target.value)}
-        />
-
-        <label htmlFor="subtipo">Subtipo*</label>
-        <input
-          id="subtipo"
-          placeholder="Subtipo do Estabelecimento"
-          value={subtipo}
-          required
-          onChange={event => setSubtipo(event.target.value)}
-        />
-
-        <label htmlFor="imagem">URL da Imagem</label>
-        <input
-          id="imagem"
-          placeholder="URL da imagem do Estabelecimento"
-          value={imagem}
-          onChange={event => setImagem(event.target.value)}
-        />
-
-        <label htmlFor="imagemcapa">URL da Imagem Capa</label>
-        <input
-          id="imagemcapa"
-          placeholder="URL da imagem Capa do Estabelecimento"
-          value={imagemcapa}
-          onChange={event => setImagemcapa(event.target.value)}
         />
 
         <label htmlFor="rua">Rua</label>
         <input
           id="rua"
           placeholder="Rua do Estabelecimento"
+          maxLength={100}
           value={rua}
           required
           onChange={event => setRua(event.target.value)}
@@ -218,6 +171,7 @@ const horarios_fim = [
         <input
           id="numero"
           placeholder="Número do Estabelecimento"
+          maxLength={10}
           value={numero}
           required
           onChange={event => setNumero(event.target.value)}
@@ -227,6 +181,7 @@ const horarios_fim = [
         <input
           id="bairro"
           placeholder="Bairro do Estabelecimento"
+          maxLength={80}
           value={bairro}
           required
           onChange={event => setBairro(event.target.value)}
@@ -236,6 +191,7 @@ const horarios_fim = [
         <input
           id="cep"
           placeholder="CEP do Estabelecimento"
+          maxLength={10}
           value={cep}
           required
           onChange={event => setCEP(event.target.value)}
@@ -245,6 +201,7 @@ const horarios_fim = [
         <input
           id="fone1"
           placeholder="Telefone do Estabelecimento"
+          maxLength={30}
           value={fone1}
           required
           onChange={event => setFone1(event.target.value)}
@@ -254,6 +211,7 @@ const horarios_fim = [
         <input
           id="fone2"
           placeholder="Telefone 2 do Estabelecimento"
+          maxLength={30}
           value={fone2}
           onChange={event => setFone2(event.target.value)}
         />
@@ -327,27 +285,41 @@ const horarios_fim = [
             )}
         </select>
 
-        <label htmlFor="pedonline">Disponibiliza Agendamento Online?</label>
-        <input
-          id="pedonline"
-          placeholder="1=Sim / 0=Nao"
-          value={pedonline}
-          onChange={event => setPedonline(event.target.value)}
-        />
+        <label>Disponibiliza Agendamento Online?</label>
 
-        <label htmlFor="plano">Qual o Plano de assinatura?</label>
-        <input
-          id="plano"
-          placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
-          value={plano}
-          required
-          onChange={event => setPlano(event.target.value)}
-        />  
+        <table>
+          <tr>
+            <td className="noborder">
+            <input
+              id="pedonline"
+              type="radio"
+              value="1"
+              label="Sim"
+              name="Sim"
+              checked={pedonline === true}
+              onChange={event => setPedonline(true)}
+            />
+            <span>Sim</span>
+            </td>
+            <td className="noborder">
+            <input
+              id="pedonline2"
+              type="radio"
+              value="0"
+              label="Não"
+              checked={pedonline === false}
+              onChange={event => setPedonline(false)}
+            />
+            <span>Não</span>
+            </td>
+          </tr>
+        </table>
 
         <label htmlFor="email">E-mail</label>
         <input
           id="email"
           placeholder="E-mail do estabelecimento"
+          maxLength={80}
           value={email}
           onChange={event => setEmail(event.target.value)}
         />  
@@ -356,6 +328,7 @@ const horarios_fim = [
         <input
           id="facebook"
           placeholder="Facebook do estabelecimento"
+          maxLength={30}
           value={facebook}
           onChange={event => setFacebook(event.target.value)}
         />  
@@ -364,6 +337,7 @@ const horarios_fim = [
         <input
           id="instagram"
           placeholder="Instagram do estabelecimento"
+          maxLength={30}
           value={instagram}
           onChange={event => setInstagram(event.target.value)}
         />  
@@ -372,12 +346,13 @@ const horarios_fim = [
         <input
           id="whatsapp"
           placeholder="Whatsapp do estabelecimento"
+          maxLength={30}
           value={whatsapp}
           onChange={event => setWhatsapp(event.target.value)}
         /> 
 
         <button type="submit" className="btn">Salvar</button> 
-        <button className="btn2" onClick={() => { usertype > 0 ? history.push('/admpainel') : history.push('/painel') }}>Voltar</button>
+        <button className="btn2" onClick={() => { history.push('/login') }}>Voltar</button>
       </form>
     </div>
   );
