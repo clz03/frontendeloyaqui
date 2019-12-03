@@ -104,16 +104,16 @@ export default function Precadastro({ history }) {
         facebook: facebook,
         instagram: instagram,
         whatsapp: whatsapp,
-        hrinicio_semana,
-        hrfim_semana,
-        hrinicio_sabado,
-        hrfim_sabado,
-        hrinicio_domingo,
-        hrfim_domingo,
+        hrinicio_semana: hrinicio_semana,
+        hrfim_semana: hrfim_semana,
+        hrinicio_sabado: hrinicio_sabado,
+        hrfim_sabado : hrfim_sabado,
+        hrinicio_domingo: hrinicio_domingo,
+        hrfim_domingo : hrfim_domingo,
         idcategoria: idcategoria
       };
       
-      await api.post('http://localhost:8080/precadastro', dataobj);
+      await api.post('/precadastro', dataobj);
       alert("Cadastro efetuado com sucesso. Nossa equipe entrará em contato em breve.")
       history.push('/login');
 
