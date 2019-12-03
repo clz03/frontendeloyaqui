@@ -112,8 +112,8 @@ export default function Precadastro({ history }) {
         hrfim_domingo,
         idcategoria: idcategoria
       };
-
-      await api.post('/precadastro', dataobj);
+      
+      await api.post('http://localhost:8080/precadastro', dataobj);
       alert("Cadastro efetuado com sucesso. Nossa equipe entrará em contato em breve.")
       history.push('/login');
 
