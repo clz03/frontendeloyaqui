@@ -11,18 +11,26 @@ const [msgvazio, setMsgvazio] = useState('carregando...');
 const userestab = localStorage.getItem('eloyuserestab');
 const usertype = localStorage.getItem('eloyusertype');
 
+async function loadProd() {
+  const query = usertype > 0 ? '/produtos' : '/produtos/estabelecimento/'+ userestab;
+  const response = await api.get(query);
+  const data = await response.data;
+  setProd(data);
+  setLoading(false);
+}
+
   useEffect(() => {
-    async function loadProd() {
-      const query = usertype > 0 ? '/produtos' : '/produtos/estabelecimento/'+ userestab;
-      const response = await api.get(query);
-      const data = await response.data;
-      setProd(data);
-      setLoading(false);
-    }
     setLoading(true);
     loadProd();
     setMsgvazio("Nenhum produto encontrado");
   }, []);
+
+  async function handleRemove(id, item){
+      if (window.confirm('Confirma remoção de ' + item + ' ?')){
+        await api.delete('/produtos/' + id);
+        loadProd();
+      }
+  }
 
   return (
     <div className="content">
@@ -37,6 +45,7 @@ const usertype = localStorage.getItem('eloyusertype');
            <th>Nome</th>
            <th>Descrição</th>
            <th>Preço</th>
+           <th>Ação</th>
          </tr>
         {prod.length ? prod.map(prod => 
             <tr>
@@ -48,6 +57,9 @@ const usertype = localStorage.getItem('eloyusertype');
               </td>
               <td>
                 {prod.preco}
+              </td>
+              <td>
+               <button className="btn4" onClick={() => {handleRemove(prod._id, prod.nome)}}>Excluir</button>
               </td>
             </tr>
         ) : msgvazio}

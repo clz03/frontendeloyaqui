@@ -11,18 +11,26 @@ export default function List_Cupom({ history }) {
   const userestab = localStorage.getItem('eloyuserestab');
   const usertype = localStorage.getItem('eloyusertype');
 
+  async function loadCupom() {
+    const query = usertype > 0 ? '/cupons/Todos' : '/cupons/estabelecimento/'+ userestab;
+    const response = await api.get(query);
+    const data = await response.data;
+    setCupom(data);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function loadCupom() {
-      const query = usertype > 0 ? '/cupons/Todos' : '/cupons/estabelecimento/'+ userestab;
-      const response = await api.get(query);
-      const data = await response.data;
-      setCupom(data);
-      setLoading(false);
-    }
     setLoading(true);
     loadCupom();
     setMsgvazio("Nenhum cupom encontrado");
   }, []);
+
+  async function handleRemove(id, item){
+    if (window.confirm('Confirma remoção de ' + item + ' ?')){
+      await api.delete('/cupons/' + id);
+      loadCupom();
+    }
+  }
 
   return (
     <div className="content">
@@ -37,6 +45,7 @@ export default function List_Cupom({ history }) {
            <th>Descrição</th>
            <th>Regra</th>
            <th>Validade</th>
+           <th>Ação</th>
          </tr>
         {cupom.length ? cupom.map(cupom => 
             <tr>
@@ -48,6 +57,9 @@ export default function List_Cupom({ history }) {
               </td>
               <td>
                 {cupom.validade.substring(8,10) + "/" + cupom.validade.substring(5,7) + "/" + cupom.validade.substring(0,4)}
+              </td>
+              <td>
+               <button className="btn4" onClick={() => {handleRemove(cupom._id, cupom.premio)}}>Excluir</button>
               </td>
             </tr>
         ) : msgvazio}
