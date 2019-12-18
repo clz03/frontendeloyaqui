@@ -91,6 +91,15 @@ export default function AdmPainel({ history }) {
                 <button type="submit" className="btn">Visualizar Administradores</button>
             </form>
         </div>
+
+        <div className="formcontent">
+            <form onSubmit={handleSubmit("/cardapios/novo")}>
+                <button type="submit" className="btn">Cadastrar Novo Cardápio</button>
+            </form>
+            <form onSubmit={handleSubmit("/cardapios/listar")}>
+                <button type="submit" className="btn">Visualizar Cardápios</button>
+            </form>
+        </div>
         
         <div className="formcontent">
             <button className="linkanchor" onClick={handleLogout}>Sair</button>

@@ -20,6 +20,8 @@ export default function Precadastro({ history }) {
 ];
 
   const horarios_inicio = [
+    { label: "Abre as 06:00", value: "6" },
+    { label: "Abre as 07:00", value: "7" },
     { label: "Abre as 08:00", value: "8" },
     { label: "Abre as 09:00", value: "9" },
     { label: "Abre as 10:00", value: "10" },

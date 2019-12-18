@@ -21,6 +21,7 @@ export default function Edit_Estab({ history }) {
   ];
 
   const horarios_inicio = [
+    { label: "Abre as 07:00", value: "7" },
     { label: "Abre as 08:00", value: "8" },
     { label: "Abre as 09:00", value: "9" },
     { label: "Abre as 10:00", value: "10" },
@@ -68,6 +69,7 @@ export default function Edit_Estab({ history }) {
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [pedonline, setPedonline] = useState("");
+  const [cardapio, setCardapio] = useState("");
   const [plano, setPlano] = useState("");
   const [email, setEmail] = useState("");
   const [facebook, setFacebook] = useState("");
@@ -107,6 +109,7 @@ export default function Edit_Estab({ history }) {
       setFone1(data[0].fone1);
       setFone2(data[0].fone2);
       setPedonline(data[0].pedonline);
+      setCardapio(data[0].cardapio);
       setPlano(data[0].plano);
       setEmail(data[0].email);
       setFacebook(data[0].facebook);
@@ -156,6 +159,7 @@ export default function Edit_Estab({ history }) {
         fone1: fone1,
         fone2: fone2,
         pedonline: pedonline,
+        cardapio: cardapio,
         plano: plano,
         email: email,
         facebook: facebook,
@@ -418,6 +422,36 @@ export default function Edit_Estab({ history }) {
               label="Não"
               checked={pedonline === false}
               onChange={event => setPedonline(false)}
+            />
+            <span>Não</span>
+            </td>
+          </tr>
+        </table>
+
+        <label>Disponibiliza Cardápio Online?</label>
+
+        <table>
+          <tr>
+            <td className="noborder">
+            <input
+              id="cardapio"
+              type="radio"
+              value="1"
+              label="Sim"
+              name="Sim"
+              checked={cardapio === true}
+              onChange={event => setCardapio(true)}
+            />
+            <span>Sim</span>
+            </td>
+            <td className="noborder">
+            <input
+              id="cardapio2"
+              type="radio"
+              value="0"
+              label="Não"
+              checked={cardapio === false}
+              onChange={event => setCardapio(false)}
             />
             <span>Não</span>
             </td>

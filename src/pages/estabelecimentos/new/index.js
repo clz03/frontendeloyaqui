@@ -20,6 +20,7 @@ export default function Novo_Estab({ history }) {
 ];
 
 const horarios_inicio = [
+  { label: "Abre as 07:00", value: "7" },
   { label: "Abre as 08:00", value: "8" },
   { label: "Abre as 09:00", value: "9" },
   { label: "Abre as 10:00", value: "10" },
@@ -67,6 +68,7 @@ const horarios_fim = [
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [pedonline, setPedonline] = useState("");
+  const [cardapio, setCardapio] = useState("");
   const [plano, setPlano] = useState("");
   const [email, setEmail] = useState("");
   const [facebook, setFacebook] = useState("");
@@ -111,6 +113,7 @@ const horarios_fim = [
         fone1: fone1,
         fone2: fone2,
         pedonline: pedonline,
+        cardapio: cardapio,
         plano: plano,
         email: email,
         facebook: facebook,
@@ -333,6 +336,14 @@ const horarios_fim = [
           placeholder="1=Sim / 0=Nao"
           value={pedonline}
           onChange={event => setPedonline(event.target.value)}
+        />
+
+        <label htmlFor="cardapio">Disponibiliza Cardápio Online?</label>
+        <input
+          id="cardapio"
+          placeholder="1=Sim / 0=Nao"
+          value={cardapio}
+          onChange={event => setCardapio(event.target.value)}
         />
 
         <label htmlFor="plano">Qual o Plano de assinatura?</label>
