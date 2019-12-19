@@ -35,6 +35,10 @@ import New_Administrador from './pages/administradores/new';
 import List_Administrador from './pages/administradores/list';
 import Edit_Administrador from './pages/administradores/edit';
 
+import New_Cardapio from './pages/cardapios/new';
+import List_Cardapio from './pages/cardapios/list';
+import Edit_Cardapio from './pages/cardapios/edit';
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -74,6 +78,10 @@ export default function Routes() {
                 <Route path="/administradores/novo" component={New_Administrador}/>
                 <Route path="/administradores/listar" component={List_Administrador}/>
                 <Route path="/administradores/:id" component={Edit_Administrador}/>
+
+                <Route path="/cardapios/novo" component={New_Cardapio}/>
+                <Route path="/cardapios/listar" component={List_Cardapio}/>
+                <Route path="/cardapios/:id" component={Edit_Cardapio}/>
             </Switch>
         </BrowserRouter>
     )

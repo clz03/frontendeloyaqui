@@ -57,7 +57,7 @@ export default function Painel({ history }) {
             }
 
             {cardapio &&
-                <form onSubmit={handleSubmit("/cardapios")}>
+                <form onSubmit={handleSubmit("/cardapios/listar")}>
                     <button type="submit" className="btn">Meu Cardápio</button>
                 </form>
             }

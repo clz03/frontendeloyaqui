@@ -241,6 +241,7 @@ export default function Edit_Estab({ history }) {
           required
           onChange={event => setSubtipo(event.target.value)}
         />
+        
         <label htmlFor="descr">Descrição*</label>
         <textarea
           id="descr"
@@ -250,8 +251,6 @@ export default function Edit_Estab({ history }) {
           required
           onChange={event => setDescr(event.target.value)}
         />
-
-        
 
         <label htmlFor="imagem">URL da Imagem</label>
         <input
@@ -329,6 +328,7 @@ export default function Edit_Estab({ history }) {
           maxLength={30}
           onChange={event => setFone2(event.target.value)}
         />
+        
         <label htmlFor="hrinicio_semana">Horário Semanal</label>
         <select
             id="hrinicio_semana"
