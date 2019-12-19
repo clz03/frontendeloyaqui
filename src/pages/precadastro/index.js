@@ -65,6 +65,7 @@ export default function Precadastro({ history }) {
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [pedonline, setPedonline] = useState("");
+  const [cardapio, setCardapio] = useState("");
   const [email, setEmail] = useState("");
   const [facebook, setFacebook] = useState("");
   const [instagram, setInstagram] = useState("");
@@ -102,6 +103,7 @@ export default function Precadastro({ history }) {
         fone1: fone1,
         fone2: fone2,
         pedonline: pedonline,
+        cardapio: cardapio,
         email: email,
         facebook: facebook,
         instagram: instagram,
@@ -311,6 +313,36 @@ export default function Precadastro({ history }) {
               label="Não"
               checked={pedonline === false}
               onChange={event => setPedonline(false)}
+            />
+            <span>Não</span>
+            </td>
+          </tr>
+        </table>
+
+        <label>Disponibiliza Cardápio Online?</label>
+
+        <table>
+          <tr>
+            <td className="noborder">
+            <input
+              id="cardapio"
+              type="radio"
+              value="1"
+              label="Sim"
+              name="Sim"
+              checked={cardapio === true}
+              onChange={event => setCardapio(true)}
+            />
+            <span>Sim</span>
+            </td>
+            <td className="noborder">
+            <input
+              id="cardapio2"
+              type="radio"
+              value="0"
+              label="Não"
+              checked={cardapio === false}
+              onChange={event => setCardapio(false)}
             />
             <span>Não</span>
             </td>
