@@ -39,6 +39,10 @@ import New_Cardapio from './pages/cardapios/new';
 import List_Cardapio from './pages/cardapios/list';
 import Edit_Cardapio from './pages/cardapios/edit';
 
+import New_Endereco from './pages/enderecos/new';
+import List_Endereco from './pages/enderecos/list';
+import Edit_Endereco from './pages/enderecos/edit';
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -82,6 +86,10 @@ export default function Routes() {
                 <Route path="/cardapios/novo" component={New_Cardapio}/>
                 <Route path="/cardapios/listar" component={List_Cardapio}/>
                 <Route path="/cardapios/:id" component={Edit_Cardapio}/>
+
+                <Route path="/enderecos/novo" component={New_Endereco}/>
+                <Route path="/enderecos/listar" component={List_Endereco}/>
+                <Route path="/enderecos/:id" component={Edit_Endereco}/>
             </Switch>
         </BrowserRouter>
     )

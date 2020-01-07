@@ -27,6 +27,13 @@ const [loading, setLoading] = useState("");
         </div>
       }
        <table>
+        <tr>
+           <th>E-Mail</th>
+           <th>Nome</th>
+           <th>PWD</th>
+           <th>Tipo</th>
+           <th>ID Estab</th>
+         </tr>
         {administrador.map(administrador => 
             <tr>
               <td>
@@ -39,13 +46,10 @@ const [loading, setLoading] = useState("");
                 {administrador.pwd}
               </td>
               <td>
-                {administrador.tipo ? "Sim" : "Não"}
+                {administrador.tipo ? "Geral" : "Estab"}
               </td>
               <td>
-                {administrador.idestabelecimento}
-              </td>
-              <td>
-                {administrador.validado ? "Sim" : "Não"}
+                {administrador.tipo ? "Todos" : administrador.idestabelecimento}
               </td>
             </tr>
         )}

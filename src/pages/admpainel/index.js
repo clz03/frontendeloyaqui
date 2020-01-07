@@ -84,6 +84,15 @@ export default function AdmPainel({ history }) {
         </div>
 
         <div className="formcontent">
+            <form onSubmit={handleSubmit("/enderecos/novo")}>
+                <button type="submit" className="btn">Cadastrar Novo Endereço</button>
+            </form>
+            <form onSubmit={handleSubmit("/enderecos/listar")}>
+                <button type="submit" className="btn">Visualizar Endereços</button>
+            </form>
+        </div>
+
+        <div className="formcontent">
             <form onSubmit={handleSubmit("/administradores/novo")}>
                 <button type="submit" className="btn">Cadastrar Novo Administrador</button>
             </form>
