@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/login';
-import Painel from './pages/painel';
+import Painel from './pages/painel/index2';
 import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
 import ValidaUsuario from './pages/validausuario';
@@ -10,6 +10,7 @@ import RedefinirSenha from './pages/redefinirsenha';
 import AdmRedefinirSenha from './pages/admredefinirsenha';
 import EsqueciSenha from './pages/esquecisenha';
 import PreCadastro from './pages/precadastro';
+
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
@@ -43,12 +44,15 @@ import New_Endereco from './pages/enderecos/new';
 import List_Endereco from './pages/enderecos/list';
 import Edit_Endereco from './pages/enderecos/edit';
 
+import List_Pedidos from './pages/pedidos/list';
+import Edit_Pedidos from './pages/pedidos/edit';
+
 export default function Routes() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={Login}/>
-                <Route path="/login" component={Login}/>
+                <Route path="/login" component={Login} />
                 <Route path="/painel" component={Painel}/>
                 <Route path="/admpainel" component={AdmPainel}/>
                 <Route path="/validausuario" component={ValidaUsuario}/>
@@ -90,6 +94,9 @@ export default function Routes() {
                 <Route path="/enderecos/novo" component={New_Endereco}/>
                 <Route path="/enderecos/listar" component={List_Endereco}/>
                 <Route path="/enderecos/:id" component={Edit_Endereco}/>
+
+                <Route path="/pedidos/listar" component={List_Pedidos}/>
+                <Route path="/pedidos/:id" component={Edit_Pedidos}/>
             </Switch>
         </BrowserRouter>
     )

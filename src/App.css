@@ -12,7 +12,7 @@ html, body, #root {
 }
 
 body {
-  /* background: #000 url('./assets/background.jpg') no-repeat; */
+  background: #000 url('./assets/background.jpg') no-repeat;
   background-size: cover;
   -webkit-font-smoothing: antialiased !important;
 }
@@ -44,7 +44,7 @@ h3 a:visited {
 
 .container {
   margin:80px auto 0;
-  max-width: 520px;
+  max-width: 60%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -222,6 +222,21 @@ h3 a:visited {
   cursor: pointer;
   margin-bottom: 5px;
   margin-top: 20px;
+}
+
+.content button.btn5 {
+  border:0;
+  border-radius: 2px;
+  width: 40%;
+  height: 42px;
+  padding:0 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #4545ee;
+  color:#fff;
+  cursor: pointer;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .content table {
