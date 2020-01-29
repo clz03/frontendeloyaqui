@@ -1,14 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useEffect } from 'react'
 import api from '../../services/api';
+import logo from "../../assets/logo.png"
 import appstore from "../../assets/app-store.png"
 import carregando from "../../assets/loading.gif";
 import googlestore from "../../assets/google-play.png"
-//index
+
 export default function Login({ history }) {
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [loading, setLoading] = useState("");
+
+    useEffect(() => {
+        document.body.className = "hold-transition login-page"
+    },[]);
 
     async function handleSubmit(event) {
         
@@ -46,46 +51,73 @@ export default function Login({ history }) {
         });    
       }
 
-    return (
-        <>
-        <div className="content">
+      const footer = {
+        marginTop: '10px',
+        flexDirection: 'row',
+      };
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">E-MAIL *</label>
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="seuemail@dominio.com.br"
-                    value={email}
-                    required
-                    onChange={event => setEmail(event.target.value)}
-                />
-                <label htmlFor="email">SENHA *</label>
-                <input
-                    id="senha"
-                    type="password"
-                    placeholder="sua senha"
-                    required
-                    value={pwd}
-                    onChange={event => setPwd(event.target.value)}
-                />
-                <a className="right" href="/esquecisenha">esqueci minha senha</a>
-                <button type="submit" className="btn">Entrar</button> 
-                {loading && 
-                    <div className="center">
-                        <img src={carregando} width="80"></img>
+        return (
+            <div>
+                <div className="login-box">
+                    <div className="login-logo">
+                        <a href="/login"><img src={logo} width={300}></img></a>
                     </div>
-                }
-            </form>
-            <h3 className="center">
-                <a href="/precadastro">Ainda não está aqui ? Cadastre seu estabelecimento</a>
-            </h3>
-        </div>
+                    <div className="login-box-body">
+                        <p className="login-box-msg">Entre com sua credencial</p>
 
-        <div className="footer">
-            <img src={appstore} alt="EloyAqui" width="200px"></img>
-            <img src={googlestore} alt="EloyAqui" width="200px"></img>
-        </div>        
-      </>
-    )
-}
+                        <form onSubmit={handleSubmit}>
+                        
+                            <div className="form-group has-feedback">
+                                <input 
+                                    type="email" 
+                                    className="form-control" 
+                                    placeholder="seuemail@dominio.com.br" 
+                                    value={email} 
+                                    required 
+                                    onChange={event => setEmail(event.target.value)} />
+                                <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                            </div>
+
+                            <div className="form-group has-feedback">
+                                <input 
+                                    type="password" 
+                                    className="form-control" 
+                                    placeholder="sua senha"
+                                    required
+                                    value={pwd}
+                                    onChange={event => setPwd(event.target.value)} />
+                                <span className="glyphicon glyphicon-lock form-control-feedback" />
+                            </div>
+
+                            <div className="row">
+                                <div className="col-xs-12">
+                                    <button type="submit" className="btn btn-primary btn-block btn-flat">Entrar</button>
+                                </div>
+                            </div>
+                           
+                        </form>
+
+                        {loading && 
+                            <div style={{ alignItems:'center', textAlign: 'center' }}>
+                                <img src={carregando} width="80"></img>
+                            </div>
+                        }
+
+                        <div style={{ marginTop:'10px' }}>
+                            <a href="/esquecisenha">Esqueci minha senha</a><br />
+                            <a href="/precadastro" className="text-center">Ainda não tem cadastro ?</a>
+                        </div>
+
+                    </div>
+
+                    <div style={footer}>
+                        <img src={appstore} alt="EloyAqui" width="50%"></img>
+                        <img src={googlestore} alt="EloyAqui" width="50%"></img>
+                    </div>      
+
+                    {/* /.login-box-body */}
+                </div>
+            </div>
+
+        )
+    }

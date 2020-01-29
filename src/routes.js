@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Login from './pages/login/index2';
+import Login from './pages/login/index';
 import Painel from './pages/painel/index2';
 import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
@@ -9,7 +9,7 @@ import ValidaUsuario from './pages/validausuario';
 import RedefinirSenha from './pages/redefinirsenha';
 import AdmRedefinirSenha from './pages/admredefinirsenha';
 import EsqueciSenha from './pages/esquecisenha';
-import PreCadastro from './pages/precadastro';
+import PreCadastro from './pages/precadastro/index2';
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
