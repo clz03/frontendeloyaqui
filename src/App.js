@@ -1,16 +1,12 @@
-import React from 'react';
-import "./App.css";
-import Routes from './routes';
-import logo from "./assets/logo.png";
+import React, { Component } from 'react'
+import Routes from '../src/routes';
 
-function App() {
-
-  return (
-    <div className="container">
-      <img src={logo} alt="EloyAqui" width="400px"></img>
-        <Routes />
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <Routes/>
+      </div>
+    )
+  }
 }
-
-export default App;
