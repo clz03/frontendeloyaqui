@@ -3,8 +3,9 @@ import Header from '../../Header';
 import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
 
-export default class index2 extends Component {
-    render() {
+export default function Painel({ history }) {
+
+
         return (
             <>
 
@@ -95,4 +96,3 @@ export default class index2 extends Component {
             </>
         )
     }
-}

@@ -3306,9 +3306,17 @@ table.text-center th {
 .login-page,
 .register-page {
   height: auto;
+  background: #d2d6de;
+  /* background: #484848 url('../img/background.jpg') no-repeat; */
+}
+
+.login-page2,
+.register-page2 {
+  height: auto;
   /* background: #d2d6de; */
   background: #484848 url('../img/background.jpg') no-repeat;
 }
+
 .login-box,
 .register-box {
   width: 360px;

@@ -83,7 +83,7 @@ export default function Login({ history }) {
       const [loading, setLoading] = useState("");
     
       useEffect(() => {
-        document.body.className = "hold-transition login-page"
+        document.body.className = "hold-transition login-page2"
       },[]);
 
       function handleSelectMulti(event){
