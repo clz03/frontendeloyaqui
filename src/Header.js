@@ -1,17 +1,29 @@
-import React, { Component } from "react";
-import logo from "./assets/logo.png"
+import React from "react"
+import logo from "./assets/logo.png";
 
-export default function SideMenu({ history }) {
+export default function Header({ history }) {
+
+  function handleLogout(event) {
+
+    event.preventDefault();
+
+    localStorage.removeItem('eloyuseremail');
+    localStorage.removeItem('eloyusernome');
+    localStorage.removeItem('eloyuserid');
+    localStorage.removeItem('eloyusertype');
+    localStorage.removeItem('eloyuserestab');
+    history.push('/login');
+  };
 
   return (
     <div>
       <header className="main-header">
         <a href="/painel" className="logo">
           <span className="logo-mini">
-            <b>Eloy</b>Aqui
+            <b>E A</b>
           </span>
           <span className="logo-lg">
-            <img src={logo} width={150}></img>
+            {/* <img src={logo} width={150}></img> */}
           </span>
         </a>
         <nav className="navbar navbar-static-top">
@@ -28,119 +40,7 @@ export default function SideMenu({ history }) {
           <div className="navbar-custom-menu">
             <ul className="nav navbar-nav">
 
-              <li className="dropdown messages-menu">
-                <a
-                  href="url_f"
-                  className="dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  <i className="fa fa-envelope-o" />
-                  <span className="label label-success">4</span>
-                </a>
-                <ul className="dropdown-menu">
-                  <li className="header">You have 4 messages</li>
-                  <li>
-
-                    <ul className="menu">
-                      <li>
-
-                        <a href="url_f">
-                          <div className="pull-left">
-                            <img
-                              src="dist/img/user2-160x160.jpg"
-                              className="img-circle"
-                              alt="User"
-                            />
-                          </div>
-                          <h4>
-                            Support Team
-                            <small>
-                              <i className="fa fa-clock-o" /> 5 mins
-                            </small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-  
-                      <li>
-                        <a href="url_f">
-                          <div className="pull-left">
-                            <img
-                              src="dist/img/user3-128x128.jpg"
-                              className="img-circle"
-                              alt="User"
-                            />
-                          </div>
-                          <h4>
-                            AdminLTE Design Team
-                            <small>
-                              <i className="fa fa-clock-o" /> 2 hours
-                            </small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="url_f">
-                          <div className="pull-left">
-                            <img
-                              src="dist/img/user4-128x128.jpg"
-                              className="img-circle"
-                              alt="User"
-                            />
-                          </div>
-                          <h4>
-                            Developers
-                            <small>
-                              <i className="fa fa-clock-o" /> Today
-                            </small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="url_f">
-                          <div className="pull-left">
-                            <img
-                              src="dist/img/user3-128x128.jpg"
-                              className="img-circle"
-                              alt="User"
-                            />
-                          </div>
-                          <h4>
-                            Sales Department
-                            <small>
-                              <i className="fa fa-clock-o" /> Yesterday
-                            </small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="url_f">
-                          <div className="pull-left">
-                            <img
-                              src="dist/img/user4-128x128.jpg"
-                              className="img-circle"
-                              alt="User"
-                            />
-                          </div>
-                          <h4>
-                            Reviewers
-                            <small>
-                              <i className="fa fa-clock-o" /> 2 days
-                            </small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="footer">
-                    <a href="url_f">See All Messages</a>
-                  </li>
-                </ul>
-              </li>
+              
 
               <li className="dropdown notifications-menu">
                 <a
@@ -195,115 +95,7 @@ export default function SideMenu({ history }) {
                 </ul>
               </li>
 
-              <li className="dropdown tasks-menu">
-                <a
-                  href="url_f"
-                  className="dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  <i className="fa fa-flag-o" />
-                  <span className="label label-danger">9</span>
-                </a>
-                <ul className="dropdown-menu">
-                  <li className="header">You have 9 tasks</li>
-                  <li>
-   
-                    <ul className="menu">
-                      <li>
-
-                        <a href="url_f">
-                          <h3>
-                            Design some buttons
-                            <small className="pull-right">20%</small>
-                          </h3>
-                          <div className="progress xs">
-                            <div
-                              className="progress-bar progress-bar-aqua"
-                              style={{ width: "20%" }}
-                              role="progressbar"
-                              aria-valuenow={20}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                            >
-                              <span className="sr-only">20% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-  
-                      <li>
-
-                        <a href="url_f">
-                          <h3>
-                            Create a nice theme
-                            <small className="pull-right">40%</small>
-                          </h3>
-                          <div className="progress xs">
-                            <div
-                              className="progress-bar progress-bar-green"
-                              style={{ width: "40%" }}
-                              role="progressbar"
-                              aria-valuenow={20}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                            >
-                              <span className="sr-only">40% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-
-                      <li>
-
-                        <a href="url_f">
-                          <h3>
-                            Some task I need to do
-                            <small className="pull-right">60%</small>
-                          </h3>
-                          <div className="progress xs">
-                            <div
-                              className="progress-bar progress-bar-red"
-                              style={{ width: "60%" }}
-                              role="progressbar"
-                              aria-valuenow={20}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                            >
-                              <span className="sr-only">60% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-
-                      <li>
-
-                        <a href="url_f">
-                          <h3>
-                            Make beautiful transitions
-                            <small className="pull-right">80%</small>
-                          </h3>
-                          <div className="progress xs">
-                            <div
-                              className="progress-bar progress-bar-yellow"
-                              style={{ width: "80%" }}
-                              role="progressbar"
-                              aria-valuenow={20}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                            >
-                              <span className="sr-only">80% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
- 
-                    </ul>
-                  </li>
-                  <li className="footer">
-                    <a href="url_f">View all tasks</a>
-                  </li>
-                </ul>
-              </li>
+              
 
               <li className="dropdown user user-menu">
                 <a
@@ -354,18 +146,10 @@ export default function SideMenu({ history }) {
                       </a>
                     </div>
                     <div className="pull-right">
-                      <a href="url_f" className="btn btn-default btn-flat">
-                        Sign out
-                      </a>
+                      <button className="btn btn-default btn-flat" onClick={handleLogout}>Sair</button>
                     </div>
                   </li>
                 </ul>
-              </li>
-
-              <li>
-                <a href="url_f" data-toggle="control-sidebar">
-                  <i className="fa fa-gears" />
-                </a>
               </li>
             </ul>
           </div>

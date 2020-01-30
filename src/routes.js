@@ -13,7 +13,7 @@ import PreCadastro from './pages/precadastro/index2';
 
 import New_Estab from './pages/estabelecimentos/new';
 import List_Estab from './pages/estabelecimentos/list';
-import Edit_Estab from './pages/estabelecimentos/edit';
+import Edit_Estab from './pages/estabelecimentos/index';
 
 import New_Prod from './pages/produtos/new';
 import List_Prod from './pages/produtos/list';
@@ -63,7 +63,7 @@ export default function Routes() {
 
                 <Route path="/estabelecimentos/novo" component={New_Estab}/>
                 <Route path="/estabelecimentos/listar" component={List_Estab}/>
-                <Route path="/estabelecimentos/editar" component={Edit_Estab}/>
+                <Route path="/estabelecimento" component={Edit_Estab}/>
                 <Route path="/estabelecimentos/editar/:id" component={Edit_Estab}/>
 
                 <Route path="/produtos/novo" component={New_Prod}/>

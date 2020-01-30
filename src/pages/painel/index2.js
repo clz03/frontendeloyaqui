@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../Header';
 import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
 
 export default function Painel({ history }) {
 
+    useEffect(() => {
+        document.body.className = "hold-transition skin-blue sidebar-mini"
+    },[]);
 
         return (
             <>

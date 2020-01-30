@@ -3,42 +3,17 @@ import api from './services/api';
 
 export default function SideMenu({ history }) {
 
-    const usertype = localStorage.getItem('eloyusertype');
-    const [usernome, setUsernome] = useState("");
-    const [pedonline, setPedonline] = useState(false);
-    const [cardapio, setCardapio] = useState(false);
-
-    const handleSubmit = pagina=> event=> {
-        event.preventDefault();
-        history.push(pagina)
-    }
-
-    function handleLogout(event) {
-
-        event.preventDefault();
-
-        localStorage.removeItem('eloyuseremail');
-        localStorage.removeItem('eloyusernome');
-        localStorage.removeItem('eloyuserid');
-        localStorage.removeItem('eloyusertype');
-        localStorage.removeItem('eloyuserestab');
-        history.push('/login');
-    }
-
-    async function checkButtons() {
-        const response = await api.get('/estabelecimentos/' + localStorage.getItem('eloyuserestab'));
-        const data = await response.data;
-        setPedonline(data[0].pedonline);
-        setCardapio(data[0].cardapio);
-    }
+  const [usernome, setUsernome] = useState("");
+  const [pedonline, setPedonline] = useState(false);
+  const [cardapio, setCardapio] = useState(false);
 
     useEffect(() => {
-        if(usertype == null)
-            history.push('/login');
-        else
-            setUsernome(localStorage.getItem('eloyusernome'));
-        checkButtons();
-      }, []);
+      const usertype = localStorage.getItem('eloyusertype');
+      if(usertype === null)
+          history.push('/login');
+      else
+          setUsernome(localStorage.getItem('eloyusernome'));
+    }, []);
 
 
   return (
@@ -74,7 +49,7 @@ export default function SideMenu({ history }) {
 
             
             <li>
-              <a href="/estabelecimentos/editar">
+              <a href="/estabelecimento">
                 <i className="fa fa-edit" /> <span>Meu Estabelecimento</span>
               
               </a>
