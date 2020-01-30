@@ -461,14 +461,6 @@ export default function Edit_Estab({ history }) {
                </div>
             </div>
 
-
-    
-       
-
-
-        
-
-
             <div className="form-group">
               <label className="col-sm-2 control-label" htmlFor="idcategoria">Horário Semanal*</label>
               <div className="col-sm-3">
