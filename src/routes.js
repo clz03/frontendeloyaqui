@@ -16,11 +16,11 @@ import List_Estab from './pages/estabelecimentos/list';
 import Edit_Estab from './pages/estabelecimentos/index';
 
 import New_Prod from './pages/produtos/new';
-import List_Prod from './pages/produtos/list';
+import List_Prod from './pages/produtos/index';
 import Edit_Prod from './pages/produtos/edit';
 
 import New_Cupom from './pages/cupons/new';
-import List_Cupom from './pages/cupons/list';
+import List_Cupom from './pages/cupons/index';
 import Edit_Cupom from './pages/cupons/edit';
 
 import New_Noticia from './pages/noticias/new';
@@ -36,8 +36,8 @@ import List_Administrador from './pages/administradores/list';
 import Edit_Administrador from './pages/administradores/edit';
 
 import New_Cardapio from './pages/cardapios/new';
-import List_Cardapio from './pages/cardapios/list';
-import Edit_Cardapio from './pages/cardapios/edit';
+import List_Cardapio from './pages/cardapios/index';
+import Edit_Cardapio from './pages/cardapios/editar';
 
 import New_Endereco from './pages/enderecos/new';
 import List_Endereco from './pages/enderecos/list';
@@ -67,11 +67,11 @@ export default function Routes() {
                 <Route path="/estabelecimentos/editar/:id" component={Edit_Estab}/>
 
                 <Route path="/produtos/novo" component={New_Prod}/>
-                <Route path="/produtos/listar" component={List_Prod}/>
+                <Route path="/produtos" component={List_Prod}/>
                 <Route path="/produtos/:id" component={Edit_Prod}/>
 
                 <Route path="/cupons/novo" component={New_Cupom}/>
-                <Route path="/cupons/listar" component={List_Cupom}/>
+                <Route path="/cupons" component={List_Cupom}/>
                 <Route path="/cupons/:id" component={Edit_Cupom}/>
 
                 <Route path="/noticias/novo" component={New_Noticia}/>
@@ -87,7 +87,7 @@ export default function Routes() {
                 <Route path="/administradores/:id" component={Edit_Administrador}/>
 
                 <Route path="/cardapios/novo" component={New_Cardapio}/>
-                <Route path="/cardapios/listar" component={List_Cardapio}/>
+                <Route path="/cardapio" component={List_Cardapio}/>
                 <Route path="/cardapios/:id" component={Edit_Cardapio}/>
 
                 <Route path="/enderecos/novo" component={New_Endereco}/>

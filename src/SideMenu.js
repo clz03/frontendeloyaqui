@@ -17,7 +17,7 @@ export default function SideMenu({ history }) {
 
 
   return (
-    <div>
+    <>
       <aside className="main-sidebar">
         <section className="sidebar">
           <div className="user-panel">
@@ -63,7 +63,7 @@ export default function SideMenu({ history }) {
             </li>
 
             <li>
-              <a href="/cardapios/listar">
+              <a href="/cardapio">
                 <i className="fa fa-book" /> <span>Meu Cardápio</span>
               
               </a>
@@ -71,22 +71,22 @@ export default function SideMenu({ history }) {
 
             <li>
               <a href="/cardapios/listar">
-                <i className="fa fa-book" /> <span>Meus Pedidos</span>
+                <i className="fa fa-cutlery" /> <span>Meus Pedidos</span>
               
               </a>
             </li>
 
 
             <li>
-              <a href="/produtos/listar">
-                <i className="fa fa-book" /> <span>Destaques</span>
+              <a href="/produtos">
+                <i className="fa fa-bullhorn" /> <span>Destaques</span>
               
               </a>
             </li>
 
             <li>
-              <a href="/cupons/listar">
-                <i className="fa fa-book" /> <span>Cupons</span>
+              <a href="/cupons">
+                <i className="fa fa-ticket" /> <span>Cupons</span>
               
               </a>
             </li>
@@ -98,6 +98,6 @@ export default function SideMenu({ history }) {
           </ul>
         </section>
       </aside>
-    </div>
+    </>
   );
 }

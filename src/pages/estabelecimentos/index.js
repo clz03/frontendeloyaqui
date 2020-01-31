@@ -72,9 +72,7 @@ export default function Edit_Estab({ history }) {
   const [fone2, setFone2] = useState("");
   const [pedonline, setPedonline] = useState("");
   const [cardapio, setCardapio] = useState("");
-  const [plano, setPlano] = useState("");
   const [email, setEmail] = useState("");
-  const [facebook, setFacebook] = useState("");
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [hrinicio_semana, setHrinicio_semana] = useState("");
@@ -112,9 +110,7 @@ export default function Edit_Estab({ history }) {
       setFone2(data[0].fone2);
       setPedonline(data[0].pedonline);
       setCardapio(data[0].cardapio);
-      setPlano(data[0].plano);
       setEmail(data[0].email);
-      setFacebook(data[0].facebook);
       setInstagram(data[0].instagram);
       setWhatsapp(data[0].whatsapp);
       setHrinicio_semana(data[0].hrinicio_semana);
@@ -148,10 +144,10 @@ export default function Edit_Estab({ history }) {
       event.preventDefault();
 
       const dataobj = { 
-        nome: nome, 
+        //nome: nome, 
         descr: descr,
-        tipo: tipo,
-        subtipo: subtipo,
+        //tipo: tipo,
+        //subtipo: subtipo,
         imagem: imagem,
         imagemcapa: imagemcapa,
         rua: rua,
@@ -162,9 +158,9 @@ export default function Edit_Estab({ history }) {
         fone2: fone2,
         pedonline: pedonline,
         cardapio: cardapio,
-        plano: plano,
+        //plano: plano,
         email: email,
-        facebook: facebook,
+        //facebook: facebook,
         instagram: instagram,
         whatsapp: whatsapp,
         hrinicio_semana: hrinicio_semana,
@@ -172,13 +168,13 @@ export default function Edit_Estab({ history }) {
         hrinicio_sabado: hrinicio_sabado,
         hrfim_sabado: hrfim_sabado,
         hrinicio_domingo: hrinicio_domingo,
-        hrfim_domingo: hrfim_domingo,
-        idcategoria: idcategoria
+        hrfim_domingo: hrfim_domingo
+        //idcategoria: idcategoria
       };
 
       await api.put('/estabelecimentos/'+ userestab, dataobj);
       setLoading(false);
-      usertype > 0 ? history.push('/admpainel') : history.push('/painel');
+      history.push('/painel');
   }
 
 
@@ -191,83 +187,30 @@ export default function Edit_Estab({ history }) {
 
 
 <div className="content-wrapper">
-  {/* Content Header (Page header) */}
+
   <section className="content-header">
     <h1>
       {nome}
       <small>&nbsp;( {tipo} / {subtipo} )</small>
     </h1>
-    <ol className="breadcrumb">
-      <li><a href="#"><i className="fa fa-dashboard" /> Home</a></li>
-      <li><a href="#">Forms</a></li>
-      <li className="active">General Elements</li>
-    </ol>
+ 
   </section>
-  {/* Main content */}
+
   <section className="content">
     <div className="row">
 
       <div className="col-md-12">
-        {/* Horizontal Form */}
+
         <div className="box box-info">
-          {/* <div className="box-header with-border">
-            <h3 className="box-title">Horizontal Form</h3>
-          </div> */}
-          {/* /.box-header */}
-          {/* form start */}
-          <form className="form-horizontal">
+
+        {loading && 
+                <div style={{ alignItems:'center', textAlign: 'center' }}>
+                    <img src={carregando} width="80"></img>
+                </div>
+            }
+
+          <form className="form-horizontal" onSubmit={handleSubmit}>
             <div className="box-body">
-
-
-            {/* <div className="form-group">
-              <label className="col-sm-2 control-label" htmlFor="idcategoria">Nome*</label>
-              <div className="col-sm-10">
-              <input
-                  id="nome"
-                  placeholder="Nome do Estabelecimento"
-                  value={nome}
-                  className="form-control"
-                  maxLength={80}
-                  disabled={usertype==0 ? true : false}
-                  required
-                  onChange={event => setNome(event.target.value)}
-                />
-               </div>
-            </div>
-
-            <div className="form-group">
-              <label className="col-sm-2 control-label" htmlFor="idcategoria">Tipo*</label>
-              <div className="col-sm-10">
-              <input
-                  id="tipo"
-                  placeholder="Tipo do Estabelecimento"
-                  value={tipo}
-                  className="form-control"
-                  maxLength={40}
-                  disabled={usertype==0 ? true : false}
-                  required
-                  onChange={event => setTipo(event.target.value)}
-                />
-               </div>
-            </div>
-
-
-            <div className="form-group">
-              <label className="col-sm-2 control-label" htmlFor="idcategoria">Sub-Tipo*</label>
-              <div className="col-sm-10">
-              <input
-                  id="subtipo"
-                  placeholder="Tipo do Estabelecimento"
-                  value={subtipo}
-                  className="form-control"
-                  maxLength={40}
-                  disabled={usertype==0 ? true : false}
-                  required
-                  onChange={event => setSubtipo(event.target.value)}
-                />
-               </div>
-            </div> */}
-
 
               <div className="form-group">
               <label className="col-sm-2 control-label" htmlFor="idcategoria">Categoria*</label>
@@ -583,24 +526,30 @@ export default function Edit_Estab({ history }) {
 
           </div>
 
-            {/* /.box-body */}
             <div className="box-footer">
-              <button type="submit" className="btn btn-default">Cancel</button>
-              <button type="submit" className="btn btn-info pull-right">Sign in</button>
+              <button className="btn btn-default" onClick={() => history.push('/painel')}>Voltar</button>
+              <button type="submit" className="btn btn-info pull-right">Salvar</button>
             </div>
-            {/* /.box-footer */}
+
+            {loading && 
+                <div style={{ alignItems:'center', textAlign: 'center' }}>
+                    <img src={carregando} width="80"></img>
+                </div>
+            }
           </form>
+
+          
         </div>
-       
+
       </div>
-      {/*/.col (right) */}
+
     </div>
-    {/* /.row */}
+
   </section>
-  {/* /.content */}
+
 </div>
 
-
+<Footer/>
 
 </>
 
@@ -609,11 +558,7 @@ export default function Edit_Estab({ history }) {
 
     // <div className="content">
 
-    //   {loading && 
-    //     <div className="center">
-    //       <img src={carregando} width="80"></img>
-    //     </div>
-    //   }
+
     //   <h1 className="center">Meu Estabelecimento</h1>
     //   <form onSubmit={handleSubmit}>
 

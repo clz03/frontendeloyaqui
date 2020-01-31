@@ -6,9 +6,9 @@ export default class Footer extends Component {
 
       <div>
         <footer className="main-footer">
-          <div className="pull-right hidden-xs"><b>Version</b> 2.4.18</div>
-          <strong>Copyright © 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong>
-           All rightsreserved.
+          <div className="pull-right hidden-xs"><b>Versão</b> 1.2</div>
+          <strong>Copyright © 2020 <a href="#">EloyAqui </a>.</strong>
+           Todos os direitos reservados.
         </footer>
       </div>
       

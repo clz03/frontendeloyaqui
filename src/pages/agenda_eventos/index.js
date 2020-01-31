@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../../App.css";
 import carregando from "../../assets/loading.gif";
 import api from '../../services/api';
+import Header from '../../Header';
+import SideMenu from '../../SideMenu';
+import Footer from '../../Footer';
 
 export default function Agenda({ history }) {
 
@@ -52,53 +55,112 @@ export default function Agenda({ history }) {
   }, []);
 
   return (
-    <div className="content">
+    <>
 
-      {loading && 
-        <div className="center">
-          <img src={carregando} width="80"></img>
+    <Header/>
+    <SideMenu/>
+
+    <div>
+        <div className="content-wrapper">
+
+            <section className="content-header">
+                <h1>
+                    Agendamentos de Clientes<small>( sua agenda )</small>
+                </h1>
+            </section>
+
+            <section className="content">
+    <div className="row">
+
+      <div className="col-md-12">
+
+
+            <div className="box box-info">
+            <form className="form-horizontal">
+            <div className="box-body">
+            <div className="form-group">
+              <label className="col-sm-2 control-label" htmlFor="meses">Selecione o Mês:</label>
+              <div className="col-sm-4">
+              <select
+                  id="meses"
+                  className="select4"
+                  value={mes}
+                  className="form-control"
+                  onChange={handleMes}
+              >
+                  {meses.map((meses) =>
+                      <option key={meses.value} value={meses.value}>{meses.label}</option>
+                  )}
+              </select>
+               </div>
+              </div>
+              </div>
+              </form>
+              </div>
+              </div>
+              </div>
+   
+
+
+                <div className="row">
+                    <div className="col-xs-12">
+                        <div className="box">
+                            <div className="box-header">
+                                <h3 className="box-title">{mes}</h3>
+                                <div className="box-tools">
+                                    <div className="input-group input-group-sm hidden-xs" style={{ width: 150 }}>
+                                        <input type="text" name="table_search" className="form-control pull-right" placeholder="Search" />
+                                        <div className="input-group-btn">
+                                            <button type="submit" className="btn btn-default"><i className="fa fa-search" /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* /.box-header */}
+                            <div className="box-body table-responsive no-padding">
+
+                            <table className="table table-hover">
+                              <tbody>
+                                <tr>
+                                  <th>Data</th>
+                                  <th>Hora</th>
+                                  <th>Nome</th>
+                                  <th>Telefone</th>
+                                </tr>
+                                {evento.length ? evento.map(evento => 
+                                    <tr>
+                                      <td>
+                                        {evento.data.substring(8,10) + "/" + evento.data.substring(5,7) + "/" + evento.data.substring(0,4)}
+                                      </td>
+                                      <td>
+                                        {evento.hora}:00
+                                      </td>
+                                      <td>
+                                        {evento.idusuario.nome}
+                                      </td>
+                                      <td>
+                                        {evento.idusuario.telefone}
+                                      </td>
+                                    </tr>
+                                ) : "Nenhum agendamento neste mês"}
+                              </tbody>
+                            </table>
+
+
+                            </div>
+                            {/* /.box-body */}
+                        </div>
+                        {/* /.box */}
+                    </div>
+                </div>
+            </section>
+            {/* /.content */}
         </div>
-      }
-
-      <label htmlFor="meses">Selecione o Mês:</label>
-      <select
-          id="meses"
-          className="select4"
-          value={mes}
-          onChange={handleMes}
-      >
-          {meses.map((meses) =>
-              <option key={meses.value} value={meses.value}>{meses.label}</option>
-          )}
-      </select>
-
-       <table>
-         <tr>
-           <th>Data</th>
-           <th>Hora</th>
-           <th>Nome</th>
-           <th>Telefone</th>
-         </tr>
-        {evento.length ? evento.map(evento => 
-            <tr>
-              <td>
-                {evento.data.substring(8,10) + "/" + evento.data.substring(5,7) + "/" + evento.data.substring(0,4)}
-              </td>
-              <td>
-                {evento.hora}:00
-              </td>
-              <td>
-                {evento.idusuario.nome}
-              </td>
-              <td>
-                {evento.idusuario.telefone}
-              </td>
-            </tr>
-        ) : "Nenhum agendamento neste mês"}
-      </table>
-      <button className="btn3" onClick={() => { history.push('/painel') }}>Voltar</button>
     </div>
-  );
+    
+    <Footer/>
+    </>
+)
 }
 
 

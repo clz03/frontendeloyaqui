@@ -23,7 +23,7 @@ export default function Header({ history }) {
             <b>E A</b>
           </span>
           <span className="logo-lg">
-            {/* <img src={logo} width={150}></img> */}
+            <img src={logo} width={150}></img>
           </span>
         </a>
         <nav className="navbar navbar-static-top">
