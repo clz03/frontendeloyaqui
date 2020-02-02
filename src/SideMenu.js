@@ -9,8 +9,9 @@ export default function SideMenu({ history }) {
 
     useEffect(() => {
       const usertype = localStorage.getItem('eloyusertype');
+
       if(usertype === null)
-          history.push('/login');
+        window.location.href = "/login";
       else
           setUsernome(localStorage.getItem('eloyusernome'));
     }, []);
@@ -23,7 +24,7 @@ export default function SideMenu({ history }) {
           <div className="user-panel">
             <div className="pull-left image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="dist/img/user.png"
                 className="img-circle"
                 alt="User"
               />
@@ -56,6 +57,20 @@ export default function SideMenu({ history }) {
             </li>
 
             <li>
+              <a href="/produtos">
+                <i className="fa fa-bullhorn" /> <span>Destaques</span>
+              
+              </a>
+            </li>
+
+            <li>
+              <a href="/cupons">
+                <i className="fa fa-ticket" /> <span>Cupons</span>
+              
+              </a>
+            </li>
+
+            <li>
               <a href="/agenda">
                 <i className="fa fa-calendar" /> <span>Minha Agenda</span>
               
@@ -77,20 +92,21 @@ export default function SideMenu({ history }) {
             </li>
 
 
+            
+
             <li>
-              <a href="/produtos">
-                <i className="fa fa-bullhorn" /> <span>Destaques</span>
-              
-              </a>
+             &nbsp;
+            </li>
+            <li>
+             &nbsp;
             </li>
 
             <li>
               <a href="/cupons">
-                <i className="fa fa-ticket" /> <span>Cupons</span>
+                <i className="fa fa-commenting-o" /> <span>Preciso de ajuda</span>
               
               </a>
             </li>
-
 
 
 

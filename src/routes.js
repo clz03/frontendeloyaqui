@@ -11,7 +11,7 @@ import AdmRedefinirSenha from './pages/admredefinirsenha';
 import EsqueciSenha from './pages/esquecisenha';
 import PreCadastro from './pages/precadastro/index2';
 
-import New_Estab from './pages/estabelecimentos/new';
+import New_Estab from './pages/estabelecimentos/novo';
 import List_Estab from './pages/estabelecimentos/list';
 import Edit_Estab from './pages/estabelecimentos/index';
 

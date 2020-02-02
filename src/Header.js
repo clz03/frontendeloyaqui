@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useEffect, useState } from "react";
 import logo from "./assets/logo.png";
 
 export default function Header({ history }) {
+
+  const [usernome, setUsernome] = useState("");
 
   function handleLogout(event) {
 
@@ -12,8 +14,18 @@ export default function Header({ history }) {
     localStorage.removeItem('eloyuserid');
     localStorage.removeItem('eloyusertype');
     localStorage.removeItem('eloyuserestab');
-    history.push('/login');
+    //history.push('/login');
+    window.location.href = "/login";
   };
+
+  useEffect(() => {
+    const usertype = localStorage.getItem('eloyusertype');
+
+    if(usertype === null)
+      window.location.href = "/login";
+    else
+        setUsernome(localStorage.getItem('eloyusernome'));
+  }, []);
 
   return (
     <div>
@@ -104,11 +116,11 @@ export default function Header({ history }) {
                   data-toggle="dropdown"
                 >
                   <img
-                    src="dist/img/user2-160x160.jpg"
+                    src="dist/img/user.png"
                     className="user-image"
                     alt="User"
                   />
-                  <span className="hidden-xs">Alexander Pierce</span>
+                  <span className="hidden-xs">{usernome}</span>
                 </a>
                 <ul className="dropdown-menu">
 
