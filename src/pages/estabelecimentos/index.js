@@ -6,20 +6,20 @@ import SideMenu from "../../SideMenu";
 import Footer from "../../Footer";
 
 export default function Edit_Estab({ history }) {
-  const categorias = [
-    { label: "Almoço", value: "5d929cbac39dcd00176af304" },
-    { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
-    { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
-    { label: "Esportes", value: "5d92a240c39dcd00176af307" },
-    { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
-    { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
-    { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
-    { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
-    { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
-    { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
-    { label: "Construção", value: "5db97db3ca74d100178e45ad" },
-    { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
-  ];
+  // const categorias = [
+  //   { label: "Almoço", value: "5d929cbac39dcd00176af304" },
+  //   { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
+  //   { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
+  //   { label: "Esportes", value: "5d92a240c39dcd00176af307" },
+  //   { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
+  //   { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
+  //   { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
+  //   { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
+  //   { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
+  //   { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
+  //   { label: "Construção", value: "5db97db3ca74d100178e45ad" },
+  //   { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
+  // ];
 
   const horarios_inicio = [
     { label: "Abre as 07:00", value: "7" },
@@ -69,8 +69,9 @@ export default function Edit_Estab({ history }) {
   const [cep, setCEP] = useState("");
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
-  const [pedonline, setPedonline] = useState("");
-  const [cardapio, setCardapio] = useState("");
+  const [agendamento, setAgendamento] = useState(false);
+  const [cardapio, setCardapio] = useState(false);
+  const [delivery, setDelivery] = useState(false);
   const [email, setEmail] = useState("");
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
@@ -80,7 +81,7 @@ export default function Edit_Estab({ history }) {
   const [hrfim_sabado, setHrfim_sabado] = useState("");
   const [hrinicio_domingo, setHrinicio_domingo] = useState("");
   const [hrfim_domingo, setHrfim_domingo] = useState("");
-  const [idcategoria, setIdcategoria] = useState("");
+  //const [idcategoria, setIdcategoria] = useState("");
   const [loading, setLoading] = useState("");
 
   const usertype = localStorage.getItem("eloyusertype");
@@ -106,8 +107,9 @@ export default function Edit_Estab({ history }) {
       setCEP(data[0].cep);
       setFone1(data[0].fone1);
       setFone2(data[0].fone2);
-      setPedonline(data[0].pedonline);
+      setAgendamento(data[0].agendamento);
       setCardapio(data[0].cardapio);
+      setDelivery(data[0].delivery);
       setEmail(data[0].email);
       setInstagram(data[0].instagram);
       setWhatsapp(data[0].whatsapp);
@@ -117,7 +119,7 @@ export default function Edit_Estab({ history }) {
       setHrfim_sabado(data[0].hrfim_sabado);
       setHrinicio_domingo(data[0].hrinicio_domingo);
       setHrfim_domingo(data[0].hrfim_domingo);
-      setIdcategoria(data[0].idcategoria);
+      //setIdcategoria(data[0].idcategoria);
       setLoading(false);
     }
     if (usertype == null) history.push("/login");
@@ -125,16 +127,16 @@ export default function Edit_Estab({ history }) {
     loadEstab();
   }, []);
 
-  function handleSelectMulti(event) {
-    var options = event.target.options;
-    var value = [];
-    for (var i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setIdcategoria(value);
-  }
+  // function handleSelectMulti(event) {
+  //   var options = event.target.options;
+  //   var value = [];
+  //   for (var i = 0, l = options.length; i < l; i++) {
+  //     if (options[i].selected) {
+  //       value.push(options[i].value);
+  //     }
+  //   }
+  //   setIdcategoria(value);
+  // }
 
   async function handleSubmit(event) {
     setLoading(true);
@@ -153,8 +155,9 @@ export default function Edit_Estab({ history }) {
       cep: cep,
       fone1: fone1,
       fone2: fone2,
-      pedonline: pedonline,
+      agendamento: agendamento,
       cardapio: cardapio,
+      delivery: delivery,
       //plano: plano,
       email: email,
       //facebook: facebook,
@@ -387,16 +390,16 @@ export default function Edit_Estab({ history }) {
                         />
                       </div>
                       {/* <label className="col-sm-2 control-label" htmlFor="idcategoria">Telefone 2*</label>
-              <div className="col-sm-4">
-              <input
-                id="fone2"
-                placeholder="Telefone 2 do Estabelecimento"
-                value={fone2}
-                className="form-control"
-                maxLength={30}
-                onChange={event => setFone2(event.target.value)}
-              />
-               </div> */}
+                        <div className="col-sm-4">
+                        <input
+                          id="fone2"
+                          placeholder="Telefone 2 do Estabelecimento"
+                          value={fone2}
+                          className="form-control"
+                          maxLength={30}
+                          onChange={event => setFone2(event.target.value)}
+                        />
+                        </div> */}
 
                       <label
                         className="col-sm-2 control-label"
@@ -601,9 +604,10 @@ export default function Edit_Estab({ history }) {
                         <div className="checkbox">
                           <label>
                             <input
+                              id='cardapio'
                               type="checkbox"
                               checked={cardapio === true ? "checked" : ""}
-                              onChange={event => setCardapio(!cardapio)}
+                              onChange={event => {setCardapio(!cardapio); setAgendamento(cardapio)}}
                             />
                             Pedido Online ?
                           </label>
@@ -614,9 +618,10 @@ export default function Edit_Estab({ history }) {
                         <div className="checkbox">
                           <label>
                             <input
+                              id='agendamento'
                               type="checkbox"
-                              checked={pedonline === true ? "checked" : ""}
-                              onChange={event => setPedonline(!pedonline)}
+                              checked={agendamento === true ? "checked" : ""}
+                              onChange={event => {setAgendamento(!agendamento); setCardapio(agendamento)}}
                             />
                             Agendamento Online ?
                           </label>

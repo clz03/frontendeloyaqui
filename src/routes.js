@@ -15,11 +15,11 @@ import New_Estab from './pages/estabelecimentos/novo';
 import List_Estab from './pages/estabelecimentos/list';
 import Edit_Estab from './pages/estabelecimentos/index';
 
-import New_Prod from './pages/produtos/new';
+import New_Prod from './pages/produtos/novo';
 import List_Prod from './pages/produtos/index';
 import Edit_Prod from './pages/produtos/edit';
 
-import New_Cupom from './pages/cupons/new';
+import New_Cupom from './pages/cupons/novo';
 import List_Cupom from './pages/cupons/index';
 import Edit_Cupom from './pages/cupons/edit';
 
@@ -35,16 +35,15 @@ import New_Administrador from './pages/administradores/new';
 import List_Administrador from './pages/administradores/list';
 import Edit_Administrador from './pages/administradores/edit';
 
-import New_Cardapio from './pages/cardapios/new';
+import New_Cardapio from './pages/cardapios/novo';
 import List_Cardapio from './pages/cardapios/index';
-import Edit_Cardapio from './pages/cardapios/editar';
+import Edit_Cardapio from './pages/cardapios/edit';
 
 import New_Endereco from './pages/enderecos/new';
 import List_Endereco from './pages/enderecos/list';
 import Edit_Endereco from './pages/enderecos/edit';
 
-import List_Pedidos from './pages/pedidos/list';
-import Edit_Pedidos from './pages/pedidos/edit';
+import List_Pedidos from './pages/pedidos/index';
 
 export default function Routes() {
     return (
@@ -66,13 +65,13 @@ export default function Routes() {
                 <Route path="/estabelecimento" component={Edit_Estab}/>
                 <Route path="/estabelecimentos/editar/:id" component={Edit_Estab}/>
 
-                <Route path="/produtos/novo" component={New_Prod}/>
+                <Route path="/produto/novo" component={New_Prod}/>
                 <Route path="/produtos" component={List_Prod}/>
-                <Route path="/produtos/:id" component={Edit_Prod}/>
+                <Route path="/produto/:id" component={Edit_Prod}/>
 
-                <Route path="/cupons/novo" component={New_Cupom}/>
+                <Route path="/cupom/novo" component={New_Cupom}/>
                 <Route path="/cupons" component={List_Cupom}/>
-                <Route path="/cupons/:id" component={Edit_Cupom}/>
+                <Route path="/cupom/:id" component={Edit_Cupom}/>
 
                 <Route path="/noticias/novo" component={New_Noticia}/>
                 <Route path="/noticias/listar" component={List_Noticia}/>
@@ -86,16 +85,15 @@ export default function Routes() {
                 <Route path="/administradores/listar" component={List_Administrador}/>
                 <Route path="/administradores/:id" component={Edit_Administrador}/>
 
-                <Route path="/cardapios/novo" component={New_Cardapio}/>
-                <Route path="/cardapio" component={List_Cardapio}/>
-                <Route path="/cardapios/:id" component={Edit_Cardapio}/>
+                <Route path="/cardapio/novo" component={New_Cardapio}/>
+                <Route path="/cardapios" component={List_Cardapio}/>
+                <Route path="/cardapio/:id" component={Edit_Cardapio}/>
 
                 <Route path="/enderecos/novo" component={New_Endereco}/>
                 <Route path="/enderecos/listar" component={List_Endereco}/>
                 <Route path="/enderecos/:id" component={Edit_Endereco}/>
 
-                <Route path="/pedidos/listar" component={List_Pedidos}/>
-                <Route path="/pedidos/:id" component={Edit_Pedidos}/>
+                <Route path="/pedidos" component={List_Pedidos}/>
             </Switch>
         </BrowserRouter>
     )

@@ -12,19 +12,25 @@ const [loading, setLoading] = useState("");
 const userestab = localStorage.getItem('eloyuserestab');
 const usertype = localStorage.getItem('eloyusertype');
 
-  useEffect(() => {
-    async function loadCardapio() {
-      const query = usertype > 0 ? '/cardapios' : '/cardapios/estabelecimento/'+ userestab;
-      const response = await api.get(query);
-      const data = await response.data;
-      setCardapio(data);
-      setLoading(false);
-    }
+  async function loadCardapio() {
+    const query = '/cardapios/estabelecimento/'+ userestab;
+    const response = await api.get(query);
+    const data = await response.data;
+    setCardapio(data);
+    setLoading(false);
+  }
 
-    if(usertype == null) history.push('/login');
+  useEffect(() => {
     setLoading(true);
     loadCardapio();
   }, []);
+
+  async function handleRemove(id, item){
+    if (window.confirm('Confirma remoção de ' + item + ' ?')){
+      await api.delete('/cardapios/' + id);
+      loadCardapio();
+    }
+  }
 
   return (
     <>
@@ -48,29 +54,22 @@ const usertype = localStorage.getItem('eloyusertype');
                            
                             <div className="box-body table-responsive">
 
-                            <a class="btn btn-app">
+                            <a class="btn btn-app" href="/cardapio/novo">
                               <i class="fa fa-edit"></i> Novo Item
-                            </a>
-
-                            <a class="btn btn-app">
-                              <i class="fa fa-edit"></i> Remover Selecionado
                             </a>
 
                             <table className="table table-hover">
                               <tbody>
                               <tr>
-                                <th>#</th>
                                 <th>Item</th>
                                 <th>Categoria</th>
                                 <th>Valor</th>
+                                <th>Ação</th>
                                 </tr>
                             {cardapio.map(cardapio => 
                                 <tr>
                                   <td>
-                                    <input type="checkbox" /> 
-                                  </td>
-                                  <td>
-                                    <a href={'/cardapios/id/' + cardapio._id}>{cardapio.item}</a>
+                                    <a href={'/cardapio/' + cardapio._id}>{cardapio.item}</a>
                                   </td>
                                   <td>
                                     {cardapio.categoria}
@@ -78,6 +77,9 @@ const usertype = localStorage.getItem('eloyusertype');
                                   <td>
                                     {cardapio.valor}
                                   </td>
+                                  <td>
+                                    <button className="btn4" onClick={() => {handleRemove(cardapio._id, cardapio.item)}}>Excluir</button>
+                                    </td>
                                 </tr>
                             )}
                               </tbody>

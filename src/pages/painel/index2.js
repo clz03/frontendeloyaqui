@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../Header";
 import SideMenu from "../../SideMenu";
 import Footer from "../../Footer";
+import api from '../../services/api';
 
 export default function Painel({ history }) {
   const [usernome, setUsernome] = useState("");

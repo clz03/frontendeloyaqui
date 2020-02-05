@@ -5,34 +5,29 @@ import Header from '../../Header';
 import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
 
-export default function List_Prod({ history }) {
-const [prod, setProd] = useState([]);
+export default function List_Pedidos({ history }) {
+
+const [pedido, setPedido] = useState([]);
 const [loading, setLoading] = useState("");
 const [msgvazio, setMsgvazio] = useState('carregando...');
 
 const userestab = localStorage.getItem('eloyuserestab');
 const usertype = localStorage.getItem('eloyusertype');
 
-async function loadProd() {
-  const query = '/produtos/estabelecimento/'+ userestab;
-  const response = await api.get(query);
+async function loadPedido() {
+  const response = await api.get('/pedidos/estabelecimento/' + userestab );
   const data = await response.data;
-  setProd(data);
+
+  setPedido(data);
   setLoading(false);
 }
 
   useEffect(() => {
     setLoading(true);
-    loadProd();
-    setMsgvazio("Nenhum produto encontrado");
+    loadPedido();
+    setMsgvazio("Nenhum pedido encontrado");
   }, []);
 
-  async function handleRemove(id, item){
-      if (window.confirm('Confirma remoção de ' + item + ' ?')){
-        await api.delete('/produtos/' + id);
-        loadProd();
-      }
-  }
 
   return (
     <>
@@ -45,7 +40,7 @@ async function loadProd() {
 
             <section className="content-header">
                 <h1>
-                    Destaques<small>( produtos em destaque )</small>
+                    Pedidos<small>Pedidos realizados</small>
                 </h1>
             </section>
 
@@ -56,34 +51,42 @@ async function loadProd() {
                            
                             <div className="box-body table-responsive">
 
-                            <a className="btn btn-app" href='/produto/novo'>
-                              <i className="fa fa-edit"></i> Novo Destaque
+                            <a class="btn btn-app">
+                              <i class="fa fa-edit"></i> Cancelar Selecionado
                             </a>
 
                             <table className="table table-hover">
                               <tbody>
-                                <tr>
-                                  <th>Nome</th>
-                                  <th>Descrição</th>
-                                  <th>Preço</th>
-                                  <th>Ação</th>
-                                </tr>
-                                {prod.length ? prod.map(prod => 
-                                  <tr key={prod._id}>
+                              <tr>
+                                <th>Pedido</th>
+                                <th>Recebido</th>
+                                <th>Status</th>
+                                <th>Tipo</th>
+                                <th>Cliente</th>
+                                <th>Endereco</th>
+                              </tr>
+                              {pedido.length ? pedido.map(pedido => 
+                                  <tr>
                                     <td>
-                                      <a href={'/produto/' + prod._id}>{prod.nome}</a>
+                                      <a href={'/pedidos/' + pedido._id}>#3456</a>
                                     </td>
                                     <td>
-                                      <p>{prod.descr}</p>
+                                      {pedido.data.substring(8,10) + "/" + pedido.data.substring(5,7) + "/" + pedido.data.substring(0,4) + ' - ' + pedido.data.substring(11,16)}
                                     </td>
                                     <td>
-                                      <p>{prod.preco}</p>
+                                      <span class="label label-warning">{pedido.status}</span>
                                     </td>
                                     <td>
-                                    <button className="btn4" onClick={() => {handleRemove(prod._id, prod.nome)}}>Excluir</button>
+                                      {pedido.tipoentrega === 'E' ? 'Entrega' : 'Retira'}
+                                    </td>
+                                    <td>
+                                      Joao
+                                    </td>
+                                    <td>
+                                      {pedido.rua}, {pedido.numero}
                                     </td>
                                   </tr>
-                              ) : msgvazio}
+                              ) : "Nenhum pedido encontrado"}
                               </tbody>
                             </table>
 
@@ -104,10 +107,3 @@ async function loadProd() {
 )
 }
 
-
-//nome, 
-//descr, 
-//preco, 
-//imagem, 
-//promocao, 
-//idestabelecimento

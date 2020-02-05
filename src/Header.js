@@ -116,7 +116,7 @@ export default function Header({ history }) {
                   data-toggle="dropdown"
                 >
                   <img
-                    src="dist/img/user.png"
+                    src="/dist/img/user.png"
                     className="user-image"
                     alt="User"
                   />
@@ -126,7 +126,7 @@ export default function Header({ history }) {
 
                   <li className="user-header">
                     <img
-                      src="dist/img/user2-160x160.jpg"
+                      src="/dist/img/user2-160x160.jpg"
                       className="img-circle"
                       alt="User"
                     />

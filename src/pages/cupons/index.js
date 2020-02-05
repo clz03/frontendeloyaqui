@@ -56,12 +56,8 @@ export default function List_Cupom({ history }) {
                            
                             <div className="box-body table-responsive">
 
-                            <a class="btn btn-app">
-                              <i class="fa fa-edit"></i> Novo Cupom
-                            </a>
-
-                            <a class="btn btn-app">
-                              <i class="fa fa-edit"></i> Remover Selecionado
+                            <a className="btn btn-app" href='/cupom/novo'>
+                              <i className="fa fa-edit"></i> Novo Cupom
                             </a>
 
                             <table className="table table-hover">
@@ -75,7 +71,7 @@ export default function List_Cupom({ history }) {
                                 {cupom.length ? cupom.map(cupom => 
                                   <tr>
                                     <td>
-                                      <a href={'/cupons/id/' + cupom._id}>{cupom.premio}</a>
+                                      <a href={'/cupom/' + cupom._id}>{cupom.premio}</a>
                                     </td>
                                     <td>
                                       {cupom.regra}

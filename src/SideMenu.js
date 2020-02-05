@@ -4,16 +4,26 @@ import api from './services/api';
 export default function SideMenu({ history }) {
 
   const [usernome, setUsernome] = useState("");
-  const [pedonline, setPedonline] = useState(false);
+  const [agendamento, setAgendamento] = useState(false);
   const [cardapio, setCardapio] = useState(false);
+  const [delivery, setDelivery] = useState(false);
+  const userestab = localStorage.getItem('eloyuserestab');
+  const usertype = localStorage.getItem('eloyusertype');
+
+  async function checkMenu() {
+    const response = await api.get('/estabelecimentos/' + userestab);
+    const data = await response.data;
+    setAgendamento(data[0].agendamento);
+    setCardapio(data[0].cardapio);
+    setDelivery(data[0].delivery);
+  }
 
     useEffect(() => {
-      const usertype = localStorage.getItem('eloyusertype');
-
       if(usertype === null)
         window.location.href = "/login";
       else
-          setUsernome(localStorage.getItem('eloyusernome'));
+        setUsernome(localStorage.getItem('eloyusernome'));
+        checkMenu();
     }, []);
 
 
@@ -24,7 +34,7 @@ export default function SideMenu({ history }) {
           <div className="user-panel">
             <div className="pull-left image">
               <img
-                src="dist/img/user.png"
+                src="/dist/img/user.png"
                 className="img-circle"
                 alt="User"
               />
@@ -56,6 +66,33 @@ export default function SideMenu({ history }) {
               </a>
             </li>
 
+            {cardapio &&
+              <>
+              <li>
+                <a href="/cardapios">
+                  <i className="fa fa-book" /> <span>Meu Cardápio</span>
+                
+                </a>
+              </li>
+
+              <li>
+                <a href="/pedidos">
+                  <i className="fa fa-cutlery" /> <span>Meus Pedidos</span>
+                
+                </a>
+              </li>
+              </>
+            }
+
+            {agendamento && 
+              <li>
+                <a href="/agenda">
+                  <i className="fa fa-calendar" /> <span>Minha Agenda</span>
+                
+                </a>
+              </li>
+            }
+
             <li>
               <a href="/produtos">
                 <i className="fa fa-bullhorn" /> <span>Destaques</span>
@@ -69,30 +106,6 @@ export default function SideMenu({ history }) {
               
               </a>
             </li>
-
-            <li>
-              <a href="/agenda">
-                <i className="fa fa-calendar" /> <span>Minha Agenda</span>
-              
-              </a>
-            </li>
-
-            <li>
-              <a href="/cardapio">
-                <i className="fa fa-book" /> <span>Meu Cardápio</span>
-              
-              </a>
-            </li>
-
-            <li>
-              <a href="/cardapios/listar">
-                <i className="fa fa-cutlery" /> <span>Meus Pedidos</span>
-              
-              </a>
-            </li>
-
-
-            
 
             <li>
              &nbsp;
