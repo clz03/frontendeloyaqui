@@ -44,6 +44,7 @@ import List_Endereco from './pages/enderecos/list';
 import Edit_Endereco from './pages/enderecos/edit';
 
 import List_Pedidos from './pages/pedidos/index';
+import Edit_Pedidos from './pages/pedidos/edit';
 
 export default function Routes() {
     return (
@@ -94,6 +95,7 @@ export default function Routes() {
                 <Route path="/enderecos/:id" component={Edit_Endereco}/>
 
                 <Route path="/pedidos" component={List_Pedidos}/>
+                <Route path="/pedido/:id" component={Edit_Pedidos}/>
             </Switch>
         </BrowserRouter>
     )

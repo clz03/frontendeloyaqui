@@ -14,6 +14,16 @@ const [msgvazio, setMsgvazio] = useState('carregando...');
 const userestab = localStorage.getItem('eloyuserestab');
 const usertype = localStorage.getItem('eloyusertype');
 
+const statusArr = [
+  { label: "Pedido enviado ao restaurante", value: "1" },
+  { label: "Pedido em preparação e sairá para entrega em breve", value: "2" },
+  { label: "Pedido em preparação e estará pronto para retirada em breve", value: "3" },
+  { label: "Pedido saiu para entrega", value: "4" },
+  { label: "Pedido pronto para ser retirado", value: "5" },
+  { label: "Pedido cancelado", value: "6" },
+  { label: "Pedido entregue", value: "7" }
+];
+
 async function loadPedido() {
   const response = await api.get('/pedidos/estabelecimento/' + userestab );
   const data = await response.data;
@@ -40,7 +50,7 @@ async function loadPedido() {
 
             <section className="content-header">
                 <h1>
-                    Pedidos<small>Pedidos realizados</small>
+                    Pedidos<small>(pedidos de hoje)</small>
                 </h1>
             </section>
 
@@ -51,15 +61,15 @@ async function loadPedido() {
                            
                             <div className="box-body table-responsive">
 
-                            <a class="btn btn-app">
+                            {/* <a class="btn btn-app">
                               <i class="fa fa-edit"></i> Cancelar Selecionado
-                            </a>
+                            </a> */}
 
                             <table className="table table-hover">
                               <tbody>
                               <tr>
                                 <th>Pedido</th>
-                                <th>Recebido</th>
+                                <th>Data/Hora</th>
                                 <th>Status</th>
                                 <th>Tipo</th>
                                 <th>Cliente</th>
@@ -68,13 +78,15 @@ async function loadPedido() {
                               {pedido.length ? pedido.map(pedido => 
                                   <tr>
                                     <td>
-                                      <a href={'/pedidos/' + pedido._id}>#3456</a>
+                                      <a href={'/pedido/' + pedido._id}>#3456</a>
                                     </td>
                                     <td>
                                       {pedido.data.substring(8,10) + "/" + pedido.data.substring(5,7) + "/" + pedido.data.substring(0,4) + ' - ' + pedido.data.substring(11,16)}
                                     </td>
                                     <td>
-                                      <span class="label label-warning">{pedido.status}</span>
+                                      {statusArr.map((statusArr) =>
+                                        statusArr.value === pedido.status ? <span key={statusArr.value} className="label label-success">{statusArr.label}</span> : ''
+                                      )}
                                     </td>
                                     <td>
                                       {pedido.tipoentrega === 'E' ? 'Entrega' : 'Retira'}
@@ -83,7 +95,7 @@ async function loadPedido() {
                                       Joao
                                     </td>
                                     <td>
-                                      {pedido.rua}, {pedido.numero}
+                                      {pedido.tipoentrega === 'E' ? pedido.rua + ', ' + pedido.numero : '-'}
                                     </td>
                                   </tr>
                               ) : "Nenhum pedido encontrado"}
