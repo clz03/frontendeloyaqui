@@ -4,38 +4,52 @@ import api from '../../services/api';
 import Header from '../../Header';
 import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
+import { connect, disconnect, subscribeToNewPed } from '../../services/socket';
 
 export default function List_Pedidos({ history }) {
 
-const [pedido, setPedido] = useState([]);
-const [loading, setLoading] = useState("");
-const [msgvazio, setMsgvazio] = useState('carregando...');
+  const [pedido, setPedido] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [msgvazio, setMsgvazio] = useState('carregando...');
 
-const userestab = localStorage.getItem('eloyuserestab');
-const usertype = localStorage.getItem('eloyusertype');
+  const userestab = localStorage.getItem('eloyuserestab');
+  const usertype = localStorage.getItem('eloyusertype');
 
-const statusArr = [
-  { label: "Pedido enviado ao restaurante", value: "1" },
-  { label: "Pedido em preparação e sairá para entrega em breve", value: "2" },
-  { label: "Pedido em preparação e estará pronto para retirada em breve", value: "3" },
-  { label: "Pedido saiu para entrega", value: "4" },
-  { label: "Pedido pronto para ser retirado", value: "5" },
-  { label: "Pedido cancelado", value: "6" },
-  { label: "Pedido entregue", value: "7" }
-];
+  const statusArr = [
+    { label: "Pedido enviado ao restaurante", value: "1" },
+    { label: "Pedido em preparação e sairá para entrega em breve", value: "2" },
+    { label: "Pedido em preparação e estará pronto para retirada em breve", value: "3" },
+    { label: "Pedido saiu para entrega", value: "4" },
+    { label: "Pedido pronto para ser retirado", value: "5" },
+    { label: "Pedido cancelado", value: "6" },
+    { label: "Pedido entregue", value: "7" }
+  ];
 
-async function loadPedido() {
-  const response = await api.get('/pedidos/estabelecimento/' + userestab );
-  const data = await response.data;
+  async function loadPedido() {
+    const response = await api.get('/pedidos/estabelecimento/' + userestab );
+    const data = await response.data;
 
-  setPedido(data);
-  setLoading(false);
-}
+    setPedido(data);
+    setLoading(false);
+    playsound();
+  }
+
+  function playsound(){
+    var audio = new Audio('/dist/audio/notifica.mp3');
+    audio.play();
+  }
+
+  function setupWebsocket(idestab) {
+    disconnect();
+    connect(idestab);
+  }
 
   useEffect(() => {
     setLoading(true);
     loadPedido();
     setMsgvazio("Nenhum pedido encontrado");
+    setupWebsocket(userestab);
+    subscribeToNewPed(status => loadPedido());
   }, []);
 
 
@@ -50,8 +64,10 @@ async function loadPedido() {
 
             <section className="content-header">
                 <h1>
-                    Pedidos<small>(pedidos de hoje)</small>
+                    Pedidos<small><img src='/dist/img/active.gif'></img></small>
+                    
                 </h1>
+                
             </section>
 
             <section className="content">

@@ -1,99 +1,166 @@
-import React, {useState,useEffect} from "react";
+import React, { useEffect, useState } from "react";
+import Header from "../../Header";
+import SideMenu from "../../SideMenu";
+import Footer from "../../Footer";
 import api from '../../services/api';
 
 export default function Painel({ history }) {
-    
-    const usertype = localStorage.getItem('eloyusertype');
-    const [usernome, setUsernome] = useState("");
-    const [pedonline, setPedonline] = useState(false);
-    const [cardapio, setCardapio] = useState(false);
+  const [usernome, setUsernome] = useState("");
 
-    const handleSubmit = pagina=> event=> {
-        event.preventDefault();
-        history.push(pagina)
-    }
-
-    function handleLogout(event) {
-
-        event.preventDefault();
-
-        localStorage.removeItem('eloyuseremail');
-        localStorage.removeItem('eloyusernome');
-        localStorage.removeItem('eloyuserid');
-        localStorage.removeItem('eloyusertype');
-        localStorage.removeItem('eloyuserestab');
-        history.push('/login');
-    }
-
-    async function checkButtons() {
-        const response = await api.get('/estabelecimentos/' + localStorage.getItem('eloyuserestab'));
-        const data = await response.data;
-        setPedonline(data[0].pedonline);
-        setCardapio(data[0].cardapio);
-    }
-
-    useEffect(() => {
-        if(usertype == null)
-            history.push('/login');
-        else
-            setUsernome(localStorage.getItem('eloyusernome'));
-        checkButtons();
-      }, []);
-
+  useEffect(() => {
+    const userestab = localStorage.getItem('eloyuserestab');
+    document.body.className = "hold-transition skin-blue sidebar-mini";
+    setUsernome(localStorage.getItem("eloyusernome"));
+  }, []);
 
   return (
-    <div className="content">
-        <p className="center">Seja Bem Vindo(a) {usernome}</p>
+    <>
+      <Header />
+      <SideMenu />
 
-        <div className="formcontent">
-            <form onSubmit={handleSubmit('/estabelecimentos/editar')}>
-                <button type="submit" className="btn">Meu Estabelecimento</button>
-            </form>
+      <div className="content-wrapper">
+        {/* Content Header (Page header) */}
+        <section className="content-header">
+          <h4>Seja bem vindo(a), {usernome}</h4>
+        </section>
 
-            {pedonline &&
-                <form onSubmit={handleSubmit("/agenda")}>
-                    <button type="submit" className="btn">Minha Agenda</button>
-                </form>
-            }
+        {/* Main content */}
+        <section className="content">
+          <div className="row">
+            <div className="col-md-12">
+              {/* <h2 className="page-header">Seus resultados de Janeiro / 2020</h2> */}
 
-            {cardapio &&
-            <>
-                <form onSubmit={handleSubmit("/cardapios/listar")}>
-                    <button type="submit" className="btn">Meu Cardápio</button>
-                </form>
+              <div className="box box-info">
+              <div className="box-header with-border">
+                  <i className="fa fa-bar-chart" />
+                  <h3 className="box-title">Estatísticas do seu Estabelecimento</h3>
+                </div>
+                <div className="box-body">
+                  <div className="col-lg-3 col-xs-6">
+                    {/* small box */}
+                    <div className="small-box bg-green">
+                      <div className="inner">
+                        <h3>
+                          543<sup style={{ fontSize: 20 }}></sup>
+                        </h3>
+                        <p>Visitas em sua página</p>
+                      </div>
+                      <div className="icon">
+                        <i className="ion ion-person-add" />
+                      </div>
+                      <a href="#" className="small-box-footer">
+                        Mais detalhes <i className="fa fa-arrow-circle-right" />
+                      </a>
+                    </div>
+                  </div>
 
-                 <form onSubmit={handleSubmit("/pedidos/listar")}>
-                     <button type="submit" className="btn">Meus Pedidos</button>
-                 </form>
-            </>
-            }
+                  <div className="col-lg-3 col-xs-6">
+                    {/* small box */}
+                    <div className="small-box bg-aqua">
+                      <div className="inner">
+                        <h3>150</h3>
+                        <p>Pedidos pelo Delivery</p>
+                      </div>
+                      <div className="icon">
+                        <i className="ion ion-bag" />
+                      </div>
+                      <a href="#" className="small-box-footer">
+                        Ir para Pedidos{" "}
+                        <i className="fa fa-arrow-circle-right" />
+                      </a>
+                    </div>
+                  </div>
 
-        </div>
+                  <div className="col-lg-3 col-xs-6">
+                    {/* small box */}
+                    <div className="small-box bg-yellow">
+                      <div className="inner">
+                        <h3>2</h3>
+                        <p>Destaques Cadastrados</p>
+                      </div>
+                      <div className="icon">
+                        <i className="ion ion-podium" />
+                      </div>
+                      <a href="#" className="small-box-footer">
+                        Ir para destaques{" "}
+                        <i className="fa fa-arrow-circle-right" />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="col-lg-3 col-xs-6">
+                    {/* small box */}
+                    <div className="small-box bg-red">
+                      <div className="inner">
+                        <h3>2</h3>
+                        <p>Cupons utilizados</p>
+                      </div>
+                      <div className="icon">
+                        <i className="ion ion-pricetags" />
+                      </div>
+                      <a href="#" className="small-box-footer">
+                        Ir para cupons{" "}
+                        <i className="fa fa-arrow-circle-right" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div className="formcontent">
-            <form onSubmit={handleSubmit("/produtos/novo")}>
-                <button type="submit" className="btn">Cadastrar Novo Produto</button>
-            </form>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="box box-info">
+              <div className="box-header with-border">
+                  <i className="fa fa-line-chart" />
+                  <h3 className="box-title">Estatísticas do EloyAqui</h3>
+                </div>
 
-            <form onSubmit={handleSubmit("/produtos/listar")}>
-                <button type="submit" className="btn">Visualizar Produtos</button>
-            </form>
-        </div>
+                <div className="box-body">
+                  <p className="lead" style={{textAlign:'center'}}>{usernome} obrigado por fortalecer ainda mais nosso bairro.<br/> 
+                  Trabalhamos diáriamente para aumentar a visibilidade dos estabelecimentos do nosso bairro, fortalecendo o comércio local.</p>
+                  <table className="table table-hover">
+                    <tbody>
+                        <tr>
+                          <td>
+                            Usuários do aplicativo
+                          </td>
+                          <td>
+                            10.254 pessoas
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Estabelecimentos cadastrados
+                          </td>
+                          <td>
+                            520 comércios   
+                         </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Expectativa de crescimento mensal:
+                          </td>
+                          <td>
+                            12%
+                          </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  
+             
+                
+                </div>
+              </div>
+            </div>
 
-        <div className="formcontent">
-            <form onSubmit={handleSubmit("/cupons/novo")}>
-                <button type="submit" className="btn">Cadastrar Novo Cupom</button>
-            </form>
+            <div className="col-md-6"></div>
+          </div>
+        </section>
+        {/* /.content */}
+      </div>
 
-            <form onSubmit={handleSubmit("/cupons/listar")}>
-                <button type="submit" className="btn">Visualizar Cupons</button>
-            </form>
-        </div>
-
-        <div className="formcontent">
-            <button className="linkanchor" onClick={handleLogout}>Sair</button>
-        </div>
-        
-    </div>
+      <Footer />
+    </>
   );
 }

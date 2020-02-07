@@ -15,6 +15,7 @@ export default function Login({ history }) {
         document.body.className = "hold-transition login-page2"
     },[]);
 
+
     async function handleSubmit(event) {
         
         setLoading(true);
@@ -38,11 +39,7 @@ export default function Login({ history }) {
                 localStorage.setItem('eloyusertype', res.data.tipo);
                 localStorage.setItem('eloyuserestab', res.data.idestabelecimento);
                 setLoading(false);
-                if(res.data.tipo > 0){
-                    history.push('/admpainel');
-                } else {
-                    history.push('/painel');
-                }  
+                history.push('/painel');
             }
         }).catch((error) => {
             alert(error);

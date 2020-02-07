@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/login/index';
-import Painel from './pages/painel/index2';
+import Painel from './pages/painel/index';
 import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
 import ValidaUsuario from './pages/validausuario';

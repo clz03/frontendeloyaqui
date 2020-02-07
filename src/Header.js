@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "./assets/logo.png";
 
+
 export default function Header({ history }) {
 
   const [usernome, setUsernome] = useState("");
@@ -23,8 +24,9 @@ export default function Header({ history }) {
 
     if(usertype === null)
       window.location.href = "/login";
-    else
+    else{
         setUsernome(localStorage.getItem('eloyusernome'));
+    };
   }, []);
 
   return (

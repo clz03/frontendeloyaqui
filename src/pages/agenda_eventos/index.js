@@ -28,7 +28,6 @@ export default function Agenda({ history }) {
     ];
 
     const userestab = localStorage.getItem('eloyuserestab');
-    const usertype = localStorage.getItem('eloyusertype');
 
     async function loadEvento(hojemes) {
       const response = await api.get('/eventos/estabelecimento/'+ userestab + '/' + hojemes );
@@ -44,15 +43,14 @@ export default function Agenda({ history }) {
       loadEvento(event.target.value);
     };
 
-  useEffect(() => {
-    if(usertype == null) history.push('/login');
-    setLoading(true);
-    const hoje = new Date();
-    const hojemes = hoje.getMonth()+1;
-    
-    setMes(hojemes);
-    loadEvento(hojemes);
-  }, []);
+    useEffect(() => {
+      setLoading(true);
+      const hoje = new Date();
+      const hojemes = hoje.getMonth()+1;
+      
+      setMes(hojemes);
+      loadEvento(hojemes);
+    }, []);
 
   return (
     <>
@@ -105,18 +103,7 @@ export default function Agenda({ history }) {
                 <div className="row">
                     <div className="col-xs-12">
                         <div className="box">
-                            <div className="box-header">
-                                <h3 className="box-title">{mes}</h3>
-                                <div className="box-tools">
-                                    <div className="input-group input-group-sm hidden-xs" style={{ width: 150 }}>
-                                        <input type="text" name="table_search" className="form-control pull-right" placeholder="Search" />
-                                        <div className="input-group-btn">
-                                            <button type="submit" className="btn btn-default"><i className="fa fa-search" /></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* /.box-header */}
+                            
                             <div className="box-body table-responsive no-padding">
 
                             <table className="table table-hover">
