@@ -41,7 +41,7 @@ export default function List_Pedidos({ history }) {
 
   function setupWebsocket(idestab) {
     disconnect();
-    connect(idestab);
+    connect(idestab, 0);
   }
 
   useEffect(() => {

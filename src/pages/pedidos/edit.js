@@ -11,6 +11,7 @@ export default function List_Pedidos({ history }) {
   const [itenspedido, setItenspedido] = useState("");
   const [status, setStatus] = useState("");
   const [tipoentrega, setTipoentrega] = useState("");
+  const [idusuario, setIdusuario] = useState("");
   const [loading, setLoading] = useState("");
 
   const url_string = window.location.href;
@@ -32,23 +33,26 @@ export default function List_Pedidos({ history }) {
 
     setPedido(data);
     setStatus(data[0].status);
+    setIdusuario(data[0].idusuario._id);
     setTipoentrega(data[0].tipoentrega);
 
     loadItensPedido();
   }
 
   async function loadItensPedido() {
+
     const response = await api.get("/itenspedido/pedido/" + param[4]);
     const data = await response.data;
 
     setItenspedido(data);
-  }
 
+  }
 
   async function atualizaStatus(status) {
 
     const dataobj = { 
-      status: status
+      status: status,
+      idusuario: idusuario
     };
 
     await api.put('/pedidos/'+param[4], dataobj)

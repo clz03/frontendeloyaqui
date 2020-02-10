@@ -12,8 +12,8 @@ function subscribeToStatusPed(subscribeFunction){
     socket.on('status-ped', subscribeFunction);
 }
 
-function connect(idestab) {
-    socket.io.opts.query = { idestab };
+function connect(idestab, idusuario) {
+    socket.io.opts.query = { idestab, idusuario };
     socket.connect();
 };
  
