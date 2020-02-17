@@ -52,9 +52,10 @@ export default function SideMenu({ history }) {
           <ul className="sidebar-menu" data-widget="tree">
             <li className="header">MENU PRINCIPAL</li>
 
-            <li className="active">
+            {/* <li className="active"> */}
+            <li>
               <a href="/painel">
-                <i className="fa fa-laptop" /> <span>Inicio</span>
+                <i className="fa fa-laptop" /> <span>Início</span>
               </a>
             </li>
 
@@ -103,6 +104,12 @@ export default function SideMenu({ history }) {
             <li>
               <a href="/cupons">
                 <i className="fa fa-ticket" /> <span>Cupons</span>
+              
+              </a>
+            </li>
+            <li>
+              <a href="/validarcupom">
+                <i className="fa fa-check" /> <span>Utilizar Cupom</span>
               
               </a>
             </li>

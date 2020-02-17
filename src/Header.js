@@ -56,7 +56,7 @@ export default function Header({ history }) {
 
               
 
-              <li className="dropdown notifications-menu">
+              {/* <li className="dropdown notifications-menu">
                 <a
                   href="url_f"
                   className="dropdown-toggle"
@@ -107,63 +107,14 @@ export default function Header({ history }) {
                     <a href="url_f">View all</a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
 
               
 
-              <li className="dropdown user user-menu">
-                <a
-                  href="url_f"
-                  className="dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  <img
-                    src="/dist/img/user.png"
-                    className="user-image"
-                    alt="User"
-                  />
-                  <span className="hidden-xs">{usernome}</span>
+              <li className="user-menu">
+                <a onClick={handleLogout} style={{cursor: 'pointer'}}>
+                  <span className="hidden-xs"><i className="fa fa-sign-out" /> Sair</span>
                 </a>
-                <ul className="dropdown-menu">
-
-                  <li className="user-header">
-                    <img
-                      src="/dist/img/user2-160x160.jpg"
-                      className="img-circle"
-                      alt="User"
-                    />
-                    <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
-                    </p>
-                  </li>
-
-                  <li className="user-body">
-                    <div className="row">
-                      <div className="col-xs-4 text-center">
-                        <a href="url_f">Followers</a>
-                      </div>
-                      <div className="col-xs-4 text-center">
-                        <a href="url_f">Sales</a>
-                      </div>
-                      <div className="col-xs-4 text-center">
-                        <a href="url_f">Friends</a>
-                      </div>
-                    </div>
-
-                  </li>
-
-                  <li className="user-footer">
-                    <div className="pull-left">
-                      <a href="url_f" className="btn btn-default btn-flat">
-                        Profile
-                      </a>
-                    </div>
-                    <div className="pull-right">
-                      <button className="btn btn-default btn-flat" onClick={handleLogout}>Sair</button>
-                    </div>
-                  </li>
-                </ul>
               </li>
             </ul>
           </div>

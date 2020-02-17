@@ -4,6 +4,7 @@ import logo from "../../assets/logo.png"
 import appstore from "../../assets/app-store.png"
 import carregando from "../../assets/loading.gif";
 import googlestore from "../../assets/google-play.png"
+import CryptoJS from 'crypto-js';
 
 export default function Login({ history }) {
 
@@ -20,10 +21,15 @@ export default function Login({ history }) {
         
         setLoading(true);
         event.preventDefault();
+        
+        const skey = process.env.REACT_APP_SECRET_KEY;
+
+        const hashEmail = CryptoJS.AES.encrypt(email, skey).toString();
+        const hashPwd = CryptoJS.AES.encrypt(pwd, skey).toString();
 
         const dataobj = { 
-            email: email,
-            senha: pwd
+            email: hashEmail,
+            senha: hashPwd
           };
 
         await api.post('/admauthenticate', dataobj)

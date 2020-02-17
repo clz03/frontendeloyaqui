@@ -22,6 +22,7 @@ import Edit_Prod from './pages/produtos/edit';
 import New_Cupom from './pages/cupons/novo';
 import List_Cupom from './pages/cupons/index';
 import Edit_Cupom from './pages/cupons/edit';
+import Validar_Cupom from './pages/cupons/validar';
 
 import New_Noticia from './pages/noticias/new';
 import List_Noticia from './pages/noticias/list';
@@ -73,6 +74,7 @@ export default function Routes() {
                 <Route path="/cupom/novo" component={New_Cupom}/>
                 <Route path="/cupons" component={List_Cupom}/>
                 <Route path="/cupom/:id" component={Edit_Cupom}/>
+                <Route path="/validarcupom" component={Validar_Cupom}/>
 
                 <Route path="/noticias/novo" component={New_Noticia}/>
                 <Route path="/noticias/listar" component={List_Noticia}/>

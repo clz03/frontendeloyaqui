@@ -94,7 +94,7 @@ export default function List_Pedidos({ history }) {
                               {pedido.length ? pedido.map(pedido => 
                                   <tr>
                                     <td>
-                                      <a href={'/pedido/' + pedido._id}>#3456</a>
+                                      <a href={'/pedido/' + pedido._id}>#{pedido.seq}</a>
                                     </td>
                                     <td>
                                       {pedido.data.substring(8,10) + "/" + pedido.data.substring(5,7) + "/" + pedido.data.substring(0,4) + ' - ' + pedido.data.substring(11,16)}
