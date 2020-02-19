@@ -44,6 +44,7 @@ export default function Login({ history }) {
                 localStorage.setItem('eloyuserid', res.data._id);
                 localStorage.setItem('eloyusertype', res.data.tipo);
                 localStorage.setItem('eloyuserestab', res.data.idestabelecimento);
+                localStorage.setItem('eloyuserestabonline', true);
                 setLoading(false);
                 history.push('/painel');
             }

@@ -11,9 +11,9 @@ export default function List_Pedidos({ history }) {
   const [pedido, setPedido] = useState([]);
   const [loading, setLoading] = useState("");
   const [msgvazio, setMsgvazio] = useState('carregando...');
+  const [online, setOnline] = useState(true);
 
   const userestab = localStorage.getItem('eloyuserestab');
-  const usertype = localStorage.getItem('eloyusertype');
 
   const statusArr = [
     { label: "Pedido enviado ao restaurante", value: "1" },
@@ -50,6 +50,7 @@ export default function List_Pedidos({ history }) {
     setMsgvazio("Nenhum pedido encontrado");
     setupWebsocket(userestab);
     subscribeToNewPed(status => loadPedido());
+    setOnline(localStorage.getItem('eloyuserestabonline'));
   }, []);
 
 
@@ -64,8 +65,10 @@ export default function List_Pedidos({ history }) {
 
             <section className="content-header">
                 <h1>
-                    Pedidos<small><img src='/dist/img/active.gif'></img></small>
-                    
+                    Pedidos
+                    {online == 'true' &&
+                      <small><img src='/dist/img/active.gif'></img></small>
+                    }
                 </h1>
                 
             </section>

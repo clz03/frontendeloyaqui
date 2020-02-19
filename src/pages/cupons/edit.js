@@ -46,7 +46,7 @@ export default function Edit_Cupom({ history }) {
           validade: validade.substring(6,10) + "-" + validade.substring(3,5) + "-" + validade.substring(0,2), 
           premio: premio,
           regra: regra,
-          expirado: expirado
+          //expirado: expirado
           //idestab: idestab
         };
   
@@ -141,7 +141,7 @@ export default function Edit_Cupom({ history }) {
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -158,7 +158,7 @@ export default function Edit_Cupom({ history }) {
                         onChange={event => setExpirado(event.target.value)}
                         />
                       </div>
-                    </div>
+                    </div> */}
 
                     
                   </div>

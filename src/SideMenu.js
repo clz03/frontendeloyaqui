@@ -7,6 +7,7 @@ export default function SideMenu({ history }) {
   const [agendamento, setAgendamento] = useState(false);
   const [cardapio, setCardapio] = useState(false);
   const [delivery, setDelivery] = useState(false);
+  const [online, setOnline] = useState(true);
   const userestab = localStorage.getItem('eloyuserestab');
   const usertype = localStorage.getItem('eloyusertype');
 
@@ -16,15 +17,25 @@ export default function SideMenu({ history }) {
     setAgendamento(data[0].agendamento);
     setCardapio(data[0].cardapio);
     setDelivery(data[0].delivery);
+    setOnline(data[0].online);
+  };
+
+  async function atualizaStatus(status) {
+    const txtstatus = status == true ? 'online' : 'offline';
+    if (window.confirm('Confirma alterar seu status para ' + txtstatus + ' ?')){
+      await api.put('/estabelecimentos/'+ userestab, {online:status})
+      localStorage.setItem('eloyuserestabonline', status);
+      window.location.reload();
+    }
   }
 
-    useEffect(() => {
-      if(usertype === null)
-        window.location.href = "/login";
-      else
-        setUsernome(localStorage.getItem('eloyusernome'));
-        checkMenu();
-    }, []);
+  useEffect(() => {
+    if(usertype === null)
+      window.location.href = "/login";
+    else
+      setUsernome(localStorage.getItem('eloyusernome'));
+      checkMenu();
+  }, []);
 
 
   return (
@@ -41,9 +52,30 @@ export default function SideMenu({ history }) {
             </div>
             <div className="pull-left info">
               <p>{usernome}</p>
-              <a href="url_f">
-                <i className="fa fa-circle text-success" /> Online
+
+              {online &&
+                <a id='status_estab' info='online'>
+                  <i className="fa fa-circle text-success" /> Online
+                </a>
+              }
+
+              {!online &&
+                <a id='status_estab' info='offline'>
+                    <i className="fa fa-circle text-danger" /> Offline
+                </a>
+              }
+
+              {!online &&
+                <a style={{cursor:'pointer'}} onClick={() => atualizaStatus(true)}>
+                  <span className="text-success">(ficar online)</span>
+                </a>
+              }
+
+              {online &&
+              <a style={{cursor:'pointer'}} onClick={() => atualizaStatus(false)}>
+                <span className="text-danger">(ficar offline)</span>
               </a>
+              }
             </div>
           </div>
 
@@ -63,7 +95,6 @@ export default function SideMenu({ history }) {
             <li>
               <a href="/estabelecimento">
                 <i className="fa fa-edit" /> <span>Meu Estabelecimento</span>
-              
               </a>
             </li>
 
@@ -72,14 +103,12 @@ export default function SideMenu({ history }) {
               <li>
                 <a href="/cardapios">
                   <i className="fa fa-book" /> <span>Meu Cardápio</span>
-                
                 </a>
               </li>
 
               <li>
                 <a href="/pedidos">
                   <i className="fa fa-cutlery" /> <span>Meus Pedidos</span>
-                
                 </a>
               </li>
               </>
@@ -89,7 +118,6 @@ export default function SideMenu({ history }) {
               <li>
                 <a href="/agenda">
                   <i className="fa fa-calendar" /> <span>Minha Agenda</span>
-                
                 </a>
               </li>
             }
@@ -97,20 +125,17 @@ export default function SideMenu({ history }) {
             <li>
               <a href="/produtos">
                 <i className="fa fa-bullhorn" /> <span>Destaques</span>
-              
               </a>
             </li>
 
             <li>
               <a href="/cupons">
                 <i className="fa fa-ticket" /> <span>Cupons</span>
-              
               </a>
             </li>
             <li>
               <a href="/validarcupom">
                 <i className="fa fa-check" /> <span>Utilizar Cupom</span>
-              
               </a>
             </li>
 
@@ -122,9 +147,8 @@ export default function SideMenu({ history }) {
             </li>
 
             <li>
-              <a href="/cupons">
+              <a href="/suporte">
                 <i className="fa fa-commenting-o" /> <span>Preciso de ajuda</span>
-              
               </a>
             </li>
 

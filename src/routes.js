@@ -10,6 +10,7 @@ import RedefinirSenha from './pages/redefinirsenha';
 import AdmRedefinirSenha from './pages/admredefinirsenha';
 import EsqueciSenha from './pages/esquecisenha';
 import PreCadastro from './pages/precadastro/index2';
+import Ajuda from './pages/ajuda/index';
 
 import New_Estab from './pages/estabelecimentos/novo';
 import List_Estab from './pages/estabelecimentos/list';
@@ -61,6 +62,7 @@ export default function Routes() {
                 <Route path="/esquecisenha" component={EsqueciSenha}/>
                 <Route path="/agenda" component={AgendaEventos}/>
                 <Route path="/precadastro" component={PreCadastro}/>
+                <Route path="/suporte" component={Ajuda}/>
 
                 <Route path="/estabelecimentos/novo" component={New_Estab}/>
                 <Route path="/estabelecimentos/listar" component={List_Estab}/>

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
+import api from "./services/api";
 import logo from "./assets/logo.png";
-
 
 export default function Header({ history }) {
 
-  const [usernome, setUsernome] = useState("");
-
-  function handleLogout(event) {
+  async function handleLogout(event) {
 
     event.preventDefault();
+    const userestab = localStorage.getItem('eloyuserestab');
 
     localStorage.removeItem('eloyuseremail');
     localStorage.removeItem('eloyusernome');
@@ -16,17 +15,13 @@ export default function Header({ history }) {
     localStorage.removeItem('eloyusertype');
     localStorage.removeItem('eloyuserestab');
     //history.push('/login');
+    await api.put('/estabelecimentos/'+ userestab, {online:false})
     window.location.href = "/login";
   };
 
   useEffect(() => {
     const usertype = localStorage.getItem('eloyusertype');
-
-    if(usertype === null)
-      window.location.href = "/login";
-    else{
-        setUsernome(localStorage.getItem('eloyusernome'));
-    };
+    if(usertype === null) window.location.href = "/login";
   }, []);
 
   return (

@@ -116,9 +116,7 @@ export default function Painel({ history }) {
                   <h3 className="box-title">Estatísticas do EloyAqui</h3>
                 </div>
 
-                <div className="box-body">
-                  <p className="lead" style={{textAlign:'center'}}>{usernome} obrigado por fortalecer ainda mais nosso bairro.<br/> 
-                  Trabalhamos diáriamente para aumentar a visibilidade dos estabelecimentos do nosso bairro, fortalecendo o comércio local.</p>
+                <div className="box-body">                 
                   <table className="table table-hover">
                     <tbody>
                         <tr>
