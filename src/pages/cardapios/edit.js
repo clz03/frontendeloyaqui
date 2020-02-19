@@ -9,6 +9,7 @@ export default function Edit_Cardapio({ history }) {
 
   const [categoria, setCategoria] = useState("");
   const [item, setItem] = useState("");
+  const [descr, setDescr] = useState("");
   const [valor, setValor] = useState("");
   const [loading, setLoading] = useState("");
 
@@ -23,6 +24,7 @@ export default function Edit_Cardapio({ history }) {
 
       setCategoria(data[0].categoria);
       setItem(data[0].item);
+      setDescr(data[0].descr);
       setValor(data[0].valor);
     };
 
@@ -83,10 +85,28 @@ export default function Edit_Cardapio({ history }) {
                       <div className="col-sm-10">
                       <input
                         id="item"
-                        placeholder="Parmegiana de Frango"
+                        placeholder="ex: Parmegiana de Frango"
                         className="form-control"
                         value={item}
                         onChange={event => setItem(event.target.value)}
+                      />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="descr"
+                      >
+                        Descrição*
+                      </label>
+                      <div className="col-sm-10">
+                      <input
+                        id="descr"
+                        placeholder="ex: Arroz, Feijão, Bife e batata"
+                        className="form-control"
+                        value={descr}
+                        onChange={event => setDescr(event.target.value)}
                       />
                       </div>
                     </div>
@@ -101,7 +121,7 @@ export default function Edit_Cardapio({ history }) {
                       <div className="col-sm-10">
                       <input
                         id="categoria"
-                        placeholder="Pratos Executivos"
+                        placeholder="ex: Pratos Executivos"
                         className="form-control"
                         value={categoria}
                         onChange={event => setCategoria(event.target.value)}

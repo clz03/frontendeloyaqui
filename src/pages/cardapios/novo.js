@@ -9,6 +9,7 @@ export default function Novo_Cardapio({ history }) {
 
   const [categoria, setCategoria] = useState("");
   const [item, setItem] = useState("");
+  const [descr, setDescr] = useState("");
   const [valor, setValor] = useState("");
   const [loading, setLoading] = useState("");
   const userestab = localStorage.getItem('eloyuserestab');
@@ -23,6 +24,7 @@ export default function Novo_Cardapio({ history }) {
     const dataobj = { 
       categoria: categoria, 
       item: item,
+      descr: descr,
       valor: valor,
       idestabelecimento: userestab
     };
@@ -74,6 +76,24 @@ export default function Novo_Cardapio({ history }) {
                         className="form-control"
                         value={item}
                         onChange={event => setItem(event.target.value)}
+                      />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="descr"
+                      >
+                        Descrição*
+                      </label>
+                      <div className="col-sm-10">
+                      <input
+                        id="descr"
+                        placeholder="ex: Arroz, Feijão, Bife e batata"
+                        className="form-control"
+                        value={descr}
+                        onChange={event => setDescr(event.target.value)}
                       />
                       </div>
                     </div>
