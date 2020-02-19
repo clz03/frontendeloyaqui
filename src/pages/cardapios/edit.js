@@ -38,6 +38,7 @@ export default function Edit_Cardapio({ history }) {
     const dataobj = { 
       categoria: categoria, 
       item: item,
+      descr: descr,
       valor: valor
       //idestabelecimento: idestabelecimento
     };
