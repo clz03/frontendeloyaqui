@@ -138,14 +138,16 @@ export default function Login({ history }) {
                         <a href="/login"><img src={logo} width={300}></img></a>
                     </div>
                     <div className="login-box-body">
-                        <p className="login-box-msg">Entre com sua credencial</p>
+                        <p className="login-box-msg lead">Cadastre aqui seu comércio</p>
 
                         <form onSubmit={handleSubmit}>
-                        
+                        <p>Categoria (segure ctrl para selecionar várias)</p>
                             <div className="form-group has-feedback">
                                 <select
                                     id="idcategoria"
                                     multiple="multiple"
+                                    style={{width:'100%'}}
+                                    className="form-control"
                                     value={idcategoria}
                                     className="select1"
                                     onChange={handleSelectMulti}
@@ -245,7 +247,7 @@ export default function Login({ history }) {
                             <div className="row">
                                 <div className="col-xs-12">
                                     <button type="submit" className="btn btn-primary btn-block btn-flat">Cadastrar</button>
-                                    <button className="btn2" onClick={() => { history.push('/login') }}>Voltar</button>
+                                    <button className="btn bg-navy btn-block btn-flat" onClick={() => { history.push('/login') }}>Voltar</button>
                                 </div>
                             </div>
                            

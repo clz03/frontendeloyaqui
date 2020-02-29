@@ -6,20 +6,21 @@ import SideMenu from "../../SideMenu";
 import Footer from "../../Footer";
 
 export default function Edit_Estab({ history }) {
-  // const categorias = [
-  //   { label: "Almoço", value: "5d929cbac39dcd00176af304" },
-  //   { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
-  //   { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
-  //   { label: "Esportes", value: "5d92a240c39dcd00176af307" },
-  //   { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
-  //   { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
-  //   { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
-  //   { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
-  //   { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
-  //   { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
-  //   { label: "Construção", value: "5db97db3ca74d100178e45ad" },
-  //   { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
-  // ];
+ 
+   const categorias = [
+     { label: "Almoço", value: "5d929cbac39dcd00176af304" },
+     { label: "Jantar", value: "5d929ddcc39dcd00176af305" },
+     { label: "Café / Chá", value: "5d92a209c39dcd00176af306" },
+     { label: "Esportes", value: "5d92a240c39dcd00176af307" },
+     { label: "Vestuário", value: "5d92a4a3c39dcd00176af308" },
+     { label: "Beleza", value: "5d92a4cdc39dcd00176af309" },
+     { label: "Pets", value: "5d92a4e3c39dcd00176af30a" },
+     { label: "Barbearia", value: "5d92a4f7c39dcd00176af30b" },
+     { label: "Educaçao", value: "5d92a516c39dcd00176af30c" },
+     { label: "Saúde", value: "5db97c64ca74d100178e45ac" },
+     { label: "Construção", value: "5db97db3ca74d100178e45ad" },
+     { label: "Serviços", value: "5db97e3bca74d100178e45ae" }
+   ];
 
   const horarios_inicio = [
     { label: "Abre as 07:00", value: "7" },
@@ -81,7 +82,7 @@ export default function Edit_Estab({ history }) {
   const [hrfim_sabado, setHrfim_sabado] = useState("");
   const [hrinicio_domingo, setHrinicio_domingo] = useState("");
   const [hrfim_domingo, setHrfim_domingo] = useState("");
-  //const [idcategoria, setIdcategoria] = useState("");
+  const [idcategoria, setIdcategoria] = useState("");
   const [loading, setLoading] = useState("");
 
   const usertype = localStorage.getItem("eloyusertype");
@@ -119,7 +120,13 @@ export default function Edit_Estab({ history }) {
       setHrfim_sabado(data[0].hrfim_sabado);
       setHrinicio_domingo(data[0].hrinicio_domingo);
       setHrfim_domingo(data[0].hrfim_domingo);
-      //setIdcategoria(data[0].idcategoria);
+      
+      categorias.forEach(function(entry) {
+        if(entry.value == data[0].idcategoria[0]){
+          setIdcategoria(entry.label);
+        }
+      });
+      
       setLoading(false);
     }
     if (usertype == null) history.push("/login");
@@ -215,7 +222,7 @@ export default function Edit_Estab({ history }) {
                       <div className="col-sm-10">
                       <input
                           id="categorias"
-                          value="Almoço, Jantar"
+                          value={idcategoria}
                           className="form-control"
                           disabled
                         />

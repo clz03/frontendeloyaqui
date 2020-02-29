@@ -66,7 +66,7 @@ export default function Login({ history }) {
                             <div className="row">
                                 <div className="col-xs-12">
                                     <button type="submit" className="btn btn-primary btn-block btn-flat">Enviar Nova Senha</button>
-                                    <button className="btn2" onClick={() => { history.push('/login') }}>Voltar</button>
+                                    <button className="btn2" className="btn bg-navy btn-block btn-flat" onClick={() => { history.push('/login') }}>Voltar</button>
                                 </div>
                             </div>
                            

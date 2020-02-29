@@ -20,6 +20,10 @@ import New_Prod from './pages/produtos/novo';
 import List_Prod from './pages/produtos/index';
 import Edit_Prod from './pages/produtos/edit';
 
+import New_Serv from './pages/servicos/novo';
+import List_Serv from './pages/servicos/index';
+import Edit_Serv from './pages/servicos/edit';
+
 import New_Cupom from './pages/cupons/novo';
 import List_Cupom from './pages/cupons/index';
 import Edit_Cupom from './pages/cupons/edit';
@@ -72,6 +76,10 @@ export default function Routes() {
                 <Route path="/produto/novo" component={New_Prod}/>
                 <Route path="/produtos" component={List_Prod}/>
                 <Route path="/produto/:id" component={Edit_Prod}/>
+
+                <Route path="/servico/novo" component={New_Serv}/>
+                <Route path="/servicos" component={List_Serv}/>
+                <Route path="/servico/:id" component={Edit_Serv}/>
 
                 <Route path="/cupom/novo" component={New_Cupom}/>
                 <Route path="/cupons" component={List_Cupom}/>

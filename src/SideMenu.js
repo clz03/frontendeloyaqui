@@ -128,6 +128,14 @@ export default function SideMenu({ history }) {
               </a>
             </li>
 
+            {agendamento && 
+            <li>
+              <a href="/servicos">
+                <i className="fa fa-bullhorn" /> <span>Serviços</span>
+              </a>
+            </li>
+            }
+
             <li>
               <a href="/cupons">
                 <i className="fa fa-ticket" /> <span>Cupons</span>
