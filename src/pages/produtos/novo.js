@@ -16,12 +16,7 @@ export default function Edit_Destaque({ history }) {
     const [loading, setLoading] = useState("");
   
     const userestab = localStorage.getItem('eloyuserestab');
-    const usertype = localStorage.getItem('eloyusertype');
-  
-    const url_string = window.location.href;
-    const param = url_string.split("/");
-  
-  
+      
     async function handleSubmit(event) {
         
         event.preventDefault();
@@ -38,7 +33,11 @@ export default function Edit_Destaque({ history }) {
         await api.post('/produtos/', dataobj)
         history.push('/produtos')
   
-    }
+    };
+
+    useEffect(() => {
+      document.getElementById('menu_produto').className = "active";
+    }, []);
 
 
   return (
@@ -82,6 +81,7 @@ export default function Edit_Destaque({ history }) {
                         placeholder="Nome do Produto"
                         className="form-control"
                         value={nome}
+                        required
                         maxLength={40}
                         onChange={event => setNome(event.target.value)}
                         />
@@ -101,6 +101,7 @@ export default function Edit_Destaque({ history }) {
                         placeholder="Descrição do Produto"
                         className="form-control"
                         value={descr}
+                        required
                         maxLength={100}
                         onChange={event => setDescr(event.target.value)}
                         />
@@ -119,7 +120,8 @@ export default function Edit_Destaque({ history }) {
                         id="preco"
                         placeholder="XX,XX"
                         className="form-control"
-                        maxLength={20}
+                        required
+                        maxLength={10}
                         value={preco}
                         onChange={event => setPreco(event.target.value)}
                         />
@@ -131,7 +133,7 @@ export default function Edit_Destaque({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        URL da Imagem*
+                        URL da Imagem
                       </label>
                       <div className="col-sm-10">
                       <input
@@ -139,7 +141,7 @@ export default function Edit_Destaque({ history }) {
                         placeholder="URL da imagem do Estabelecimento"
                         className="form-control"
                         value={imagem}
-                        maxLength={100}
+                        maxLength={150}
                         onChange={event => setImagem(event.target.value)}
                         />
                       </div>
@@ -150,7 +152,7 @@ export default function Edit_Destaque({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Promoção*
+                        Promoção
                       </label>
                       <div className="col-sm-10">
                       <input

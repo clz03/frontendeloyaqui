@@ -23,7 +23,7 @@ export default function Login({ history }) {
             email: email
           };
 
-        await api.post('/admforgotpwd', dataobj)
+        await api.post('/forgotpwd', dataobj)
         .then((res) => {
             if(res.data.error != undefined){
                 alert(res.data.error);

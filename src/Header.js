@@ -19,10 +19,10 @@ export default function Header({ history }) {
     window.location.href = "/login";
   };
 
-  useEffect(() => {
-    const usertype = localStorage.getItem('eloyusertype');
-    if(usertype === null) window.location.href = "/login";
-  }, []);
+  //useEffect(() => {
+    //const usertype = localStorage.getItem('eloyusertype');
+    //if(usertype === null) window.location.href = "/login";
+  //}, []);
 
   return (
     <div>

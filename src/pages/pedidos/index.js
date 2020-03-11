@@ -51,6 +51,12 @@ export default function List_Pedidos({ history }) {
     setupWebsocket(userestab);
     subscribeToNewPed(status => loadPedido());
     setOnline(localStorage.getItem('eloyuserestabonline'));
+    try {
+      setTimeout(() => {
+        document.getElementById('menu_pedidos').className = "active";
+      }, 1000);  
+    } catch (error) { 
+    }
   }, []);
 
 

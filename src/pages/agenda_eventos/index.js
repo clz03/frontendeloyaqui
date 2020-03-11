@@ -50,6 +50,13 @@ export default function Agenda({ history }) {
       
       setMes(hojemes);
       loadEvento(hojemes);
+      
+      try {
+        setTimeout(() => {
+          document.getElementById('menu_agenda').className = "active";
+        }, 1000);  
+      } catch (error) { 
+      }
     }, []);
 
   return (
@@ -113,6 +120,7 @@ export default function Agenda({ history }) {
                                   <th>Hora</th>
                                   <th>Nome</th>
                                   <th>Telefone</th>
+                                  <th>Serviço</th>
                                 </tr>
                                 {evento.length ? evento.map(evento => 
                                     <tr>
@@ -127,6 +135,9 @@ export default function Agenda({ history }) {
                                       </td>
                                       <td>
                                         {evento.idusuario.telefone}
+                                      </td>
+                                      <td>
+                                        {evento.idservico.nome}
                                       </td>
                                     </tr>
                                 ) : "Nenhum agendamento neste mês"}

@@ -62,6 +62,12 @@ export default function List_Pedidos({ history }) {
 
   useEffect(() => {
     loadPedido();
+    try {
+      setTimeout(() => {
+        document.getElementById('menu_pedidos').className = "active";
+      }, 1000);  
+    } catch (error) { 
+    }
   }, []);
 
   

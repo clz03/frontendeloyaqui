@@ -26,6 +26,15 @@ export default function Edit_Cardapio({ history }) {
       setItem(data[0].item);
       setDescr(data[0].descr);
       setValor(data[0].valor);
+
+      try {
+        setTimeout(() => {
+          document.getElementById('menu_cardapio').className = "active";
+        }, 1000);  
+      } catch (error) { 
+      }
+
+      
     };
 
     loadCardapio();
@@ -88,6 +97,8 @@ export default function Edit_Cardapio({ history }) {
                         id="item"
                         placeholder="ex: Parmegiana de Frango"
                         className="form-control"
+                        required
+                        maxLength={50}
                         value={item}
                         onChange={event => setItem(event.target.value)}
                       />
@@ -106,6 +117,8 @@ export default function Edit_Cardapio({ history }) {
                         id="descr"
                         placeholder="ex: Arroz, Feijão, Bife e batata"
                         className="form-control"
+                        required
+                        maxLength={150}
                         value={descr}
                         onChange={event => setDescr(event.target.value)}
                       />
@@ -135,13 +148,15 @@ export default function Edit_Cardapio({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="preco"
                       >
-                        Valor*
+                        Valor
                       </label>
                       <div className="col-sm-10">
                       <input
                         id="valor"
                         placeholder="39,90"
                         className="form-control"
+                        required
+                        maxLength={10}
                         value={valor}
                         onChange={event => setValor(event.target.value)}
                       />

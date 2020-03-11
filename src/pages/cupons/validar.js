@@ -24,6 +24,7 @@ export default function Valida_Cupom({ history }) {
     setLoading(true);
     loadCupom();
     setMsgvazio("Nenhum cupom pronto para uso");
+    document.getElementById('menu_validarcupom').className = "active";
   }, []);
 
   async function handleRemove(id, item){

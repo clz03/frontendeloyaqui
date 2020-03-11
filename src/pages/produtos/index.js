@@ -11,7 +11,6 @@ const [loading, setLoading] = useState("");
 const [msgvazio, setMsgvazio] = useState('carregando...');
 
 const userestab = localStorage.getItem('eloyuserestab');
-const usertype = localStorage.getItem('eloyusertype');
 
 async function loadProd() {
   const query = '/produtos/estabelecimento/'+ userestab;
@@ -25,6 +24,7 @@ async function loadProd() {
     setLoading(true);
     loadProd();
     setMsgvazio("Nenhum produto encontrado");
+    document.getElementById('menu_produto').className = "active";
   }, []);
 
   async function handleRemove(id, item){

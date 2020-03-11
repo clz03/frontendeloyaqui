@@ -17,10 +17,7 @@ export default function Edit_Cupom({ history }) {
     const url_string = window.location.href;
     const param = url_string.split("/");
   
-    const userestab = localStorage.getItem('eloyuserestab');
-    const usertype = localStorage.getItem('eloyusertype');
-
-  
+    
     useEffect(() => {
       async function loadCupom() {
   
@@ -35,6 +32,7 @@ export default function Edit_Cupom({ history }) {
       }
       
       loadCupom();
+      document.getElementById('menu_cupons').className = "active";
     },[]);
   
   
@@ -96,6 +94,7 @@ export default function Edit_Cupom({ history }) {
                         id="validade"
                         placeholder="DD/MM/AAAA"
                         className="form-control"
+                        required
                         maxLength={10}
                         value={validade}
                         onChange={event => setValidade(event.target.value)}
@@ -115,6 +114,7 @@ export default function Edit_Cupom({ history }) {
                         id="premio"
                         placeholder="Titulo do Cupom"
                         className="form-control"
+                        required
                         maxLength={50}
                         value={premio}
                         onChange={event => setPremio(event.target.value)}
@@ -134,6 +134,7 @@ export default function Edit_Cupom({ history }) {
                         id="regra"
                         placeholder="Regra do Cupom"
                         className="form-control"
+                        required
                         maxLength={80}
                         value={regra}
                         onChange={event => setRegra(event.target.value)}

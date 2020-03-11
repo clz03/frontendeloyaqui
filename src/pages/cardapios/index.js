@@ -23,6 +23,13 @@ const usertype = localStorage.getItem('eloyusertype');
   useEffect(() => {
     setLoading(true);
     loadCardapio();
+    try {
+      setTimeout(() => {
+        document.getElementById('menu_cardapio').className = "active";
+      }, 1000);  
+    } catch (error) { 
+    }
+    
   }, []);
 
   async function handleRemove(id, item){

@@ -25,6 +25,12 @@ async function loadProd() {
     setLoading(true);
     loadProd();
     setMsgvazio("Nenhum serviço encontrado");
+    try {
+      setTimeout(() => {
+        document.getElementById('menu_servico').className = "active";
+      }, 1000);  
+    } catch (error) { 
+    }
   }, []);
 
   async function handleRemove(id, item){

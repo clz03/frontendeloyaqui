@@ -23,6 +23,7 @@ export default function Edit_Estab({ history }) {
    ];
 
   const horarios_inicio = [
+    { label: "Abre as 06:00", value: "6" },
     { label: "Abre as 07:00", value: "7" },
     { label: "Abre as 08:00", value: "8" },
     { label: "Abre as 09:00", value: "9" },
@@ -68,6 +69,7 @@ export default function Edit_Estab({ history }) {
   const [numero, setNumero] = useState("");
   const [bairro, setBairro] = useState("");
   const [cep, setCEP] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [agendamento, setAgendamento] = useState(false);
@@ -85,53 +87,55 @@ export default function Edit_Estab({ history }) {
   const [idcategoria, setIdcategoria] = useState("");
   const [loading, setLoading] = useState("");
 
-  const usertype = localStorage.getItem("eloyusertype");
+  //const usertype = localStorage.getItem("eloyusertype");
   var userestab = localStorage.getItem("eloyuserestab");
-  const url_string = window.location.href;
-  const param = url_string.split("/");
-  if (usertype > 0) userestab = param[6];
+  //const url_string = window.location.href;
+  //const param = url_string.split("/");
+  //if (usertype > 0) userestab = param[6];
+
+  async function loadEstab() {
+    const response = await api.get("/estabelecimentos/" + userestab);
+    const data = await response.data;
+
+    setNome(data[0].nome);
+    setDescr(data[0].descr);
+    setTipo(data[0].tipo);
+    setSubtipo(data[0].subtipo);
+    setImagem(data[0].imagem);
+    setImagemcapa(data[0].imagemcapa);
+    setRua(data[0].rua);
+    setNumero(data[0].numero);
+    setBairro(data[0].bairro);
+    setCEP(data[0].cep);
+    setComplemento(data[0].complemento);
+    setFone1(data[0].fone1);
+    setFone2(data[0].fone2);
+    setAgendamento(data[0].agendamento);
+    setCardapio(data[0].cardapio);
+    setDelivery(data[0].delivery);
+    setEmail(data[0].email);
+    setInstagram(data[0].instagram);
+    setWhatsapp(data[0].whatsapp);
+    setHrinicio_semana(data[0].hrinicio_semana);
+    setHrfim_semana(data[0].hrfim_semana);
+    setHrinicio_sabado(data[0].hrinicio_sabado);
+    setHrfim_sabado(data[0].hrfim_sabado);
+    setHrinicio_domingo(data[0].hrinicio_domingo);
+    setHrfim_domingo(data[0].hrfim_domingo);
+    
+    categorias.forEach(function(entry) {
+      if(entry.value == data[0].idcategoria[0]){
+        setIdcategoria(entry.label);
+      }
+    });
+    
+    setLoading(false);
+  }
 
   useEffect(() => {
-    async function loadEstab() {
-      const response = await api.get("/estabelecimentos/" + userestab);
-      const data = await response.data;
-
-      setNome(data[0].nome);
-      setDescr(data[0].descr);
-      setTipo(data[0].tipo);
-      setSubtipo(data[0].subtipo);
-      setImagem(data[0].imagem);
-      setImagemcapa(data[0].imagemcapa);
-      setRua(data[0].rua);
-      setNumero(data[0].numero);
-      setBairro(data[0].bairro);
-      setCEP(data[0].cep);
-      setFone1(data[0].fone1);
-      setFone2(data[0].fone2);
-      setAgendamento(data[0].agendamento);
-      setCardapio(data[0].cardapio);
-      setDelivery(data[0].delivery);
-      setEmail(data[0].email);
-      setInstagram(data[0].instagram);
-      setWhatsapp(data[0].whatsapp);
-      setHrinicio_semana(data[0].hrinicio_semana);
-      setHrfim_semana(data[0].hrfim_semana);
-      setHrinicio_sabado(data[0].hrinicio_sabado);
-      setHrfim_sabado(data[0].hrfim_sabado);
-      setHrinicio_domingo(data[0].hrinicio_domingo);
-      setHrfim_domingo(data[0].hrfim_domingo);
-      
-      categorias.forEach(function(entry) {
-        if(entry.value == data[0].idcategoria[0]){
-          setIdcategoria(entry.label);
-        }
-      });
-      
-      setLoading(false);
-    }
-    if (usertype == null) history.push("/login");
     setLoading(true);
     loadEstab();
+    document.getElementById('menu_estabelecimento').className = "active";
   }, []);
 
   // function handleSelectMulti(event) {
@@ -160,6 +164,7 @@ export default function Edit_Estab({ history }) {
       numero: numero,
       bairro: bairro,
       cep: cep,
+      complemento: complemento,
       fone1: fone1,
       fone2: fone2,
       agendamento: agendamento,
@@ -259,6 +264,7 @@ export default function Edit_Estab({ history }) {
                           placeholder="Descrição do Estabelecimento"
                           value={descr}
                           className="form-control"
+                          style={{height:'80px'}}
                           maxLength={250}
                           required
                           onChange={event => setDescr(event.target.value)}
@@ -317,7 +323,7 @@ export default function Edit_Estab({ history }) {
                           placeholder="Rua do Estabelecimento"
                           value={rua}
                           className="form-control"
-                          maxLength={100}
+                          maxLength={50}
                           required
                           onChange={event => setRua(event.target.value)}
                         />
@@ -334,7 +340,7 @@ export default function Edit_Estab({ history }) {
                           placeholder="Número do Estabelecimento"
                           value={numero}
                           className="form-control"
-                          maxLength={10}
+                          maxLength={5}
                           required
                           onChange={event => setNumero(event.target.value)}
                         />
@@ -354,7 +360,7 @@ export default function Edit_Estab({ history }) {
                           placeholder="Bairro do Estabelecimento"
                           value={bairro}
                           className="form-control"
-                          maxLength={80}
+                          maxLength={20}
                           required
                           onChange={event => setBairro(event.target.value)}
                         />
@@ -383,50 +389,19 @@ export default function Edit_Estab({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Telefone*
+                        Complemento
                       </label>
                       <div className="col-sm-4">
                         <input
-                          id="fone1"
-                          placeholder="Telefone do Estabelecimento"
-                          value={fone1}
+                          id="complemento"
+                          placeholder="Complemento do endereço"
+                          value={complemento}
                           className="form-control"
-                          maxLength={30}
-                          required
-                          onChange={event => setFone1(event.target.value)}
+                          maxLength={80}
+                          onChange={event => setComplemento(event.target.value)}
                         />
                       </div>
-                      {/* <label className="col-sm-2 control-label" htmlFor="idcategoria">Telefone 2*</label>
-                        <div className="col-sm-4">
-                        <input
-                          id="fone2"
-                          placeholder="Telefone 2 do Estabelecimento"
-                          value={fone2}
-                          className="form-control"
-                          maxLength={30}
-                          onChange={event => setFone2(event.target.value)}
-                        />
-                        </div> */}
 
-                      <label
-                        className="col-sm-2 control-label"
-                        htmlFor="idcategoria"
-                      >
-                        Whatsapp
-                      </label>
-                      <div className="col-sm-4">
-                        <input
-                          id="whatsapp"
-                          placeholder="Whatsapp do estabelecimento"
-                          value={whatsapp}
-                          className="form-control"
-                          maxLength={30}
-                          onChange={event => setWhatsapp(event.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -439,16 +414,75 @@ export default function Edit_Estab({ history }) {
                           placeholder="E-mail do estabelecimento"
                           value={email}
                           className="form-control"
-                          maxLength={80}
+                          required
+                          maxLength={40}
                           onChange={event => setEmail(event.target.value)}
                         />
                       </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Telefone*
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="fone1"
+                          placeholder="Telefone do Estabelecimento"
+                          value={fone1}
+                          className="form-control"
+                          maxLength={14}
+                          required
+                          onChange={event => setFone1(event.target.value)}
+                        />
+                      </div>
+
 
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Instagram*
+                        Telefone 2
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="fone2"
+                          placeholder="Telefone 2 do Estabelecimento"
+                          value={fone2}
+                          className="form-control"
+                          maxLength={14}
+                          onChange={event => setFone2(event.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                    <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Whatsapp
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="whatsapp"
+                          placeholder="Whatsapp do estabelecimento"
+                          value={whatsapp}
+                          className="form-control"
+                          maxLength={14}
+                          onChange={event => setWhatsapp(event.target.value)}
+                        />
+                      </div>
+
+
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Instagram
                       </label>
                       <div className="col-sm-4">
                         <input
@@ -607,16 +641,31 @@ export default function Edit_Estab({ history }) {
                     </div>
 
                     <div className="form-group">
-                      <div className="col-sm-offset-2 col-sm-10">
+
+                    <div className="col-sm-offset-2 col-sm-10">
                         <div className="checkbox">
                           <label>
                             <input
                               id='cardapio'
                               type="checkbox"
                               checked={cardapio === true ? "checked" : ""}
-                              onChange={event => {setCardapio(!cardapio); setAgendamento(cardapio)}}
+                              onChange={event => {setCardapio(!cardapio); setAgendamento(false)}}
                             />
-                            Pedido Online ?
+                            Cardapio Online ?
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-offset-2 col-sm-10">
+                        <div className="checkbox">
+                          <label>
+                            <input
+                              id='delivery'
+                              type="checkbox"
+                              checked={delivery === true ? "checked" : ""}
+                              onChange={event => {setDelivery(!delivery); setCardapio(true); setAgendamento(false)}}
+                            />
+                            Pedido Online (Delivery) ?
                           </label>
                         </div>
                       </div>
@@ -628,7 +677,7 @@ export default function Edit_Estab({ history }) {
                               id='agendamento'
                               type="checkbox"
                               checked={agendamento === true ? "checked" : ""}
-                              onChange={event => {setAgendamento(!agendamento); setCardapio(agendamento)}}
+                              onChange={event => {setAgendamento(!agendamento); setDelivery(false); setCardapio(false)}}
                             />
                             Agendamento Online ?
                           </label>
@@ -637,16 +686,12 @@ export default function Edit_Estab({ history }) {
                     </div>
                   </div>
 
-                  <div className="box-footer">
-                    <button
-                      className="btn btn-default"
-                      onClick={() => history.push("/painel")}
-                    >
-                      Voltar
-                    </button>
-                    <button type="submit" className="btn btn-info pull-right">
-                      Salvar
-                    </button>
+                  <div className="box-footer text-center">
+
+                    <button className="btn btn-danger" style={{marginRight:'20px'}} onClick={() => history.push("/painel")}><i className="fa fa-arrow-left" /> Voltar</button>
+
+                    <button type="submit" className="btn btn-success"><i className="fa fa-save" /> Salvar</button>
+
                   </div>
 
                   {loading && (
@@ -664,330 +709,5 @@ export default function Edit_Estab({ history }) {
       <Footer />
     </>
 
-    // <div className="content">
-
-    //   <h1 className="center">Meu Estabelecimento</h1>
-    //   <form onSubmit={handleSubmit}>
-
-    //       {usertype > 0 &&
-    //         <React.Fragment>
-    //           <label htmlFor="idcategoria">Categoria*</label>
-    //           <select
-    //               id="idcategoria"
-    //               multiple="multiple"
-    //               className="select1"
-    //               value={idcategoria}
-    //               onChange={handleSelectMulti}
-    //           >
-    //               {categorias.map((categoria) =>
-    //                   <option key={categoria.value} value={categoria.value}>{categoria.label}</option>
-    //               )}
-    //           </select>
-    //         </React.Fragment>
-    //       }
-
-    //     <label htmlFor="nome">Nome*</label>
-    //     <input
-    //       id="nome"
-    //       placeholder="Nome do Estabelecimento"
-    //       value={nome}
-    //       maxLength={80}
-    //       disabled={usertype==0 ? true : false}
-    //       required
-    //       onChange={event => setNome(event.target.value)}
-    //     />
-
-    //     <label htmlFor="tipo">Tipo*</label>
-    //     <input
-    //       id="tipo"
-    //       placeholder="Tipo do Estabelecimento"
-    //       value={tipo}
-    //       maxLength={40}
-    //       disabled={usertype==0 ? true : false}
-    //       required
-    //       onChange={event => setTipo(event.target.value)}
-    //     />
-
-    //     <label htmlFor="subtipo">Subtipo*</label>
-    //     <input
-    //       id="subtipo"
-    //       placeholder="Subtipo do Estabelecimento"
-    //       value={subtipo}
-    //       maxLength={40}
-    //       disabled={usertype==0 ? true : false}
-    //       required
-    //       onChange={event => setSubtipo(event.target.value)}
-    //     />
-
-    //     <label htmlFor="descr">Descrição*</label>
-    //     <textarea
-    //       id="descr"
-    //       placeholder="Descrição do Estabelecimento"
-    //       value={descr}
-    //       maxLength={250}
-    //       required
-    //       onChange={event => setDescr(event.target.value)}
-    //     />
-
-    //     <label htmlFor="imagem">URL da Imagem</label>
-    //     <input
-    //       id="imagem"
-    //       placeholder="URL da imagem do Estabelecimento"
-    //       value={imagem}
-    //       maxLength={250}
-    //       onChange={event => setImagem(event.target.value)}
-    //     />
-
-    //     <label htmlFor="imagemcapa">URL da Imagem Capa</label>
-    //     <input
-    //       id="imagemcapa"
-    //       placeholder="URL da imagem Capa do Estabelecimento"
-    //       value={imagemcapa}
-    //       maxLength={250}
-    //       onChange={event => setImagemcapa(event.target.value)}
-    //     />
-
-    //     <label htmlFor="rua">Rua</label>
-    //     <input
-    //       id="rua"
-    //       placeholder="Rua do Estabelecimento"
-    //       value={rua}
-    //       maxLength={100}
-    //       required
-    //       onChange={event => setRua(event.target.value)}
-    //     />
-
-    //     <label htmlFor="numero">Número</label>
-    //     <input
-    //       id="numero"
-    //       placeholder="Número do Estabelecimento"
-    //       value={numero}
-    //       maxLength={10}
-    //       required
-    //       onChange={event => setNumero(event.target.value)}
-    //     />
-
-    //     <label htmlFor="bairro">Bairro</label>
-    //     <input
-    //       id="bairro"
-    //       placeholder="Bairro do Estabelecimento"
-    //       value={bairro}
-    //       maxLength={80}
-    //       required
-    //       onChange={event => setBairro(event.target.value)}
-    //     />
-
-    //     <label htmlFor="cep">CEP</label>
-    //     <input
-    //       id="cep"
-    //       placeholder="CEP do Estabelecimento"
-    //       value={cep}
-    //       maxLength={10}
-    //       required
-    //       onChange={event => setCEP(event.target.value)}
-    //     />
-
-    //     <label htmlFor="fone1">Telefone</label>
-    //     <input
-    //       id="fone1"
-    //       placeholder="Telefone do Estabelecimento"
-    //       value={fone1}
-    //       maxLength={30}
-    //       required
-    //       onChange={event => setFone1(event.target.value)}
-    //     />
-
-    //     <label htmlFor="fone2">Telefone 2</label>
-    //     <input
-    //       id="fone2"
-    //       placeholder="Telefone 2 do Estabelecimento"
-    //       value={fone2}
-    //       maxLength={30}
-    //       onChange={event => setFone2(event.target.value)}
-    //     />
-
-    //     <label htmlFor="hrinicio_semana">Horário Semanal</label>
-    //     <select
-    //         id="hrinicio_semana"
-    //         value={hrinicio_semana}
-    //         className="select2"
-    //         onChange={event => setHrinicio_semana(event.target.value)}
-    //     >
-    //         {horarios_inicio.map((horarios_inicio) =>
-    //             <option key={horarios_inicio.value} value={horarios_inicio.value}>{horarios_inicio.label}</option>
-    //         )}
-    //     </select>
-
-    //     <select
-    //       id="hrfim_semana"
-    //       value={hrfim_semana}
-    //       className="select3"
-    //       onChange={event => setHrfim_semana(event.target.value)}
-    //     >
-    //         {horarios_fim.map((horarios_fim) =>
-    //             <option key={horarios_fim.value} value={horarios_fim.value}>{horarios_fim.label}</option>
-    //         )}
-    //     </select>
-
-    //     <label htmlFor="hrinicio_sabado">Horário Sabados</label>
-    //     <select
-    //         id="hrinicio_sabado"
-    //         value={hrinicio_sabado}
-    //         className="select2"
-    //         onChange={event => setHrinicio_sabado(event.target.value)}
-    //     >
-    //         {horarios_inicio.map((horarios_inicio) =>
-    //             <option key={horarios_inicio.value} value={horarios_inicio.value}>{horarios_inicio.label}</option>
-    //         )}
-    //     </select>
-
-    //     <select
-    //       id="hrfim_sabado"
-    //       value={hrfim_sabado}
-    //       className="select3"
-    //       onChange={event => setHrfim_sabado(event.target.value)}
-    //     >
-    //         {horarios_fim.map((horarios_fim) =>
-    //             <option key={horarios_fim.value} value={horarios_fim.value}>{horarios_fim.label}</option>
-    //         )}
-    //     </select>
-
-    //     <label htmlFor="hrinicio_domingo">Horário Domingos</label>
-    //     <select
-    //         id="hrinicio_domingo"
-    //         value={hrinicio_domingo}
-    //         className="select2"
-    //         onChange={event => setHrinicio_domingo(event.target.value)}
-    //     >
-    //         {horarios_inicio.map((horarios_inicio) =>
-    //             <option key={horarios_inicio.value} value={horarios_inicio.value}>{horarios_inicio.label}</option>
-    //         )}
-    //     </select>
-
-    //     <select
-    //       id="hrfim_domingo"
-    //       value={hrfim_domingo}
-    //       className="select3"
-    //       onChange={event => setHrfim_domingo(event.target.value)}
-    //     >
-    //         {horarios_fim.map((horarios_fim) =>
-    //             <option key={horarios_fim.value} value={horarios_fim.value}>{horarios_fim.label}</option>
-    //         )}
-    //     </select>
-
-    //     <label>Disponibiliza Agendamento Online?</label>
-
-    //     <table>
-    //       <tr>
-    //         <td className="noborder">
-    //         <input
-    //           id="pedonline"
-    //           type="radio"
-    //           value="1"
-    //           label="Sim"
-    //           name="Sim"
-    //           checked={pedonline === true}
-    //           onChange={event => setPedonline(true)}
-    //         />
-    //         <span>Sim</span>
-    //         </td>
-    //         <td className="noborder">
-    //         <input
-    //           id="pedonline2"
-    //           type="radio"
-    //           value="0"
-    //           label="Não"
-    //           checked={pedonline === false}
-    //           onChange={event => setPedonline(false)}
-    //         />
-    //         <span>Não</span>
-    //         </td>
-    //       </tr>
-    //     </table>
-
-    //     <label>Disponibiliza Cardápio Online?</label>
-
-    //     <table>
-    //       <tr>
-    //         <td className="noborder">
-    //         <input
-    //           id="cardapio"
-    //           type="radio"
-    //           value="1"
-    //           label="Sim"
-    //           name="Sim"
-    //           checked={cardapio === true}
-    //           onChange={event => setCardapio(true)}
-    //         />
-    //         <span>Sim</span>
-    //         </td>
-    //         <td className="noborder">
-    //         <input
-    //           id="cardapio2"
-    //           type="radio"
-    //           value="0"
-    //           label="Não"
-    //           checked={cardapio === false}
-    //           onChange={event => setCardapio(false)}
-    //         />
-    //         <span>Não</span>
-    //         </td>
-    //       </tr>
-    //     </table>
-
-    //     {usertype > 0 &&
-    //       <React.Fragment>
-    //        <label htmlFor="plano">Qual o Plano de assinatura?</label>
-    //         <input
-    //           id="plano"
-    //           placeholder="0=Sem Plano / 1=Plano 1 / 2=Plano 2"
-    //           value={plano}
-    //           maxLength={1}
-    //           required
-    //           onChange={event => setPlano(event.target.value)}
-    //         />
-    //       </React.Fragment>
-    //     }
-
-    //     <label htmlFor="email">E-mail</label>
-    //     <input
-    //       id="email"
-    //       placeholder="E-mail do estabelecimento"
-    //       value={email}
-    //       maxLength={80}
-    //       onChange={event => setEmail(event.target.value)}
-    //     />
-
-    //     <label htmlFor="facebook">Facebook</label>
-    //     <input
-    //       id="facebook"
-    //       placeholder="Facebook do estabelecimento"
-    //       value={facebook}
-    //       maxLength={30}
-    //       onChange={event => setFacebook(event.target.value)}
-    //     />
-
-    //     <label htmlFor="instagram">Instagram</label>
-    //     <input
-    //       id="instagram"
-    //       placeholder="Instagram do estabelecimento"
-    //       value={instagram}
-    //       maxLength={30}
-    //       onChange={event => setInstagram(event.target.value)}
-    //     />
-
-    //     <label htmlFor="whatsapp">Whatsapp (ex: 1199999-9999)</label>
-    //     <input
-    //       id="whatsapp"
-    //       placeholder="Whatsapp do estabelecimento"
-    //       value={whatsapp}
-    //       maxLength={30}
-    //       onChange={event => setWhatsapp(event.target.value)}
-    //     />
-
-    //     <button type="submit" className="btn">Salvar</button>
-    //     <button className="btn2" onClick={history.goBack}>Cancelar</button>
-    //   </form>
-    // </div>
   );
 }

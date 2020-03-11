@@ -25,6 +25,7 @@ export default function List_Cupom({ history }) {
     setLoading(true);
     loadCupom();
     setMsgvazio("Nenhum cupom encontrado");
+    document.getElementById('menu_cupons').className = "active";
   }, []);
 
   async function handleRemove(id, item){

@@ -81,6 +81,12 @@ export default function Edit_Servicos({ history }) {
         setHrinicio(data[0].hrinicio);
         setHrfim(data[0].hrfim);
         //setIdestab(data[0].idestabelecimento._id);
+        try {
+          setTimeout(() => {
+            document.getElementById('menu_servico').className = "active";
+          }, 1000);  
+        } catch (error) { 
+        }
       }
       
       loadProd();
@@ -150,6 +156,7 @@ export default function Edit_Servicos({ history }) {
                         placeholder="Nome do Serviço"
                         className="form-control"
                         value={nome}
+                        required
                         maxLength={40}
                         onChange={event => setNome(event.target.value)}
                         />
@@ -169,6 +176,7 @@ export default function Edit_Servicos({ history }) {
                         placeholder="Descrição do Serviço"
                         className="form-control"
                         value={descr}
+                        required
                         maxLength={100}
                         onChange={event => setDescr(event.target.value)}
                         />
@@ -189,6 +197,7 @@ export default function Edit_Servicos({ history }) {
                         className="form-control"
                         maxLength={20}
                         value={preco}
+                        required
                         onChange={event => setPreco(event.target.value)}
                         />
                       </div>
@@ -208,6 +217,7 @@ export default function Edit_Servicos({ history }) {
                         multiple="multiple"
                         style={{height:'130px', width:'150px'}}
                         value={diasemana}
+                        required
                         className="select1"
                         onChange={handleSelectMulti}
                     >
@@ -272,7 +282,7 @@ export default function Edit_Servicos({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        URL da Imagem*
+                        URL da Imagem
                       </label>
                       <div className="col-sm-10">
                       <input
@@ -280,7 +290,7 @@ export default function Edit_Servicos({ history }) {
                         placeholder="URL da imagem"
                         className="form-control"
                         value={imagem}
-                        maxLength={100}
+                        maxLength={150}
                         onChange={event => setImagem(event.target.value)}
                         />
                       </div>
@@ -291,7 +301,7 @@ export default function Edit_Servicos({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Promoção*
+                        Promoção
                       </label>
                       <div className="col-sm-10">
                       <input

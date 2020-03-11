@@ -32,7 +32,16 @@ export default function Novo_Cardapio({ history }) {
     await api.post('/cardapios', dataobj)
     history.push('/cardapios')
 
-  }
+  };
+
+  useEffect(() => {
+    try {
+      setTimeout(() => {
+        document.getElementById('menu_cardapio').className = "active";
+      }, 1000);  
+    } catch (error) { 
+    }
+  }, []);
 
   return (
     <>
@@ -74,6 +83,8 @@ export default function Novo_Cardapio({ history }) {
                         id="item"
                         placeholder="Parmegiana de Frango"
                         className="form-control"
+                        required
+                        maxLength={60}
                         value={item}
                         onChange={event => setItem(event.target.value)}
                       />
@@ -92,6 +103,8 @@ export default function Novo_Cardapio({ history }) {
                         id="descr"
                         placeholder="ex: Arroz, Feijão, Bife e batata"
                         className="form-control"
+                        required
+                        maxLength={150}
                         value={descr}
                         onChange={event => setDescr(event.target.value)}
                       />
@@ -128,6 +141,8 @@ export default function Novo_Cardapio({ history }) {
                         id="valor"
                         placeholder="39,90"
                         className="form-control"
+                        required
+                        maxLength={10}
                         value={valor}
                         onChange={event => setValor(event.target.value)}
                       />
