@@ -84,6 +84,10 @@ export default function Edit_Estab({ history }) {
   const [hrfim_sabado, setHrfim_sabado] = useState("");
   const [hrinicio_domingo, setHrinicio_domingo] = useState("");
   const [hrfim_domingo, setHrfim_domingo] = useState("");
+  const [pedidominimo, setPedidominimo] = useState("");
+  const [taxaentrega, setTaxaentrega] = useState("");
+  const [tempoentrega, setTempoentrega] = useState("");
+  const [temporetira, setTemporetira] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
   const [loading, setLoading] = useState("");
 
@@ -122,6 +126,10 @@ export default function Edit_Estab({ history }) {
     setHrfim_sabado(data[0].hrfim_sabado);
     setHrinicio_domingo(data[0].hrinicio_domingo);
     setHrfim_domingo(data[0].hrfim_domingo);
+    setPedidominimo(data[0].pedidominimo);
+    setTaxaentrega(data[0].taxaentrega);
+    setTempoentrega(data[0].tempoentrega);
+    setTemporetira(data[0].temporetira);
     
     categorias.forEach(function(entry) {
       if(entry.value == data[0].idcategoria[0]){
@@ -180,7 +188,11 @@ export default function Edit_Estab({ history }) {
       hrinicio_sabado: hrinicio_sabado,
       hrfim_sabado: hrfim_sabado,
       hrinicio_domingo: hrinicio_domingo,
-      hrfim_domingo: hrfim_domingo
+      hrfim_domingo: hrfim_domingo,
+      pedidominimo: pedidominimo,
+      taxaentrega: taxaentrega,
+      tempoentrega: tempoentrega,
+      temporetira: temporetira
       //idcategoria: idcategoria
     };
 
@@ -522,7 +534,12 @@ export default function Edit_Estab({ history }) {
                           ))}
                         </select>
                       </div>
-
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Horário Fim Semanal*
+                      </label>
                       <div className="col-sm-4">
                         <select
                           id="hrfim_semana"
@@ -570,7 +587,12 @@ export default function Edit_Estab({ history }) {
                           ))}
                         </select>
                       </div>
-
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Horário Fim Sabados*
+                      </label>
                       <div className="col-sm-4">
                         <select
                           id="hrfim_sabado"
@@ -619,6 +641,12 @@ export default function Edit_Estab({ history }) {
                         </select>
                       </div>
 
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Horario Fim Domingos*
+                      </label>
                       <div className="col-sm-4">
                         <select
                           id="hrfim_domingo"
@@ -639,6 +667,84 @@ export default function Edit_Estab({ history }) {
                         </select>
                       </div>
                     </div>
+
+                   {delivery &&
+                    <>
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Valor Mínimo Pedido*
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="valorminimo"
+                          placeholder="15,00"
+                          value={pedidominimo}
+                          className="form-control"
+                          maxLength={8}
+                          required
+                          onChange={event => setPedidominimo(event.target.value)}
+                        />
+                      </div>
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Taxa de entrega*
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="taxaentrega"
+                          placeholder="4,00"
+                          value={taxaentrega}
+                          className="form-control"
+                          maxLength={8}
+                          required
+                          onChange={event => setTaxaentrega(event.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Tempo médio de entrega (minutos)*
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="tempoentrega"
+                          placeholder="60"
+                          value={tempoentrega}
+                          className="form-control"
+                          maxLength={20}
+                          required
+                          onChange={event => setTempoentrega(event.target.value)}
+                        />
+                      </div>
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Tempo médio de retirada (minutos)*
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          id="temporetira"
+                          placeholder="40"
+                          value={temporetira}
+                          className="form-control"
+                          maxLength={10}
+                          required
+                          onChange={event => setTemporetira(event.target.value)}
+                        />
+                      </div>
+                    </div>
+                    </>
+                  }
 
                     <div className="form-group">
 

@@ -153,7 +153,23 @@ export default function List_Pedidos({ history }) {
                               <th>Status:</th>
                               <td>
                                 {statusArr.map((statusArr) =>
-                                  statusArr.value === pedido.status ? <span key={statusArr.value} className="label label-warning">{statusArr.label}</span> : ''
+                                  // if
+                                  statusArr.value === pedido.status ? 
+                                    // if
+                                    statusArr.value < 6 ?
+                                    <span key={statusArr.value} className="label label-warning">{statusArr.label}</span>
+                                    :
+                                    // if
+                                    statusArr.value == 7 ?
+                                    <span key={statusArr.value} className="label label-success">{statusArr.label}</span>
+                                    :
+                                    //else
+                                    statusArr.value == 6 ?
+                                    <span key={statusArr.value} className="label label-danger">{statusArr.label}</span> 
+                                    //else
+                                    :''
+                                  //else
+                                  : ''
                                 )}
                               </td>
                             </tr>
