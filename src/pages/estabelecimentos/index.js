@@ -75,15 +75,17 @@ export default function Edit_Estab({ history }) {
   const [agendamento, setAgendamento] = useState(false);
   const [cardapio, setCardapio] = useState(false);
   const [delivery, setDelivery] = useState(false);
+  const [entrega, setEntrega] = useState(false);
+  const [retira, setRetira] = useState(false);
   const [email, setEmail] = useState("");
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [hrinicio_semana, setHrinicio_semana] = useState("");
-  const [hrfim_semana, setHrfim_semana] = useState("");
-  const [hrinicio_sabado, setHrinicio_sabado] = useState("");
-  const [hrfim_sabado, setHrfim_sabado] = useState("");
-  const [hrinicio_domingo, setHrinicio_domingo] = useState("");
-  const [hrfim_domingo, setHrfim_domingo] = useState("");
+  //const [hrinicio_semana, setHrinicio_semana] = useState("");
+  //const [hrfim_semana, setHrfim_semana] = useState("");
+  //const [hrinicio_sabado, setHrinicio_sabado] = useState("");
+  //const [hrfim_sabado, setHrfim_sabado] = useState("");
+  //const [hrinicio_domingo, setHrinicio_domingo] = useState("");
+  //const [hrfim_domingo, setHrfim_domingo] = useState("");
   const [pedidominimo, setPedidominimo] = useState("");
   const [taxaentrega, setTaxaentrega] = useState("");
   const [tempoentrega, setTempoentrega] = useState("");
@@ -117,15 +119,17 @@ export default function Edit_Estab({ history }) {
     setAgendamento(data[0].agendamento);
     setCardapio(data[0].cardapio);
     setDelivery(data[0].delivery);
+    setEntrega(data[0].entrega);
+    setRetira(data[0].retira)
     setEmail(data[0].email);
     setInstagram(data[0].instagram);
     setWhatsapp(data[0].whatsapp);
-    setHrinicio_semana(data[0].hrinicio_semana);
-    setHrfim_semana(data[0].hrfim_semana);
-    setHrinicio_sabado(data[0].hrinicio_sabado);
-    setHrfim_sabado(data[0].hrfim_sabado);
-    setHrinicio_domingo(data[0].hrinicio_domingo);
-    setHrfim_domingo(data[0].hrfim_domingo);
+    //setHrinicio_semana(data[0].hrinicio_semana);
+    //setHrfim_semana(data[0].hrfim_semana);
+    //setHrinicio_sabado(data[0].hrinicio_sabado);
+    //setHrfim_sabado(data[0].hrfim_sabado);
+    //setHrinicio_domingo(data[0].hrinicio_domingo);
+    //setHrfim_domingo(data[0].hrfim_domingo);
     setPedidominimo(data[0].pedidominimo);
     setTaxaentrega(data[0].taxaentrega);
     setTempoentrega(data[0].tempoentrega);
@@ -183,16 +187,18 @@ export default function Edit_Estab({ history }) {
       //facebook: facebook,
       instagram: instagram,
       whatsapp: whatsapp,
-      hrinicio_semana: hrinicio_semana,
-      hrfim_semana: hrfim_semana,
-      hrinicio_sabado: hrinicio_sabado,
-      hrfim_sabado: hrfim_sabado,
-      hrinicio_domingo: hrinicio_domingo,
-      hrfim_domingo: hrfim_domingo,
+      //hrinicio_semana: hrinicio_semana,
+      //hrfim_semana: hrfim_semana,
+      //hrinicio_sabado: hrinicio_sabado,
+      //hrfim_sabado: hrfim_sabado,
+      //hrinicio_domingo: hrinicio_domingo,
+      //hrfim_domingo: hrfim_domingo,
       pedidominimo: pedidominimo,
       taxaentrega: taxaentrega,
       tempoentrega: tempoentrega,
-      temporetira: temporetira
+      temporetira: temporetira,
+      entrega: entrega,
+      retira: retira,
       //idcategoria: idcategoria
     };
 
@@ -508,7 +514,7 @@ export default function Edit_Estab({ history }) {
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -666,11 +672,12 @@ export default function Edit_Estab({ history }) {
                           ))}
                         </select>
                       </div>
-                    </div>
+                    </div> */}
 
-                   {delivery &&
-                    <>
+
                     <div className="form-group">
+                    {retira | entrega &&
+                    <>
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -688,24 +695,33 @@ export default function Edit_Estab({ history }) {
                           onChange={event => setPedidominimo(event.target.value)}
                         />
                       </div>
+                      </>
+                    }
+
+                      {retira && 
+                      <>
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Taxa de entrega*
+                        Tempo médio de retirada (minutos)*
                       </label>
                       <div className="col-sm-4">
                         <input
-                          id="taxaentrega"
-                          placeholder="4,00"
-                          value={taxaentrega}
+                          id="temporetira"
+                          placeholder="40"
+                          value={temporetira}
                           className="form-control"
-                          maxLength={8}
+                          maxLength={10}
                           required
-                          onChange={event => setTaxaentrega(event.target.value)}
+                          onChange={event => setTemporetira(event.target.value)}
                         />
                       </div>
+                      </>
+                      }
                     </div>
+
+                      {entrega && 
 
                     <div className="form-group">
                       <label
@@ -725,26 +741,30 @@ export default function Edit_Estab({ history }) {
                           onChange={event => setTempoentrega(event.target.value)}
                         />
                       </div>
+                      
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Tempo médio de retirada (minutos)*
+                        Taxa de entrega*
                       </label>
                       <div className="col-sm-4">
                         <input
-                          id="temporetira"
-                          placeholder="40"
-                          value={temporetira}
+                          id="taxaentrega"
+                          placeholder="4,00"
+                          value={taxaentrega}
                           className="form-control"
-                          maxLength={10}
+                          maxLength={8}
                           required
-                          onChange={event => setTemporetira(event.target.value)}
+                          onChange={event => setTaxaentrega(event.target.value)}
                         />
                       </div>
+
+
+                     
                     </div>
-                    </>
                   }
+
 
                     <div className="form-group">
 
@@ -755,14 +775,14 @@ export default function Edit_Estab({ history }) {
                               id='cardapio'
                               type="checkbox"
                               checked={cardapio === true ? "checked" : ""}
-                              onChange={event => {setCardapio(!cardapio); setAgendamento(false)}}
+                              onChange={event => {setCardapio(!cardapio); setEntrega(!cardapio); setRetira(!cardapio); setAgendamento(false)}}
                             />
                             Cardapio Online ?
                           </label>
                         </div>
                       </div>
 
-                      <div className="col-sm-offset-2 col-sm-10">
+                      {/* <div className="col-sm-offset-2 col-sm-10">
                         <div className="checkbox">
                           <label>
                             <input
@@ -771,7 +791,23 @@ export default function Edit_Estab({ history }) {
                               checked={delivery === true ? "checked" : ""}
                               onChange={event => {setDelivery(!delivery); setCardapio(true); setAgendamento(false)}}
                             />
-                            Pedido Online (Delivery) ?
+                            Pedido Online ?
+                          </label>
+                        </div>
+                      </div> */}
+
+                    {cardapio && 
+                    <>
+                      <div className="col-sm-offset-2 col-sm-10">
+                        <div className="checkbox">
+                          <label>
+                            <input
+                              id='entrega'
+                              type="checkbox"
+                              checked={entrega === true ? "checked" : ""}
+                              onChange={event => {setEntrega(!entrega); setCardapio(true); setAgendamento(false)}}
+                            />
+                            Habilitar pedidos para entrega ?
                           </label>
                         </div>
                       </div>
@@ -780,10 +816,26 @@ export default function Edit_Estab({ history }) {
                         <div className="checkbox">
                           <label>
                             <input
+                              id='retira'
+                              type="checkbox"
+                              checked={retira === true ? "checked" : ""}
+                              onChange={event => {setRetira(!retira) ; setCardapio(true); setAgendamento(false)}}
+                            />
+                            Habilitar pedidos para retirada ?
+                          </label>
+                        </div>
+                      </div>
+                      </>
+                      }
+
+                      <div className="col-sm-offset-2 col-sm-10">
+                        <div className="checkbox">
+                          <label>
+                            <input
                               id='agendamento'
                               type="checkbox"
                               checked={agendamento === true ? "checked" : ""}
-                              onChange={event => {setAgendamento(!agendamento); setDelivery(false); setCardapio(false)}}
+                              onChange={event => {setAgendamento(!agendamento); setRetira(false); setEntrega(false); setCardapio(false)}}
                             />
                             Agendamento Online ?
                           </label>

@@ -169,11 +169,11 @@ export default function SideMenu({ history }) {
             
             </li>
 
-            <li id="menu_financeiro">
+            {/* <li id="menu_financeiro">
               <a href="/suporte">
                   <i className="fa fa-file-text-o" /> <span>Financeiro</span>
               </a>
-            </li>
+            </li> */}
 
           </ul>
         </section>

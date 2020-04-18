@@ -42,7 +42,7 @@ export default function Login({ history }) {
                 localStorage.setItem('eloyusernome', res.data.nome);
                 localStorage.setItem('eloyuserid', res.data._id);
                 localStorage.setItem('eloyuserestab', res.data.idestabelecimento);
-                localStorage.setItem('eloyuserestabonline', true);
+                localStorage.setItem('eloyuserestabonline', false);
                 setLoading(false);
                 history.push('/painel');
             }

@@ -26,7 +26,7 @@ const usertype = localStorage.getItem('eloyusertype');
     try {
       setTimeout(() => {
         document.getElementById('menu_cardapio').className = "active";
-      }, 1000);  
+      }, 2000);  
     } catch (error) { 
     }
     
@@ -68,7 +68,7 @@ const usertype = localStorage.getItem('eloyusertype');
                             <table className="table table-hover">
                               <tbody>
                               <tr>
-                                <th>Item</th>
+                                <th>Nome</th>
                                 <th>Categoria</th>
                                 <th>Valor</th>
                                 <th>Ação</th>
