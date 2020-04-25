@@ -12,6 +12,10 @@ function subscribeToStatusPed(subscribeFunction){
     socket.on('status-ped', subscribeFunction);
 }
 
+function subscribeToNewAgenda(subscribeFunction){
+    socket.on('novo-agenda', subscribeFunction);
+}
+
 function connect(idestab, idusuario) {
     socket.io.opts.query = { idestab, idusuario };
     socket.connect();
@@ -27,5 +31,6 @@ export {
     connect,
     disconnect,
     subscribeToNewPed,
-    subscribeToStatusPed
+    subscribeToStatusPed,
+    subscribeToNewAgenda
 };

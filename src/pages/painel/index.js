@@ -71,12 +71,11 @@ export default function Painel({ history }) {
                     </div>
                   </div>
                   
-                  { delivery && 
+                  {/* { delivery && 
                     <div className="col-lg-3 col-xs-6">
-                      {/* small box */}
                       <div className="small-box bg-aqua">
                         <div className="inner">
-                          <h3>150</h3>
+                          <h3>150</h3>s
                           <p>Pedidos pelo Delivery</p>
                         </div>
                         <div className="icon">
@@ -88,13 +87,13 @@ export default function Painel({ history }) {
                         </a>
                       </div>
                     </div>
-                  }
+                  } */}
 
                 { cardapio && 
                   <div className="col-lg-3 col-xs-6">
                     <div className="small-box bg-red">
                       <div className="inner">
-                        <h3>2</h3>
+                        <h3>25</h3>
                         <p>Itens no Cardapio</p>
                       </div>
                       <div className="icon">
@@ -118,7 +117,7 @@ export default function Painel({ history }) {
                         <i className="ion ion-pricetags" />
                       </div>
                       <a href="/validarcupom" className="small-box-footer">
-                        Utilizar Cupom{" "}
+                        Validar Cupom{" "}
                         <i className="fa fa-arrow-circle-right" />
                       </a>
                     </div>

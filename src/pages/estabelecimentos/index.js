@@ -675,7 +675,9 @@ export default function Edit_Estab({ history }) {
                     </div> */}
 
 
-                    <div className="form-group">
+
+
+                    {/* <div className="form-group">
                     {retira | entrega &&
                     <>
                       <label
@@ -758,12 +760,12 @@ export default function Edit_Estab({ history }) {
                           required
                           onChange={event => setTaxaentrega(event.target.value)}
                         />
-                      </div>
+                      </div> 
 
 
                      
                     </div>
-                  }
+                  }*/}
 
 
                     <div className="form-group">
@@ -796,7 +798,7 @@ export default function Edit_Estab({ history }) {
                         </div>
                       </div> */}
 
-                    {cardapio && 
+                    {/* {cardapio && 
                     <>
                       <div className="col-sm-offset-2 col-sm-10">
                         <div className="checkbox">
@@ -826,7 +828,7 @@ export default function Edit_Estab({ history }) {
                         </div>
                       </div>
                       </>
-                      }
+                      } */}
 
                       <div className="col-sm-offset-2 col-sm-10">
                         <div className="checkbox">

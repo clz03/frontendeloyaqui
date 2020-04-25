@@ -5,6 +5,9 @@ import api from '../../services/api';
 import Header from '../../Header';
 import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
+import { connect, disconnect, subscribeToNewAgenda } from "../../services/socket";
+
+var messelecionado = ''
 
 export default function Agenda({ history }) {
 
@@ -29,18 +32,31 @@ export default function Agenda({ history }) {
 
     const userestab = localStorage.getItem('eloyuserestab');
 
-    async function loadEvento(hojemes) {
+    function playsound() {
+      var audio = new Audio("/dist/audio/notifica.mp3");
+      audio.play();
+    }
+
+    function setupWebsocket(idestab) {
+      disconnect();
+      connect(idestab, 0);
+    }
+
+    async function loadEvento(hojemes, tocasom) {
       const response = await api.get('/eventos/estabelecimento/'+ userestab + '/' + hojemes );
       const data = await response.data;
 
       setEvento(data);
       setLoading(false);
+
+      if (tocasom) playsound();
     }
 
     function handleMes(event){
       setLoading(true);
       setMes(event.target.value);
-      loadEvento(event.target.value);
+      messelecionado = event.target.value;
+      loadEvento(event.target.value, false);
     };
 
     useEffect(() => {
@@ -49,7 +65,11 @@ export default function Agenda({ history }) {
       const hojemes = hoje.getMonth()+1;
       
       setMes(hojemes);
-      loadEvento(hojemes);
+      messelecionado = hojemes;
+      loadEvento(hojemes, false);
+
+      setupWebsocket(userestab);
+      subscribeToNewAgenda(status => loadEvento(messelecionado, true));
       
       try {
         setTimeout(() => {

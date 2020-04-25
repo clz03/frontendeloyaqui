@@ -122,12 +122,12 @@ export default function Edit_Cardapio({ history }) {
                       </a>
                     </li>
                     <li>
-                      <a href="#disp" data-toggle="tab">
+                      <a href="#disp">
                         Disponibilidade
                       </a>
                     </li>
                     <li>
-                      <a href="#compl" data-toggle="tab">
+                      <a href="#compl">
                         Opções do Prato
                       </a>
                     </li>

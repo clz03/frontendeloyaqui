@@ -106,7 +106,7 @@ export default function SideMenu({ history }) {
               </li>
             }
             
-            {delivery &&
+            {/* {delivery &&
               <li id="menu_pedidos">
                 <a href="/pedidos">
                   <i className="fa fa-cutlery" /> <span>Meus Pedidos&nbsp;&nbsp;
@@ -116,32 +116,36 @@ export default function SideMenu({ history }) {
                   </span>
                 </a>
               </li>
-            }
+            } */}
 
                 
-
-
-            {agendamento && 
-              <li id="menu_agenda">
-                <a href="/agenda">
-                  <i className="fa fa-calendar-check-o" /> <span>Clientes Agendados</span>
-                </a>
-              </li>
-            }
-
-            <li id="menu_produto">
-              <a href="/produtos">
-                <i className="fa fa-bullhorn" /> <span>Produtos / Serviços</span>
-              </a>
-            </li>
-
-            {agendamento && 
+          {agendamento && 
+          <>
             <li id="menu_servico">
               <a href="/servicos">
                 <i className="fa fa-calendar" /> <span>Serviços com Agendamento</span>
               </a>
             </li>
+            
+              <li id="menu_agenda">
+                <a href="/agenda">
+                  <i className="fa fa-calendar-check-o" /> <span>Clientes Agendados&nbsp;&nbsp;
+                  {online &&
+                    <img src='/dist/img/active_menu.gif' width="12"></img>
+                  }
+                  </span>
+                </a>
+              </li>
+              </>
             }
+
+            <li id="menu_produto">
+              <a href="/produtos">
+                <i className="fa fa-bullhorn" /> <span>Destaques</span>
+              </a>
+            </li>
+
+          
 
             <li id="menu_cupons">
               <a href="/cupons">

@@ -86,12 +86,12 @@ export default function Novo_Cardapio({ history }) {
                       </a>
                     </li>
                     <li>
-                      <a href="#disp" data-toggle="tab">
+                      <a href="#disp">
                         Disponibilidade
                       </a>
                     </li>
                     <li>
-                      <a href="#compl" data-toggle="tab">
+                      <a href="#compl">
                         Opções / Complementos
                       </a>
                     </li>
