@@ -14,7 +14,7 @@ export default function Painel({ history }) {
 
   async function getCountVisitors() {
     const userestab = localStorage.getItem('eloyuserestab');
-    const response = await api.get('/estabelecimentos/'+ userestab);
+    const response = await api.get('/estabelecimentos_adm/'+ userestab);
     const data = await response.data;
     //setEstab(data);
     setVisitors(data[0].views)

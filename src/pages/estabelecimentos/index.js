@@ -73,6 +73,7 @@ export default function Edit_Estab({ history }) {
   const [fone1, setFone1] = useState("");
   const [fone2, setFone2] = useState("");
   const [agendamento, setAgendamento] = useState(false);
+  const [enableFeriado, setEnableFeriado] = useState(false);
   const [cardapio, setCardapio] = useState(false);
   const [delivery, setDelivery] = useState(false);
   const [entrega, setEntrega] = useState(false);
@@ -80,6 +81,7 @@ export default function Edit_Estab({ history }) {
   const [email, setEmail] = useState("");
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [hashtags, setHashtags] = useState("");
   //const [hrinicio_semana, setHrinicio_semana] = useState("");
   //const [hrfim_semana, setHrfim_semana] = useState("");
   //const [hrinicio_sabado, setHrinicio_sabado] = useState("");
@@ -100,7 +102,7 @@ export default function Edit_Estab({ history }) {
   //if (usertype > 0) userestab = param[6];
 
   async function loadEstab() {
-    const response = await api.get("/estabelecimentos/" + userestab);
+    const response = await api.get("/estabelecimentos_adm/" + userestab);
     const data = await response.data;
 
     setNome(data[0].nome);
@@ -124,6 +126,8 @@ export default function Edit_Estab({ history }) {
     setEmail(data[0].email);
     setInstagram(data[0].instagram);
     setWhatsapp(data[0].whatsapp);
+    setHashtags(data[0].hashtags);
+    setEnableFeriado(data[0].enableFeriado)
     //setHrinicio_semana(data[0].hrinicio_semana);
     //setHrfim_semana(data[0].hrfim_semana);
     //setHrinicio_sabado(data[0].hrinicio_sabado);
@@ -187,6 +191,8 @@ export default function Edit_Estab({ history }) {
       //facebook: facebook,
       instagram: instagram,
       whatsapp: whatsapp,
+      hashtags: hashtags,
+      enableFeriado: enableFeriado,
       //hrinicio_semana: hrinicio_semana,
       //hrfim_semana: hrfim_semana,
       //hrinicio_sabado: hrinicio_sabado,
@@ -510,6 +516,25 @@ export default function Edit_Estab({ history }) {
                           className="form-control"
                           maxLength={30}
                           onChange={event => setInstagram(event.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="plano"
+                      >
+                        Palavras Chave*
+                      </label>
+                      <div className="col-sm-10">
+                      <input
+                          id="plano"
+                          value={hashtags}
+                          placeholder="barbeiro, corte, barba, visual"
+                          className="form-control"
+                          maxLength={30}
+                          onChange={event => setHashtags(event.target.value)}
                         />
                       </div>
                     </div>
@@ -840,6 +865,20 @@ export default function Edit_Estab({ history }) {
                               onChange={event => {setAgendamento(!agendamento); setRetira(false); setEntrega(false); setCardapio(false)}}
                             />
                             Agendamento Online ?
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-offset-2 col-sm-10">
+                        <div className="checkbox">
+                          <label>
+                            <input
+                              id='enableFeriado'
+                              type="checkbox"
+                              checked={enableFeriado === true ? "checked" : ""}
+                              onChange={event => {setEnableFeriado(!enableFeriado)}}
+                            />
+                            Habilitar Agendamento em Feriados ?
                           </label>
                         </div>
                       </div>

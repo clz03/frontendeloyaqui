@@ -6,17 +6,17 @@ export default function SideMenu({ history }) {
   const [usernome, setUsernome] = useState("");
   const [agendamento, setAgendamento] = useState(false);
   const [cardapio, setCardapio] = useState(false);
-  const [delivery, setDelivery] = useState(false);
+  //const [delivery, setDelivery] = useState(false);
   const [online, setOnline] = useState(true);
   const userestab = localStorage.getItem('eloyuserestab');
   //const usertype = localStorage.getItem('eloyusertype');
 
   async function checkMenu() {
-    const response = await api.get('/estabelecimentos/' + userestab);
+    const response = await api.get('/estabelecimentos_adm/' + userestab);
     const data = await response.data;
     setAgendamento(data[0].agendamento);
     setCardapio(data[0].cardapio);
-    setDelivery(data[0].delivery);
+    //setDelivery(data[0].delivery);
     setOnline(data[0].online);
   };
 

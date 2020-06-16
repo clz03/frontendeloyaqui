@@ -10,15 +10,15 @@ export default function Edit_Servicos({ history }) {
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
   const [preco, setPreco] = useState("");
-  const [imagem, setImagem] = useState("");
+  //const [imagem, setImagem] = useState("");
   const [diasemana, setDiasemana] = useState([]);
   const [hrinicio, setHrinicio] = useState([]);
   const [hrfim, setHrfim] = useState([]);
-  const [promocao, setPromocao] = useState("");
+  //const [promocao, setPromocao] = useState("");
   //const [idestab, setIdestab] = useState("");
   const [loading, setLoading] = useState("");
 
-  const userestab = localStorage.getItem('eloyuserestab');
+  //const userestab = localStorage.getItem('eloyuserestab');
 
   const diasdaSemana = [
     { label: "Domingo", value: "0" },
@@ -76,8 +76,8 @@ export default function Edit_Servicos({ history }) {
         setNome(data[0].nome);
         setDescr(data[0].descr);
         setPreco(data[0].preco);
-        setImagem(data[0].imagem);
-        setPromocao(data[0].promocao);
+        //setImagem(data[0].imagem);
+        //setPromocao(data[0].promocao);
         setDiasemana(data[0].diasemana);
         setHrinicio(data[0].hrinicio);
         setHrfim(data[0].hrfim);
@@ -105,8 +105,8 @@ export default function Edit_Servicos({ history }) {
           diasemana: diasemana,
           hrinicio: hrinicio,
           hrfim: hrfim,
-          imagem: imagem,
-          promocao: promocao,
+          //imagem: imagem,
+          //promocao: promocao,
           //idestab: idestab
         };
   
@@ -126,7 +126,7 @@ export default function Edit_Servicos({ history }) {
           <h1>
             {nome}
             <small>
-              &nbsp;( {nome} )
+              &nbsp;( Agendamentos )
             </small>
           </h1>
         </section>
@@ -235,9 +235,9 @@ export default function Edit_Servicos({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Horario Início / Fim*
+                        Horario Início*
                       </label>
-                      <div className="col-sm-4">
+                      <div className="col-sm-3">
                         <select
                           id="hrinicio"
                           value={hrinicio}
@@ -256,8 +256,17 @@ export default function Edit_Servicos({ history }) {
                           ))}
                         </select>
                       </div>
+                    </div>
 
-                      <div className="col-sm-4">
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Horario Fim*
+                      </label>
+
+                    <div className="col-sm-3">
                         <select
                           id="hrfim"
                           value={hrfim}
@@ -276,9 +285,9 @@ export default function Edit_Servicos({ history }) {
                           ))}
                         </select>
                       </div>
-                    </div>
+                      </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -295,9 +304,9 @@ export default function Edit_Servicos({ history }) {
                         onChange={event => setImagem(event.target.value)}
                         />
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
@@ -314,7 +323,7 @@ export default function Edit_Servicos({ history }) {
                         onChange={event => setPromocao(event.target.value)}
                         />
                       </div>
-                    </div>
+                    </div> */}
 
                     
                   </div>

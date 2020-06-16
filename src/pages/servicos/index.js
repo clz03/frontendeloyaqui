@@ -11,7 +11,7 @@ const [loading, setLoading] = useState("");
 const [msgvazio, setMsgvazio] = useState('carregando...');
 
 const userestab = localStorage.getItem('eloyuserestab');
-const usertype = localStorage.getItem('eloyusertype');
+//const usertype = localStorage.getItem('eloyusertype');
 
 async function loadProd() {
   const query = '/servicos/estabelecimento/'+ userestab;
