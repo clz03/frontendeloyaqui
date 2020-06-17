@@ -10,7 +10,7 @@ export default function Edit_Cupom({ history }) {
     const [validade, setValidade] = useState("");
     const [premio, setPremio] = useState("");
     const [regra, setRegra] = useState("");
-    const [expirado, setExpirado] = useState("");
+    //const [expirado, setExpirado] = useState("");
     //const [idestab, setIdestab] = useState("");
     const [loading, setLoading] = useState("");
   
@@ -34,7 +34,9 @@ export default function Edit_Cupom({ history }) {
     };
 
     useEffect(() => {
+      setLoading(true);
       document.getElementById('menu_cupons').className = "active";
+      setLoading(false);
     }, []);
   
 

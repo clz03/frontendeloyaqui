@@ -5,6 +5,7 @@ import Login from './pages/login/index';
 import Painel from './pages/painel/index';
 import AdmPainel from './pages/admpainel';
 import AgendaEventos from './pages/agenda_eventos';
+import AgendaPublica from './pages/agenda_eventos/publica.js';
 import ValidaUsuario from './pages/validausuario';
 import RedefinirSenha from './pages/redefinirsenha';
 import AdmRedefinirSenha from './pages/admredefinirsenha';
@@ -64,6 +65,7 @@ export default function Routes() {
                 <Route path="/admredefinirsenha" component={AdmRedefinirSenha}/>
                 <Route path="/esquecisenha" component={EsqueciSenha}/>
                 <Route path="/agenda" component={AgendaEventos}/>
+                <Route path="/agendar/:id" component={AgendaPublica}/>
                 <Route path="/precadastro" component={PreCadastro}/>
                 <Route path="/suporte" component={Ajuda}/>
 

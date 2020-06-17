@@ -8,7 +8,7 @@ export default function Painel({ history }) {
   const [usernome, setUsernome] = useState("");
   //const [estab, setEstab] = useState("");
   const [visitors, setVisitors] = useState("");
-  const [delivery, setDelivery] = useState("");
+  //const [delivery, setDelivery] = useState("");
   const [cardapio, setCardapio] = useState("");
 
 
@@ -18,7 +18,7 @@ export default function Painel({ history }) {
     const data = await response.data;
     //setEstab(data);
     setVisitors(data[0].views)
-    setDelivery(data[0].delivery)
+    //setDelivery(data[0].delivery)
     setCardapio(data[0].cardapio)
   }
 

@@ -10,7 +10,7 @@ export default function Edit_Cupom({ history }) {
     const [validade, setValidade] = useState("");
     const [premio, setPremio] = useState("");
     const [regra, setRegra] = useState("");
-    const [expirado, setExpirado] = useState("");
+    //const [expirado, setExpirado] = useState("");
     //const [idestab, setIdestab] = useState("");
     const [loading, setLoading] = useState("");
   
@@ -19,6 +19,7 @@ export default function Edit_Cupom({ history }) {
   
     
     useEffect(() => {
+      setLoading(true);
       async function loadCupom() {
   
         const response = await api.get('/cupons/'+param[4]);
@@ -27,12 +28,13 @@ export default function Edit_Cupom({ history }) {
         setValidade(data[0].validade.substring(8,10) + "/" + data[0].validade.substring(5,7) + "/" + data[0].validade.substring(0,4));
         setPremio(data[0].premio);
         setRegra(data[0].regra);
-        setExpirado(data[0].expirado);
+        //setExpirado(data[0].expirado);
         //setIdestab(data[0].idestabelecimento._id);
       }
       
       loadCupom();
       document.getElementById('menu_cupons').className = "active";
+      setLoading(false);
     },[]);
   
   
