@@ -118,3 +118,6 @@
     background-color: #e6e6e6;
   }
   
+  .selectedItem {
+    border: 2px solid green
+  }

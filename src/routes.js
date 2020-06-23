@@ -52,6 +52,10 @@ import Edit_Endereco from './pages/enderecos/edit';
 import List_Pedidos from './pages/pedidos/index';
 import Edit_Pedidos from './pages/pedidos/edit';
 
+import New_Prof from './pages/profissionais/novo';
+import List_Prof from './pages/profissionais/index';
+import Edit_Prof from './pages/profissionais/edit';
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -85,29 +89,36 @@ export default function Routes() {
                 <Route path="/cupons" component={List_Cupom}/>
                 <Route path="/cupom/:id" component={Edit_Cupom}/>
                 <Route path="/validarcupom" component={Validar_Cupom}/>
-
+{/* 
                 <Route path="/noticias/novo" component={New_Noticia}/>
                 <Route path="/noticias/listar" component={List_Noticia}/>
-                <Route path="/noticias/:id" component={Edit_Noticia}/>
+                <Route path="/noticias/:id" component={Edit_Noticia}/> */}
 
                 <Route path="/usuarios/novo" component={New_Usuario}/>
                 <Route path="/usuarios/listar" component={List_Usuario}/>
                 <Route path="/usuarios/:id" component={Edit_Usuario}/>
-
+{/* 
                 <Route path="/administradores/novo" component={New_Administrador}/>
                 <Route path="/administradores/listar" component={List_Administrador}/>
-                <Route path="/administradores/:id" component={Edit_Administrador}/>
+                <Route path="/administradores/:id" component={Edit_Administrador}/> */}
 
                 <Route path="/cardapio/novo" component={New_Cardapio}/>
                 <Route path="/cardapios" component={List_Cardapio}/>
                 <Route path="/cardapio/:id" component={Edit_Cardapio}/>
-
+{/* 
                 <Route path="/enderecos/novo" component={New_Endereco}/>
                 <Route path="/enderecos/listar" component={List_Endereco}/>
-                <Route path="/enderecos/:id" component={Edit_Endereco}/>
+                <Route path="/enderecos/:id" component={Edit_Endereco}/> */}
+
+                <Route path="/profissional/novo" component={New_Prof}/>
+                <Route path="/profissionais" component={List_Prof}/>
+                <Route path="/profissional/:id" component={Edit_Prof}/>
 
                 <Route path="/pedidos" component={List_Pedidos}/>
                 <Route path="/pedido/:id" component={Edit_Pedidos}/>
+
+
+
             </Switch>
         </BrowserRouter>
     )

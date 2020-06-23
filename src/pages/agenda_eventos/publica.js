@@ -1,114 +1,236 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import carregando from "../../assets/loading.gif";
-import api from '../../services/api';
-import { connect, disconnect, subscribeToNewAgenda } from "../../services/socket";
-import Calendar from 'react-calendar';
-import moment from 'moment';
-import 'moment/locale/pt-br';
-import './calendar.css';
+//import carregando from "../../assets/loading.gif";
+import api from "../../services/api";
+//import {connect,disconnect,subscribeToNewAgenda,} from "../../services/socket";
+import Calendar from "react-calendar";
+import moment from "moment";
+import "moment/locale/pt-br";
+import "./calendar.css";
 
 export default function AgendaPublica() {
+  const [loading, setLoading] = useState("");  
+  const [servicos, setServicos] = useState([]);
+  const [servico, setServico] = useState('');
+  const [profissionais, setProfissionais] = useState([]);
+  const [profissional, setProfissional] = useState("1");
+  const [value, onChange] = useState(new Date());
+  const [blackdates, setBlackdates] = useState([]);
+  const [seldate, setSeldate] = useState();
+  const [maxdate, setMaxdate] = useState();
+  const [diasSemana, setDiasSemana] = useState([]);
+  const [evento, setEvento] = useState([]);
 
-    const [loading, setLoading] = useState('');
-    const [value, onChange] = useState(new Date());
-    const [blackdates, setBlackdates] = useState([]);  
-    const [seldate, setSeldate] = useState();  
+  const url_string = window.location.href;
+  const param = url_string.split("/");
+  const userestab = param[4];
 
-    const url_string = window.location.href;
-    const param = url_string.split("/");
-    const userestab = param[4];
+  async function loadProfs() {
+    const query = "/profissional/estabelecimento/" + userestab;
+    const response = await api.get(query);
+    const data = await response.data;
+    setProfissionais(data);
+  };
 
-    async function loadCalendar() {
-        var dias = ["0","1","2","3","4","5","6"];
-        var arrFeriados = [];
-        let datesBlacklist = [];
-        var i = 0;
-        var curDate; 
-        var curDay;
-        var blackdat;
+  async function loadProf() {
+    //console.log("aaa -> " + profissional);
+    if(profissional === '1') return;
+    const query = "/profissional/" + profissional;
+    const response = await api.get(query);
+    const data = await response.data;
+    setDiasSemana(data[0].diasemana);
+    loadCalendar(data[0].diasemana);
+  };
 
-        const response = await api.get('/feriados');
-        const data = await response.data;
-        
-        for (i = 0; i < data.length; i++) {
-          arrFeriados.push(data[i].data.toString().substring(0,10));
-        };
-       
-        // Next 30 days
-        for (let i = 0; i <= 30; ++i){
-            curDay = moment().add(i,'days').startOf('day').toISOString().substring(0,10);
-            curDate = moment().add(i,'days').day();
-            
-            if(arrFeriados.includes(curDay)){
-                blackdat = new Date(curDay+'T10:00:00');
-                datesBlacklist.push(blackdat);
-            } else if(!dias.includes(curDate.toString())){
-                blackdat = new Date(curDay+'T10:00:00');
-                datesBlacklist.push(blackdat);
-            };
-        };
+  async function loadServicos() {
+    if(profissional === '1') return;
+    const query = "/servicos/profissional/" + profissional;
+    const response = await api.get(query);
+    const data = await response.data;
+    setServicos(data);
+  };
 
-        var todayDate = new Date();
-        todayDate.setDate(todayDate.getDate() + 30);
+  async function loadEvento(date) {
+    if(profissional === '1') return;
+    const query = "/eventos/dia/" + date + "/" + profissional;
+    const response = await api.get(query);
+    const data = await response.data;
+    setEvento(data);
+  };
 
-        setBlackdates(datesBlacklist);
-        setSeldate(todayDate);
+  async function loadCalendar(semanadia) {
+    var dias = semanadia;
+    var arrFeriados = [];
+    let datesBlacklist = [];
+    var i = 0;
+    var curDate;
+    var curDay;
+    var blackdat;
 
-      };
+    const response = await api.get("/feriados");
+    const data = await response.data;
 
+    for (i = 0; i < data.length; i++) {
+      arrFeriados.push(data[i].data.toString().substring(0, 10));
+    }
 
-    useEffect(() => {
-      setLoading(true);
-      loadCalendar();
-      setLoading(false);
+    // Next 30 days
+    for (let i = 0; i <= 30; ++i) {
+      curDay = moment()
+        .add(i, "days")
+        .startOf("day")
+        .toISOString()
+        .substring(0, 10);
+      curDate = moment().add(i, "days").day();
 
-      //setupWebsocket(userestab);
-      //subscribeToNewAgenda(status => loadEvento(1, true));
-      
-    }, []);
+      if (arrFeriados.includes(curDay)) {
+        blackdat = new Date(curDay + "T10:00:00");
+        datesBlacklist.push(blackdat);
+      } else if (!dias.includes(curDate.toString())) {
+        blackdat = new Date(curDay + "T10:00:00");
+        datesBlacklist.push(blackdat);
+      }
+    }
+
+    var todayDate = new Date();
+    todayDate.setDate(todayDate.getDate() + 30);
+
+    setBlackdates(datesBlacklist);
+    setMaxdate(todayDate);
+  };
+
+   async function handleSubmit(event) {       
+    
+    event.preventDefault();
+    
+    const dataobj = { 
+       data: seldate, 
+       hora: 3, 
+       comentario: '', 
+       idestabelecimento: userestab, 
+       idservico: servico,
+       idusuario: ''
+    };
+
+    await api.post('/servicos/', dataobj)
+
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    loadProfs();    
+    setLoading(false);
+
+    //setupWebsocket(userestab);
+    //subscribeToNewAgenda(status => loadEvento(1, true));
+  }, []);
+
+  useEffect(() => {
+    loadProf();
+    loadServicos();
+    loadEvento('2020-01-01');
+    //loadCalendar();
+  }, [profissional]);
 
   return (
-    <>
+      <div>
+        <div className="wrapper" style={{ backgroundColor: "#ecf0f5" }}>
+          <section className="content-header">
+            <h1>
+              Agende Aqui<small>( Barbearia do Rody )</small>
+            </h1>
+          </section>
 
-    <div>
-        <div className="wrapper" style={{backgroundColor:'#ecf0f5'}}>
-
-            <section className="content-header">
-                <h1>
-                    Agende Aqui<small>( Barbearia do Rody )</small>
-                </h1>
-            </section>
-
-            <section className="content">
-                <div className="row">
-                    <div className="col-xs-12 center-block text-center">
-                            <Calendar
-                                onChange={onChange}
-                                value={value}
-                                maxDate={seldate}
-                                minDate={new Date()}
-                                onClickDay={(value) => alert(value) }
-                                tileDisabled={({date, view}) =>
-                                    (view === 'month') && // Block day tiles only
-                                    blackdates.some(disabledDate =>
-                                        date.getFullYear() === disabledDate.getFullYear() &&
-                                        date.getMonth() === disabledDate.getMonth() &&
-                                        date.getDate() === disabledDate.getDate()
-                                    )
-                                }
-                            />
-
-                    </div>
+          <section className="content">
+            <div className="row">
+              <div className="box-body">
+                <div className="form-group">
+                  <label
+                    className="col-sm-2 control-label"
+                    htmlFor="idcategoria"
+                  >
+                    Profissional*
+                  </label>
+                  <div className="col-sm-4">
+                    <select
+                      id="profissional"
+                      value={profissional}
+                      className="form-control select2"
+                      onChange={(event) => setProfissional(event.target.value)}
+                    >
+                      <option key={"1"} value={"1"}>
+                        {"Selecione Aqui"}
+                      </option>
+                      {profissionais.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-            </section>
+              </div>
 
+              <div className="box-body">
+                <div className="form-group">
+                  <label
+                    className="col-sm-2 control-label"
+                    htmlFor="idcategoria"
+                  >
+                    Serviço*
+                  </label>
+                  <div className="col-sm-4">
+                    <select
+                      id="servicos"
+                      value={servico}
+                      className="form-control select2"
+                      onChange={(event) => setServico(event.target.value)}
+                    >
+                      <option key={''} value={''}>
+                        {"Selecione Aqui"}
+                      </option>
+                      {servicos.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* <div className="box-body">
+                {servicos.length
+                      ? servicos.map((servico) => (
+                      <a className="btn" id={servico._id} key={servico._id} onClick={() => handleSelectItem(servico._id)}>{servico.nome}</a>
+                      ))
+                : msgvazio}
+              </div> */}
+
+              { profissional !== '1' &&
+              <div className="col-xs-12 center-block text-center">
+                <Calendar
+                  onChange={onChange}
+                  value={value}
+                  maxDate={maxdate}
+                  minDate={new Date()}
+                  locale="PT-BR"
+                  onClickDay={(value) => setSeldate(value)}
+                  tileDisabled={({ date, view }) =>
+                    view === "month" && // Block day tiles only
+                    blackdates.some(
+                      (disabledDate) =>
+                        date.getFullYear() === disabledDate.getFullYear() &&
+                        date.getMonth() === disabledDate.getMonth() &&
+                        date.getDate() === disabledDate.getDate()
+                    )
+                  }
+                />
+              </div>
+              }
+            </div>
+          </section>
         </div>
-    </div>
-    
-    </>
-)
+      </div>
+  );
 }
-
-
-

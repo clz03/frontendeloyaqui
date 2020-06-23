@@ -121,6 +121,13 @@ export default function SideMenu({ history }) {
                 
           {agendamento && 
           <>
+
+            <li id="menu_profissionais">
+              <a href="/profissionais/listar">
+                <i className="fa fa-user" /> <span>Profissionais</span>
+              </a>
+            </li>
+
             <li id="menu_servico">
               <a href="/servicos">
                 <i className="fa fa-calendar" /> <span>Serviços com Agendamento</span>

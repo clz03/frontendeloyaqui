@@ -10,59 +10,11 @@ export default function Edit_Servicos({ history }) {
   const [nome, setNome] = useState("");
   const [descr, setDescr] = useState("");
   const [preco, setPreco] = useState("");
-  //const [imagem, setImagem] = useState("");
-  const [diasemana, setDiasemana] = useState([]);
-  const [hrinicio, setHrinicio] = useState([]);
-  const [hrfim, setHrfim] = useState([]);
-  //const [promocao, setPromocao] = useState("");
-  //const [idestab, setIdestab] = useState("");
+  const [profissional, setProfissional] = useState('');
+  const [profissionais, setProfissionais] = useState([]);
   const [loading, setLoading] = useState("");
 
-  //const userestab = localStorage.getItem('eloyuserestab');
-
-  const diasdaSemana = [
-    { label: "Domingo", value: "0" },
-    { label: "Segunda-Feira", value: "1" },
-    { label: "Terça-Feira", value: "2" },
-    { label: "Quarta-Feira", value: "3" },
-    { label: "Quinta-Feira", value: "4" },
-    { label: "Sexta-Feira", value: "5" },
-    { label: "Sábado", value: "6" }
-  ];
-
-  const horarios = [
-    { label: "06:00", value: "6" },
-    { label: "07:00", value: "7" },
-    { label: "08:00", value: "8" },
-    { label: "09:00", value: "9" },
-    { label: "10:00", value: "10" },
-    { label: "11:00", value: "11" },
-    { label: "12:00", value: "12" },
-    { label: "13:00", value: "13" },
-    { label: "14:00", value: "14" },
-    { label: "15:00", value: "15" },
-    { label: "16:00", value: "16" },
-    { label: "17:00", value: "17" },
-    { label: "18:00", value: "18" },
-    { label: "19:00", value: "19" },
-    { label: "20:00", value: "20" },
-    { label: "21:00", value: "21" },
-    { label: "22:00", value: "22" },
-    { label: "23:00", value: "23" }
-  ];
-  
-
-  function handleSelectMulti(event){
-    var options = event.target.options;
-    var value = [];
-    for (var i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setDiasemana(value);
-  }
-
+  const userestab = localStorage.getItem('eloyuserestab');
   
     const url_string = window.location.href;
     const param = url_string.split("/");
@@ -76,22 +28,27 @@ export default function Edit_Servicos({ history }) {
         setNome(data[0].nome);
         setDescr(data[0].descr);
         setPreco(data[0].preco);
-        //setImagem(data[0].imagem);
-        //setPromocao(data[0].promocao);
-        setDiasemana(data[0].diasemana);
-        setHrinicio(data[0].hrinicio);
-        setHrfim(data[0].hrfim);
-        //setIdestab(data[0].idestabelecimento._id);
+        setProfissional(data[0].idprofissional);
         try {
           setTimeout(() => {
             document.getElementById('menu_servico').className = "active";
           }, 1000);  
         } catch (error) { 
         }
+      };
+
+      async function loadProf() {
+        const query = '/profissional/estabelecimento/'+ userestab;
+        const response = await api.get(query);
+        const data = await response.data;
+        setProfissionais(data);
       }
       
       loadProd();
+      loadProf();
     },[]);
+
+    
   
   
     async function handleSubmit(event) {
@@ -102,12 +59,7 @@ export default function Edit_Servicos({ history }) {
           nome: nome, 
           descr: descr,
           preco: preco,
-          diasemana: diasemana,
-          hrinicio: hrinicio,
-          hrfim: hrfim,
-          //imagem: imagem,
-          //promocao: promocao,
-          //idestab: idestab
+          idprofissional: profissional
         };
   
         await api.put('/servicos/'+param[4], dataobj)
@@ -187,6 +139,40 @@ export default function Edit_Servicos({ history }) {
                     <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
+                        htmlFor="idcategoria"
+                      >
+                        Profissional*
+                      </label>
+                      <div className="col-sm-4">
+                        <select
+                          id="profissional"
+                          value={profissional}
+                          className="form-control select2"
+                          onChange={event =>
+                            setProfissional(event.target.value)
+                          }
+                        >
+                          <option
+                              key={''}
+                              value={''}
+                            >
+                              {''}
+                            </option>
+                          {profissionais.map(item => (
+                            <option
+                              key={item._id}
+                              value={item._id}
+                            >
+                              {item.nome}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label
+                        className="col-sm-2 control-label"
                         htmlFor="preco"
                       >
                         Preço*
@@ -204,88 +190,6 @@ export default function Edit_Servicos({ history }) {
                       </div>
                     </div>
 
-                    <div className="form-group">
-                      <label
-                        className="col-sm-2 control-label"
-                        htmlFor="preco"
-                      >
-                        Dias da Semana*
-                      </label>
-                      <div className="col-sm-10">
-                      
-                      <select
-                        id="idcategoria"
-                        multiple="multiple"
-                        style={{height:'130px', width:'150px'}}
-                        value={diasemana}
-                        required
-                        className="select1"
-                        onChange={handleSelectMulti}
-                    >
-                        {diasdaSemana.map((dia) =>
-                            <option key={dia.value} value={dia.value}>{dia.label}</option>
-                        )}
-                    </select>
-
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label
-                        className="col-sm-2 control-label"
-                        htmlFor="idcategoria"
-                      >
-                        Horario Início*
-                      </label>
-                      <div className="col-sm-3">
-                        <select
-                          id="hrinicio"
-                          value={hrinicio}
-                          className="form-control select2"
-                          onChange={event =>
-                            setHrinicio(event.target.value)
-                          }
-                        >
-                          {horarios.map(horarios_inicio => (
-                            <option
-                              key={horarios_inicio.value}
-                              value={horarios_inicio.value}
-                            >
-                              {horarios_inicio.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label
-                        className="col-sm-2 control-label"
-                        htmlFor="idcategoria"
-                      >
-                        Horario Fim*
-                      </label>
-
-                    <div className="col-sm-3">
-                        <select
-                          id="hrfim"
-                          value={hrfim}
-                          className="form-control select2"
-                          onChange={event =>
-                            setHrfim(event.target.value)
-                          }
-                        >
-                          {horarios.map(horarios_fim => (
-                            <option
-                              key={horarios_fim.value}
-                              value={horarios_fim.value}
-                            >
-                              {horarios_fim.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      </div>
 
                     {/* <div className="form-group">
                       <label

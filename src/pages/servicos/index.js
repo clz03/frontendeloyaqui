@@ -6,19 +6,20 @@ import SideMenu from '../../SideMenu';
 import Footer from '../../Footer';
 
 export default function List_Servicos({ history }) {
-const [prod, setProd] = useState([]);
-const [loading, setLoading] = useState("");
-const [msgvazio, setMsgvazio] = useState('carregando...');
 
-const userestab = localStorage.getItem('eloyuserestab');
-//const usertype = localStorage.getItem('eloyusertype');
+  const [prod, setProd] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [msgvazio, setMsgvazio] = useState('carregando...');
 
-async function loadProd() {
-  const query = '/servicos/estabelecimento/'+ userestab;
-  const response = await api.get(query);
-  const data = await response.data;
-  setProd(data);
-  setLoading(false);
+  const userestab = localStorage.getItem('eloyuserestab');
+  //const usertype = localStorage.getItem('eloyusertype');
+
+  async function loadProd() {
+    const query = '/servicos/estabelecimento/'+ userestab;
+    const response = await api.get(query);
+    const data = await response.data;   
+    setProd(data);
+    console.log(data);
 }
 
   useEffect(() => {
@@ -71,6 +72,7 @@ async function loadProd() {
                                 <tr>
                                   <th>Nome</th>
                                   <th>Descrição</th>
+                                  <th>Profissional</th>
                                   <th>Preço</th>
                                   <th>Ação</th>
                                 </tr>
@@ -81,6 +83,9 @@ async function loadProd() {
                                     </td>
                                     <td>
                                       <p>{prod.descr}</p>
+                                    </td>
+                                    <td>
+                                      <p>{prod.idprofissional.nome}</p>
                                     </td>
                                     <td>
                                       <p>{prod.preco}</p>

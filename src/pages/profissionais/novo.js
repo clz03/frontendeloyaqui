@@ -10,45 +10,77 @@ export default function Edit_Destaque({ history }) {
     const [nome, setNome] = useState("");
     const [descr, setDescr] = useState("");
     const [preco, setPreco] = useState("");
-    const [profissional, setProfissional] = useState('');
-    const [profissionais, setProfissionais] = useState([]);
+    const [imagem, setImagem] = useState("");
+    const [promocao, setPromocao] = useState("");
+    const [diasemana, setDiasemana] = useState([]);
+    const [hrinicio, setHrinicio] = useState([]);
+    const [hrfim, setHrfim] = useState([]);
+    //const [idestab, setIdestab] = useState("");
     const [loading, setLoading] = useState("");
   
     const userestab = localStorage.getItem('eloyuserestab');
 
-    async function loadProf() {
-      const query = '/profissional/estabelecimento/'+ userestab;
-      const response = await api.get(query);
-      const data = await response.data;
-      setProfissionais(data);
-    }
-  
+    const diasdaSemana = [
+      { label: "Domingo", value: "0" },
+      { label: "Segunda-Feira", value: "1" },
+      { label: "Terça-Feira", value: "2" },
+      { label: "Quarta-Feira", value: "3" },
+      { label: "Quinta-Feira", value: "4" },
+      { label: "Sexta-Feira", value: "5" },
+      { label: "Sábado", value: "6" }
+    ];
+
+    const horarios = [
+      { label: "06:00", value: "6" },
+      { label: "07:00", value: "7" },
+      { label: "08:00", value: "8" },
+      { label: "09:00", value: "9" },
+      { label: "10:00", value: "10" },
+      { label: "11:00", value: "11" },
+      { label: "12:00", value: "12" },
+      { label: "13:00", value: "13" },
+      { label: "14:00", value: "14" },
+      { label: "15:00", value: "15" },
+      { label: "16:00", value: "16" },
+      { label: "17:00", value: "17" },
+      { label: "18:00", value: "18" },
+      { label: "19:00", value: "19" },
+      { label: "20:00", value: "20" },
+      { label: "21:00", value: "21" },
+      { label: "22:00", value: "22" },
+      { label: "23:00", value: "23" }
+    ];
+      
     async function handleSubmit(event) {
         
         event.preventDefault();
   
         const dataobj = { 
           nome: nome, 
-          descr: descr,
-          preco: preco,
-          idprofissional: profissional,
+          hrinicio: hrinicio,
+          hrfim: hrfim,
+          diasemana: diasemana,
           idestabelecimento: userestab
         };
-        console.log(dataobj);
   
-        await api.post('/servicos/', dataobj)
-        history.push('/servicos')
+        await api.post('/profissional/', dataobj)
+        history.push('/profissionais')
   
     };
 
-    useEffect(() => {
-      loadProf();
-      try {
-        setTimeout(() => {
-          document.getElementById('menu_servico').className = "active";
-        }, 1000);  
-      } catch (error) { 
+    function handleSelectMulti(event){
+      var options = event.target.options;
+      var value = [];
+      for (var i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
       }
+      setDiasemana(value);
+    }
+
+    useEffect(() => {
+    //  document.getElementById('menu_profissionais').className = "active";
     }, []);
 
 
@@ -62,7 +94,7 @@ export default function Edit_Destaque({ history }) {
           <h1>
             {nome}
             <small>
-            &nbsp;( Agendamentos )
+              &nbsp;( {nome} )
             </small>
           </h1>
         </section>
@@ -90,10 +122,10 @@ export default function Edit_Destaque({ history }) {
                       <div className="col-sm-10">
                       <input
                         id="nome"
-                        placeholder="Nome do Serviço"
+                        placeholder="Nome do Profissional"
                         className="form-control"
-                        required
                         value={nome}
+                        required
                         maxLength={40}
                         onChange={event => setNome(event.target.value)}
                         />
@@ -103,40 +135,26 @@ export default function Edit_Destaque({ history }) {
                     <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
-                        htmlFor="descr"
-                      >
-                        Descrição*
-                      </label>
-                      <div className="col-sm-10">
-                      <input
-                        id="descr"
-                        placeholder="Descrição do Serviço"
-                        className="form-control"
-                        required
-                        value={descr}
-                        maxLength={100}
-                        onChange={event => setDescr(event.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label
-                        className="col-sm-2 control-label"
                         htmlFor="preco"
                       >
-                        Preço*
+                        Dias da Semana*
                       </label>
                       <div className="col-sm-10">
-                      <input
-                        id="preco"
-                        placeholder="XX,XX"
+                      
+                      <select
+                        id="idcategoria"
+                        multiple="multiple"
+                        style={{height:'130px', width:'150px'}}
+                        value={diasemana}
                         required
-                        className="form-control"
-                        maxLength={20}
-                        value={preco}
-                        onChange={event => setPreco(event.target.value)}
-                        />
+                        className="select1"
+                        onChange={handleSelectMulti}
+                    >
+                        {diasdaSemana.map((dia) =>
+                            <option key={dia.value} value={dia.value}>{dia.label}</option>
+                        )}
+                    </select>
+
                       </div>
                     </div>
 
@@ -145,78 +163,58 @@ export default function Edit_Destaque({ history }) {
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        Profissional*
+                        Horario Início*
                       </label>
-                      <div className="col-sm-4">
+                      <div className="col-sm-3">
                         <select
-                          id="profissional"
-                          value={profissional}
+                          id="hrinicio"
+                          value={hrinicio}
                           className="form-control select2"
                           onChange={event =>
-                            setProfissional(event.target.value)
+                            setHrinicio(event.target.value)
                           }
                         >
-                          <option
-                              key={''}
-                              value={''}
-                            >
-                              {''}
-                            </option>
-                          {profissionais.map(item => (
+                          {horarios.map(horarios_inicio => (
                             <option
-                              key={item._id}
-                              value={item._id}
+                              key={horarios_inicio.value}
+                              value={horarios_inicio.value}
                             >
-                              {item.nome}
+                              {horarios_inicio.label}
                             </option>
                           ))}
                         </select>
                       </div>
                     </div>
 
-                    
-
-          
-
-                    {/* <div className="form-group">
+                    <div className="form-group">
                       <label
                         className="col-sm-2 control-label"
                         htmlFor="idcategoria"
                       >
-                        URL da Imagem
+                        Horario Fim*
                       </label>
-                      <div className="col-sm-10">
-                      <input
-                        id="imagem"
-                        placeholder="URL da imagem"
-                        className="form-control"
-                        value={imagem}
-                        maxLength={150}
-                        onChange={event => setImagem(event.target.value)}
-                        />
-                      </div>
-                    </div> */}
 
-                    {/* <div className="form-group">
-                      <label
-                        className="col-sm-2 control-label"
-                        htmlFor="idcategoria"
-                      >
-                        Promoção
-                      </label>
-                      <div className="col-sm-10">
-                      <input
-                        id="promocao"
-                        placeholder="1=SIM / 0=NÃO"
-                        className="form-control"
-                        value={promocao}
-                        maxLength={1}
-                        onChange={event => setPromocao(event.target.value)}
-                        />
+                    <div className="col-sm-3">
+                        <select
+                          id="hrfim"
+                          value={hrfim}
+                          className="form-control select2"
+                          onChange={event =>
+                            setHrfim(event.target.value)
+                          }
+                        >
+                          {horarios.map(horarios_fim => (
+                            <option
+                              key={horarios_fim.value}
+                              value={horarios_fim.value}
+                            >
+                              {horarios_fim.label}
+                            </option>
+                          ))}
+                        </select>
                       </div>
-                    </div> */}
+                      </div>
 
-                   
 
                     
                   </div>
@@ -224,7 +222,7 @@ export default function Edit_Destaque({ history }) {
                   <div className="box-footer">
                   <button
                       className="btn btn-default"
-                      onClick={() => history.push("/servicos")}
+                      onClick={() => history.push("/profissionais")}
                     >
                       Voltar
                     </button>
