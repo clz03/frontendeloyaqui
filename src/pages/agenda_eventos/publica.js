@@ -6,6 +6,7 @@ import api from "../../services/api";
 import Calendar from "react-calendar";
 import moment from "moment";
 import "moment/locale/pt-br";
+import InputMask from 'react-input-mask';
 import "./calendar.css";
 
 export default function AgendaPublica() {
@@ -14,14 +15,18 @@ export default function AgendaPublica() {
   const [servico, setServico] = useState('');
   const [profissionais, setProfissionais] = useState([]);
   const [profissional, setProfissional] = useState("1");
+  const [horario, setHorario] = useState("");
   const [value, onChange] = useState(new Date());
   const [blackdates, setBlackdates] = useState([]);
   const [seldate, setSeldate] = useState('');
   const [maxdate, setMaxdate] = useState();
-  const [diasSemana, setDiasSemana] = useState([]);
   const [evento, setEvento] = useState([]);
   const [progress, setProgress] = useState(10);
-  const [progressText, setProgressText] = useState("Inicie seu agendamento selecionando o profissional")
+  const [progressText, setProgressText] = useState("Inicie seu agendamento selecionando o profissional");
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [etapa, setEtapa] = useState("1");
 
   const url_string = window.location.href;
   const param = url_string.split("/");
@@ -46,7 +51,6 @@ export default function AgendaPublica() {
     const query = "/profissional/" + profissional;
     const response = await api.get(query);
     const data = await response.data;
-    setDiasSemana(data[0].diasemana);
     loadCalendar(data[0].diasemana);
     setProgress(25);
     setProgressText("Selecione o serviço que deseja agendar");
@@ -62,8 +66,8 @@ export default function AgendaPublica() {
 
   async function loadEvento(date) {
     if (profissional === '1') return;
-    const query = "/eventos/dia/" + date + "/" + profissional;
-    const response = await api.get(query);
+    const date2 = date.toISOString().substring(0, 4) + "-" + date.toISOString().substring(5, 7) + "-" + date.toISOString().substring(8, 10)
+    const response = await api.get("/eventos/dia/" + date2 + "/" + profissional);
     const data = await response.data;
     setEvento(data);
   };
@@ -111,240 +115,409 @@ export default function AgendaPublica() {
 
   async function handleSubmit(event) {
 
-    event.preventDefault();
+    
+      var strTelefone;
+      //event.preventDefault();
+  
+      //Buscar por telefone
+      //Encontrado -> retorna id
+      //Nao Encontrado -> Abre form para cadastro e retorna id
+      //Realiza agendamento
+      
+      strTelefone = telefone.toString().replace(/[{()}]/g, '');
+      strTelefone = strTelefone.toString().replace("-", '');
+      strTelefone = strTelefone.toString().replace(" ", '');
+  
+      const response = await api.get('/usuarios/telefone/' + strTelefone);
+      const data = await response.data;
+  
+      if(data){
+        if (window.confirm(data.nome + ', confirma seu agendamento ?')){
+          const dataobj = {
+            data: seldate.toISOString().substring(0, 4) + "/" + seldate.toISOString().substring(5, 7) + "/" + seldate.toISOString().substring(8, 10),
+            hora: horario,
+            comentario: 'teste automatico',
+            idestabelecimento: userestab,
+            idservico: servico,
+            idprofissional: profissional,
+            idusuario: data._id
+          };
+      
+          await api.post('/eventos/', dataobj)
+          .then((res) => {
+              if(res.status == 200){
+                  //sucesso
+              }else{
+                  //algum problema
+              }
+          }).catch((error) => {
+              //erro
+          });
 
-    const dataobj = {
-      data: seldate,
-      hora: 3,
-      comentario: '',
-      idestabelecimento: userestab,
-      idservico: servico,
-      idusuario: ''
-    };
+        }
+        
+      }else {
+        //Permite preencher Nome, Email e Senha e agenda
+      }
+  };
 
-    await api.post('/servicos/', dataobj)
+  function handleProfissional() {
+    setProfissional('1');
+    setSeldate('');
+    setServico('');
+  };
 
+  function handleServico() {
+    setServico('');
+    setSeldate('');
+    setProgress(25);
+    setProgressText("Selecione um serviço")
   };
 
   function handleCalendar() {
-    setSeldate(undefined);
+    setSeldate('');
+    setProgress(50);
+    setProgressText("Selecione uma data")
+  };
+
+  function handleHorario(hora) {
+    if (horario === '') {
+      setHorario(hora);
+      setProgress(100);
+      setProgressText("Informações completas, por favor confirme e agende")
+    } else {
+      setHorario('');
+      setProgress(75);
+      setProgressText("Selecione um horário")
+    }
+
   };
 
   useEffect(() => {
     setLoading(true);
     loadProfs();
     setLoading(false);
-
+    document.getElementsByTagName("body")[0].style = 'background-color:#ABABAB'
     //setupWebsocket(userestab);
     //subscribeToNewAgenda(status => loadEvento(1, true));
   }, []);
 
+
+  useEffect(() => {
+    if (seldate.toString() !== '') {
+      setProgress(75);
+      setProgressText("Selecione um horário");
+      loadEvento(seldate);
+    }
+  }, [seldate]);
+
+  useEffect(() => {
+    if (servico === '') {
+      setProgress(25);
+      setProgressText("Selecione um serviço")
+    } else {
+      setProgress(50);
+      setProgressText("Selecione um dia no calendario")
+    }
+  }, [servico]);
+
   useEffect(() => {
     loadProf();
     loadServicos();
-    loadEvento('2020-01-01');
+    //loadEvento('2020-01-01');
     //loadCalendar();
   }, [profissional]);
 
-
   return (
-    <div className="wrapper" style={{ backgroundColor: "#ecf0f5" }}>
-      {/* <section className="content-header">
-          <h1>
-            Agende Aqui<small>( Barbearia do Rody )</small>
-          </h1>
-        </section> */}
 
+    <div className="wrapper" style={{ backgroundColor: "#ABABAB" }}>
       <section className="content">
-        <div className="row">
-
-          <div className="col-md-12">
-            {/* Widget: user widget style 1 */}
-            <div className="box box-widget widget-user">
-              {/* Add the bg color to the header using any of the bg-* classes */}
-              <div className="widget-user-header bg-aqua-active">
-                <h3 className="widget-user-username">Barbearia do Rody</h3>
-                <h5 className="widget-user-desc">Agendamento online</h5>
-              </div>
-              <div className="widget-user-image">
-                <img className="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Avatar" />
-              </div>
-
-              <div className="box-footer">
-                <div className="row">
-                  <div className="col-sm-12 border-right">
-                    <div className="description-block">
-                
-
-                      <p><code>{progressText}</code></p>
-                      <div className="progress">
-                        <div className="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} style={{ width: `${progress}%` }}>
-                          {progress}% completo
-                          </div>
-                      </div>
-
-
-
-                    </div>
-                    {/* /.description-block */}
-                  </div>
-
-
-                </div>
-                {/* /.row */}
-              </div>
-
-              <div className="box-body">
-                <div className="row">
-                  <div className="col-sm-12 border-right">
-                    Profissional: {profissional} <a onClick={handleCalendar}>(alterar)</a>
-                  </div>
-                  <div className="col-sm-12 border-right">
-                    Serviço: {servico} <a onClick={handleCalendar}>(alterar)</a>
-                  </div>
-                  <div className="col-sm-12 border-right">
-                    Data: {seldate.toString().substring(8,10) + "/" + seldate.toString().substring(5,7) + "/" + seldate.toString().substring(0,4)} <a onClick={handleCalendar}>(alterar)</a>
-                  </div>
-                  <div className="col-sm-12 border-right">
-                    Horário: 09:30 AM <a onClick={handleCalendar}>(alterar)</a>
-                  </div>
-
-                </div>
-                {/* /.row */}
-              </div>
-            
+        <div className="col-md-12">
+          <div className="box">
+            <div className="box-header with-border">
+              <i className="fa fa-calendar" />
+              <h3 className="box-title">&nbsp;Barbearia do Rody</h3>
             </div>
-            {/* /.widget-user */}
-          </div>
-        </div>
 
-
-
-        <div className="row">
-
-          {profissional === "1" &&
-          <div className="box-body">
-            <div className="form-group">
-              <label
-                className="col-sm-2 control-label"
-                htmlFor="idcategoria"
-              >
-                Profissional*
-                  </label>
-              <div className="col-sm-4">
-                <select
-                  id="profissional"
-                  value={profissional}
-                  className="form-control select2"
-                  onChange={(event) => setProfissional(event.target.value)}
-                >
-                  <option key={"1"} value={"1"}>
-                    {"Selecione Aqui"}
-                  </option>
-                  {profissionais.map((item) => (
-                    <option key={item._id} value={item._id}>
-                      {item.nome}
-                    </option>
-                  ))}
-                </select>
+            <div className="box-body">
+              <p><code>{progressText}</code></p>
+              <div className="progress">
+                <div className="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} style={{ width: `${progress}%` }}>
+                  {progress}% completo
+                </div>
               </div>
-            </div>
-          </div>
-        }
 
-        {servicos.length > 0 && servico === '' &&
-          <div className="box-body">
-              <div className="form-group">
-                <label
-                  className="col-sm-2 control-label"
-                  htmlFor="idcategoria"
-                >
-                  Serviço*
-                  </label>
-                <div className="col-sm-4">
-                  <select
-                    id="servicos"
-                    value={servico}
-                    className="form-control select2"
-                    onChange={(event) => setServico(event.target.value)}
-                  >
-                    <option key={''} value={''}>
-                      {"Selecione Aqui"}
-                    </option>
-                    {servicos.map((item) => (
-                      <option key={item._id} value={item._id}>
-                        {item.nome}
+              {profissional === '1' &&
+                <div className="form-group">
+                  <label className="col-sm-2 control-label" htmlFor="profissional">Profissional*</label>
+                  <div className="col-sm-4">
+                    <select
+                      id="profissional"
+                      value={profissionais}
+                      className="form-control select2"
+                      onChange={(event) => setProfissional(event.target.value)}
+                    >
+                      <option key={"1"} value={"1"}>
+                        {"Selecione Aqui"}
                       </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-            }
-
-          {/* <div className="box-body">
-                {servicos.length
-                      ? servicos.map((servico) => (
-                      <a className="btn" id={servico._id} key={servico._id} onClick={() => handleSelectItem(servico._id)}>{servico.nome}</a>
-                      ))
-                : msgvazio}
-              </div> */}
-
-
-
-          {profissional !== '1' &&
-            servico !== '' &&
-            seldate === '' &&
-            <div className="col-xs-12 center-block text-center">
-              <Calendar
-                onChange={onChange}
-                value={value}
-                maxDate={maxdate}
-                minDate={new Date()}
-                locale="PT-BR"
-                onClickDay={(value) => setSeldate(value)}
-                tileDisabled={({ date, view }) =>
-                  view === "month" && // Block day tiles only
-                  blackdates.some(
-                    (disabledDate) =>
-                      date.getFullYear() === disabledDate.getFullYear() &&
-                      date.getMonth() === disabledDate.getMonth() &&
-                      date.getDate() === disabledDate.getDate()
-                  )
-                }
-              />
-            </div>
-          }
-
-          {profissional !== '1' &&
-            seldate !== '' &&
-            <>
-
-              <div className="col-md-3 col-sm-6 col-xs-12 center-block text-center">
-                <div className="info-box bg-aqua">
-
-
-                  <span className="info-box-text">Bookmarks</span>
-                  <span className="info-box-number">41,410</span>
-                  <div className="progress">
-                    <div className="progress-bar" style={{ width: '70%' }} />
+                      {profissionais.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item.nome}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <span className="progress-description">
-                    70% Increase in 30 Days</span>
-
-                  {/* /.info-box-content */}
                 </div>
-                {/* /.info-box */}
-              </div>
-            </>
+
+              }
+
+              {profissional !== '1' &&
+
+                <div className="form-group" style={{ paddingBottom: 10 }}>
+                  <div className="col-md-12">
+                    <strong>Profissional: </strong><span>{profissionais[0].nome} <button style={{ backgroundColor: '#fff', border: 0, textDecoration: 'underline' }} onClick={handleProfissional}> alterar </button></span>
+                  </div>
+                </div>
+
+              }
+
+              {profissional !== '1' && servico === '' &&
+                <div className="form-group">
+                  <label
+                    className="col-sm-2 control-label"
+                    htmlFor="idcategoria"
+                  >
+                    Serviço*
+                      </label>
+                  <div className="col-sm-4">
+                    <select
+                      id="servicos"
+                      value={servico}
+                      className="form-control select2"
+                      onChange={(event) => setServico(event.target.value)}
+                    >
+                      <option key={''} value={''}>
+                        {"Selecione Aqui"}
+                      </option>
+                      {servicos.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+              }
+
+              {profissional !== '1' && servico !== '' &&
+                <div className="form-group" style={{ paddingBottom: 10 }}>
+                  <div className="col-md-12">
+                    <strong>Serviço: </strong><span>{servicos[0].nome} <button style={{ backgroundColor: '#fff', border: 0, textDecoration: 'underline' }} onClick={handleServico}> alterar </button></span>
+                  </div>
+                </div>
+
+              }
+
+              {profissional !== '1' && servico !== '' && seldate.toString() === '' &&
+                <div className="form-group" style={{ marginBottom: 15 }}>
+                  <div className="col-md-12">
+                    <Calendar
+                      onChange={onChange}
+                      value={value}
+                      maxDate={maxdate}
+                      minDate={new Date()}
+
+                      onClickDay={(value) => setSeldate(value)}
+                      tileDisabled={({ date, view }) =>
+                        view === "month" && // Block day tiles only
+                        blackdates.some(
+                          (disabledDate) =>
+                            date.getFullYear() === disabledDate.getFullYear() &&
+                            date.getMonth() === disabledDate.getMonth() &&
+                            date.getDate() === disabledDate.getDate()
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              }
+
+              {profissional !== '1' && servico !== '' && seldate.toString() !== '' &&
+
+                <div className="form-group" style={{ paddingBottom: 10 }}>
+                  <div className="col-md-12">
+                    <strong>Data: </strong><span>{seldate.toISOString().substring(8, 10) + "/" + seldate.toISOString().substring(5, 7) + "/" + seldate.toISOString().substring(0, 4)} <button style={{ backgroundColor: '#fff', border: 0, textDecoration: 'underline' }} onClick={handleCalendar}> alterar </button></span>
+                  </div>
+                </div>
+              }
 
 
-          }
+              {profissional !== '1' && servico !== '' && seldate.toString() !== '' && horario === '' &&
+                <>
+                  {evento.map((evento) =>
+                    <a onClick={() => handleHorario(evento.hora)} style={{ cursor: 'pointer' }} key={evento.hora}>
+                      <div className="col-md-2 col-sm-4 col-xs-6">
+                        <div className={`info-box ${evento.status === 'D' ? 'bg-green' : 'bg-red'}`} style={{ minHeight: 45 }}>
+                          <div className="info-box-content" style={{ marginLeft: 0 }}>
+                            <span className="info-box-number">{evento.hora.toString().indexOf('.5') > -1 ? evento.hora.toString().replace(".5", "") + ":30" : evento.hora + ":00"}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  )}
+                </>
+              }
+
+              {profissional !== '1' && servico !== '' && seldate.toString() !== '' && horario !== '' &&
+                <>
+                  <div className="form-group" style={{ paddingBottom: 10 }}>
+                    <div className="col-md-12">
+                      <strong>Horário: </strong><span>{horario} <button style={{ backgroundColor: '#fff', border: 0, textDecoration: 'underline' }} onClick={() => handleHorario('')}> alterar </button></span>
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ paddingBottom: 10 }}>
+                    <div className="col-md-12">
+                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                        Agendar e Confirmar
+                      </button>
+                    </div>
+                  </div>
+                </>
+              }
+            </div>
+          </div>
         </div>
-        <div className="row">
+
+
+        <div className="row" style={{ backgroundColor: "#ABABAB", }}>
           <p>&nbsp;</p>
         </div>
       </section>
+
+      <div className="modal fade" id="modal-default" style={{ display: 'none' }}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 className="modal-title">Identifique-se para finalizar</h4>
+            </div>
+            <div className="modal-body">
+
+              <form className="form-horizontal">
+                <div className="box-body">
+
+                  {/* <div className="form-group">
+                    <label htmlFor="inputNome3" className="col-sm-2 control-label">Nome</label>
+                    <div className="col-sm-10">
+                      <input
+                        className="form-control"
+                        id="inputNome3"
+                        placeholder="Seu Nome"
+                        required
+                        maxLength={40}
+                        value={nome}
+                        onChange={event => setNome(event.target.value)}
+                      />
+                    </div>
+                  </div> */}
+
+                  {/* <div className="form-group">
+                    <label htmlFor="inputEmail3" className="col-sm-2 control-label">E-mail</label>
+                    <div className="col-sm-10">
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="inputEmail3"
+                        placeholder="Seu Email"
+                        required
+                        maxLength={40}
+                        value={email}
+                        onChange={event => setEmail(event.target.value)}
+                      />
+                    </div>
+                  </div> */}
+
+                  {etapa === '1' ?
+                  <div class="form-group">
+                    <label htmlFor="inputTel3" className="col-sm-2 control-label">Telefone</label>
+                    <div className="col-sm-10">
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <i class="fa fa-phone"></i>
+                        </div>
+
+                        <InputMask
+                          type="text"
+                          className="form-control"
+                          id="inputTel3"
+                          placeholder="(11) 99999-9999"
+                          required
+                          mask="(99) 99999-9999"
+                          value={telefone}
+                          onChange={event => setTelefone(event.target.value)}
+                        />
+
+                      </div>
+                    </div>
+                  </div>
+                  : 
+                  <div class="form-group">
+                    <div className="col-sm-10">
+                   Olá {nome}, confirme seu agendamento !
+                   </div>
+                  </div>
+                  }
+
+                  <h3>Resumo:</h3>
+
+                  <div className="form-group" style={{ marginBottom: 5 }}>
+                    <div className="col-md-12">
+                      <strong>Estabelecimento: </strong><span>Barbearia do Rody</span>
+                    </div>
+                  </div>
+
+                  {profissionais.length > 0 &&
+                    <div className="form-group" style={{ marginBottom: 5 }}>
+                      <div className="col-md-12">
+                        <strong>Profissional: </strong><span>{profissionais[0].nome}</span>
+                      </div>
+                    </div>
+                  }
+
+                  {servicos.length > 0 &&
+                    <div className="form-group" style={{ marginBottom: 5 }}>
+                      <div className="col-md-12">
+                        <strong>Serviço: </strong><span>{servicos[0].nome}</span>
+                      </div>
+                    </div>
+                  }
+
+                  {seldate && horario &&
+                    <div className="form-group" style={{ marginBottom: 5 }}>
+                      <div className="col-md-12">
+                        <strong>Data: </strong><span>{seldate.toISOString().substring(8, 10) + "/" + seldate.toISOString().substring(5, 7) + "/" + seldate.toISOString().substring(0, 4)} as {horario}</span>
+                      </div>
+                    </div>
+                  }
+
+                </div>
+              </form>
+
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Voltar</button>
+              <button type="button" className="btn btn-primary" onClick={() => handleSubmit()}>Avançar</button>
+            </div>
+          </div>
+          {/* /.modal-content */}
+        </div>
+        {/* /.modal-dialog */}
+      </div>
+
+
     </div>
 
   );

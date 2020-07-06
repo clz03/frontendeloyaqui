@@ -8,14 +8,9 @@ import Footer from "../../Footer";
 export default function Edit_Destaque({ history }) {
   
     const [nome, setNome] = useState("");
-    const [descr, setDescr] = useState("");
-    const [preco, setPreco] = useState("");
-    const [imagem, setImagem] = useState("");
-    const [promocao, setPromocao] = useState("");
     const [diasemana, setDiasemana] = useState([]);
     const [hrinicio, setHrinicio] = useState([]);
     const [hrfim, setHrfim] = useState([]);
-    //const [idestab, setIdestab] = useState("");
     const [loading, setLoading] = useState("");
   
     const userestab = localStorage.getItem('eloyuserestab');
@@ -52,7 +47,7 @@ export default function Edit_Destaque({ history }) {
     ];
       
     async function handleSubmit(event) {
-        
+        setLoading(true);
         event.preventDefault();
   
         const dataobj = { 
@@ -64,6 +59,7 @@ export default function Edit_Destaque({ history }) {
         };
   
         await api.post('/profissional/', dataobj)
+        setLoading(false);
         history.push('/profissionais')
   
     };
@@ -79,9 +75,9 @@ export default function Edit_Destaque({ history }) {
       setDiasemana(value);
     }
 
-    useEffect(() => {
+    //useEffect(() => {
     //  document.getElementById('menu_profissionais').className = "active";
-    }, []);
+    //}, []);
 
 
   return (
@@ -105,7 +101,7 @@ export default function Edit_Destaque({ history }) {
               <div className="box box-info">
                 {loading && (
                   <div style={{ alignItems: "center", textAlign: "center" }}>
-                    <img src={carregando} width="80"></img>
+                    <img src={carregando} width="80" alt="carregando"></img>
                   </div>
                 )}
 
@@ -233,7 +229,7 @@ export default function Edit_Destaque({ history }) {
 
                   {loading && (
                     <div style={{ alignItems: "center", textAlign: "center" }}>
-                      <img src={carregando} width="80"></img>
+                      <img src={carregando} width="80" alt="carregando"></img>
                     </div>
                   )}
                 </form>
