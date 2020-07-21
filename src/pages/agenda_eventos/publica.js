@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-//import carregando from "../../assets/loading.gif";
+import carregando from "../../assets/loading.gif";
 import api from "../../services/api";
 //import {connect,disconnect,subscribeToNewAgenda,} from "../../services/socket";
 import Calendar from "react-calendar";
@@ -9,9 +9,10 @@ import "moment/locale/pt-br";
 import InputMask from "react-input-mask";
 import "./calendar.css";
 
-export default function AgendaPublica() {
+export default function AgendaPublica({ history }) {
   const [loading, setLoading] = useState("");
   const [servicos, setServicos] = useState([]);
+  const [estab, setEstab] = useState([]);
   const [servico, setServico] = useState("");
   const [profissionais, setProfissionais] = useState([]);
   const [profissional, setProfissional] = useState("1");
@@ -22,9 +23,6 @@ export default function AgendaPublica() {
   const [maxdate, setMaxdate] = useState();
   const [evento, setEvento] = useState([]);
   const [progress, setProgress] = useState(10);
-  const [progressText, setProgressText] = useState(
-    "Inicie seu agendamento selecionando o profissional"
-  );
   const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -32,7 +30,21 @@ export default function AgendaPublica() {
 
   const url_string = window.location.href;
   const param = url_string.split("/");
-  const userestab = param[4];
+  let userestab = '';
+  const estabIdentifier = param[4];
+
+  async function loadEstab() {
+    const query = "/estabelecimentos/identifier/" + estabIdentifier;
+    const response = await api.get(query);
+    const data = await response.data;
+    if (data == null) {
+       history.push('/');
+    } else {
+      userestab = data._id;
+      setEstab(data);
+      loadProfs();
+    }
+  }
 
   async function loadProfs() {
     const query = "/profissional/estabelecimento/" + userestab;
@@ -45,7 +57,7 @@ export default function AgendaPublica() {
     //console.log("aaa -> " + profissional);
     if (profissional === "1") {
       setProgress(10);
-      setProgressText("Inicie seu agendamento selecionando o profissional");
+      //setProgressText("Inicie seu agendamento selecionando o profissional");
       setServicos([]);
       return;
     }
@@ -55,7 +67,7 @@ export default function AgendaPublica() {
     const data = await response.data;
     loadCalendar(data[0].diasemana);
     setProgress(25);
-    setProgressText("Selecione o serviço que deseja agendar");
+    //setProgressText("Selecione o serviço que deseja agendar");
   }
 
   async function loadServicos() {
@@ -183,40 +195,41 @@ export default function AgendaPublica() {
     setServico("");
     setSeldate("");
     setProgress(25);
-    setProgressText("Selecione um serviço");
+    //setProgressText("Selecione um serviço");
   }
 
   function handleCalendar() {
     setSeldate("");
     setProgress(50);
-    setProgressText("Selecione uma data");
+    //setProgressText("Selecione uma data");
   }
 
   function handleHorario(hora) {
     if (horario === "") {
       setHorario(hora);
       setProgress(100);
-      setProgressText("Informações completas, por favor confirme e agende");
+      //setProgressText("Informações completas, por favor confirme e agende");
     } else {
       setHorario("");
       setProgress(75);
-      setProgressText("Selecione um horário");
+      //setProgressText("Selecione um horário");
     }
   }
 
   useEffect(() => {
     setLoading(true);
-    loadProfs();
-    setLoading(false);
+    loadEstab();
+    //loadProfs();
     document.getElementsByTagName("body")[0].style = "background-color:#ABABAB";
     //setupWebsocket(userestab);
     //subscribeToNewAgenda(status => loadEvento(1, true));
+    setLoading(false);
   }, []);
 
   useEffect(() => {
     if (seldate.toString() !== "") {
       setProgress(75);
-      setProgressText("Selecione um horário");
+      //setProgressText("Selecione um horário");
       loadEvento(seldate);
     }
   }, [seldate]);
@@ -224,10 +237,10 @@ export default function AgendaPublica() {
   useEffect(() => {
     if (servico === "") {
       setProgress(25);
-      setProgressText("Selecione um serviço");
+      //setProgressText("Selecione um serviço");
     } else {
       setProgress(50);
-      setProgressText("Selecione um dia no calendario");
+      //setProgressText("Selecione um dia no calendario");
     }
   }, [servico]);
 
@@ -245,17 +258,23 @@ export default function AgendaPublica() {
           <div className="box">
             <div className="box-header with-border text-center">
               <i className="fa fa-calendar" />
-              <h3 className="box-title">&nbsp;Barbearia do Rody</h3>
+              <h3 className="box-title">&nbsp;{estab.nome}</h3>
               <p>
-                (11) 94369-5284<br></br>Rua Dante Bellodi ( centro comercial
-                colinas center), 232 Jundiaí / SP
+                {estab.fone1}<br></br>{estab.rua}, {estab.numero} {estab.complemento}
               </p>
+
+              {loading && (
+                  <div style={{ alignItems: "center", textAlign: "center" }}>
+                    <img src={carregando} width="80"></img>
+                  </div>
+                )}
+
             </div>
 
             <div className="box-body">
-              <p>
+              {/* <p>
                 <code>{progressText}</code>
-              </p>
+              </p> */}
               <div className="progress">
                 <div
                   className="progress-bar progress-bar-primary progress-bar-striped"
@@ -269,7 +288,7 @@ export default function AgendaPublica() {
                 </div>
               </div>
 
-              
+
               {/* {profissional === "1" && (
                 <div className="form-group">
                   <label
@@ -298,41 +317,40 @@ export default function AgendaPublica() {
                 </div>
               )} */}
 
-            {profissional === "1" && (
-              <div className="box box box-success box-solid">
-                <div className="box-header with-border">
-                  <h3 className="box-title">Selecione o Profissional</h3>
-                </div>
-                {/* /.box-header */}
-                <div className="box-body">
-                  <ul className="products-list product-list-in-box">
+              {profissional === "1" && (
+                <div className="box box box-success box-solid">
+                  <div className="box-header with-border">
+                    <h3 className="box-title">Selecione o Profissional</h3>
+                  </div>
+                  {/* /.box-header */}
+                  <div className="box-body">
+                    <ul className="products-list product-list-in-box">
 
-                    {profissionais.map((item) => (
-                      <li className="item">
-                        <div>
-                          <a
-                            href="javascript:void(0)"
-                            className="product-title"
-                          >
-                            {item.nome}
-                            <span className="label pull-right">
-                              <button className="btn btn-success" onClick={() => setProfissional(item._id)}>Selecionar</button>
-                            </span>
-                          </a>
-                          <span className="product-description">
-                            agenda disponível
+                      {profissionais.map((item) => (
+                        <li className="item" key={item._id}>
+                          <div>
+                            <a
+                              className="product-title"
+                            >
+                              {item.nome}
+                              <span className="label pull-right">
+                                <button className="btn btn-success" onClick={() => setProfissional(item._id)}>Selecionar</button>
+                              </span>
+                            </a>
+                            <span className="product-description">
+                              agenda disponível
                           </span>
-                        </div>
-                      </li>
-                    ))}
+                          </div>
+                        </li>
+                      ))}
 
-                  </ul>
-                </div>              
-              </div>
-               )}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
               {profissional !== "1" && (
-                <div className="form-group" style={{ paddingBottom: 10 }}>
+                <div className="form-group">
                   <div className="col-md-12">
                     <strong>Profissional: </strong>
                     <span>
@@ -353,42 +371,41 @@ export default function AgendaPublica() {
                 </div>
               )}
 
-          {profissional !== "1" && servico === "" && (
-              <div className="box box box-success box-solid">
-                <div className="box-header with-border">
-                  <h3 className="box-title">Agendar um Serviço</h3>
-                </div>
-                {/* /.box-header */}
-                <div className="box-body">
-                  <ul className="products-list product-list-in-box">
+              {profissional !== "1" && servico === "" && (
+                <div className="box box box-success box-solid">
+                  <div className="box-header with-border">
+                    <h3 className="box-title">Agendar um Serviço</h3>
+                  </div>
+                  {/* /.box-header */}
+                  <div className="box-body">
+                    <ul className="products-list product-list-in-box">
 
-                    {servicos.map((item) => (
-                      <li className="item">
-                        <div>
-                          <a
-                            href="javascript:void(0)"
-                            className="product-title"
-                          >
-                            {item.nome}
-                            <span className="label pull-right">
-                              <button className="btn btn-success" onClick={() => setServico(item._id)}>Selecionar</button>
+                      {servicos.map((item) => (
+                        <li className="item" key={item._id}>
+                          <div>
+                            <a
+                              className="product-title"
+                            >
+                              {item.nome}
+                              <span className="label pull-right">
+                                <button className="btn btn-success" onClick={() => setServico(item._id)}>Selecionar</button>
+                              </span>
+                            </a>
+                            <span className="product-description">
+                              R$ {item.preco}
                             </span>
-                          </a>
-                          <span className="product-description">
-                            R$ {item.preco}
-                          </span>
-                        </div>
-                      </li>
-                    ))}
+                          </div>
+                        </li>
+                      ))}
 
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-               )}
+              )}
 
-            
 
-             
+
+
 
               {/* {profissional !== "1" && servico === "" && (
                 <div className="form-group">
@@ -419,7 +436,7 @@ export default function AgendaPublica() {
               )} */}
 
               {profissional !== "1" && servico !== "" && (
-                <div className="form-group" style={{ paddingBottom: 10 }}>
+                <div className="form-group">
                   <div className="col-md-12">
                     <strong>Serviço: </strong>
                     <span>
@@ -445,12 +462,12 @@ export default function AgendaPublica() {
                 seldate.toString() === "" && (
 
                   <div className="box box box-success box-solid">
-                  <div className="box-header with-border">
-                    <h3 className="box-title">Selecione o dia desejado</h3>
-                  </div>
-                  {/* /.box-header */}
-                  <div className="box-body">
-                  <Calendar
+                    <div className="box-header with-border">
+                      <h3 className="box-title">Selecione o dia desejado</h3>
+                    </div>
+                    {/* /.box-header */}
+                    <div className="box-body">
+                      <Calendar
                         onChange={onChange}
                         value={value}
                         maxDate={maxdate}
@@ -461,16 +478,16 @@ export default function AgendaPublica() {
                           blackdates.some(
                             (disabledDate) =>
                               date.getFullYear() ===
-                                disabledDate.getFullYear() &&
+                              disabledDate.getFullYear() &&
                               date.getMonth() === disabledDate.getMonth() &&
                               date.getDate() === disabledDate.getDate()
                           )
                         }
                       />
+                    </div>
                   </div>
-                </div>
 
-                 
+
 
 
                 )}
@@ -478,7 +495,7 @@ export default function AgendaPublica() {
               {profissional !== "1" &&
                 servico !== "" &&
                 seldate.toString() !== "" && (
-                  <div className="form-group" style={{ paddingBottom: 10 }}>
+                  <div className="form-group">
                     <div className="col-md-12">
                       <strong>Data: </strong>
                       <span>
@@ -509,41 +526,41 @@ export default function AgendaPublica() {
                 horario === "" && (
 
                   <div className="box box box-success box-solid">
-                  <div className="box-header with-border">
-                    <h3 className="box-title">Selecione o horário</h3>
-                  </div>
-                  {/* /.box-header */}
-                  <div className="box-body">
-                  {evento.map((evento) => (
-                      <a
-                        onClick={() => handleHorario(evento.hora)}
-                        style={{ cursor: "pointer" }}
-                        key={evento.hora}
-                      >
-                        <div className="col-md-2 col-sm-4 col-xs-6">
-                          <div
-                            className={`info-box ${
-                              evento.status === "D" ? "bg-green" : "bg-red"
-                            }`}
-                            style={{ minHeight: 45 }}
-                          >
+                    <div className="box-header with-border">
+                      <h3 className="box-title">Selecione o horário</h3>
+                    </div>
+                    {/* /.box-header */}
+                    <div className="box-body">
+                      {evento.map((evento) => (
+                        <a
+                          onClick={() => handleHorario(evento.hora)}
+                          style={{ cursor: "pointer" }}
+                          key={evento.hora}
+                        >
+                          <div className="col-md-2 col-sm-4 col-xs-6">
                             <div
-                              className="info-box-content"
-                              style={{ marginLeft: 0 }}
+                              className={`info-box ${
+                                evento.status === "D" ? "bg-green" : "bg-red"
+                                }`}
+                              style={{ minHeight: 45 }}
                             >
-                              <span className="info-box-number">
-                                {evento.hora.toString().indexOf(".5") > -1
-                                  ? evento.hora.toString().replace(".5", "") +
+                              <div
+                                className="info-box-content"
+                                style={{ marginLeft: 0 }}
+                              >
+                                <span className="info-box-number">
+                                  {evento.hora.toString().indexOf(".5") > -1
+                                    ? evento.hora.toString().replace(".5", "") +
                                     ":30"
-                                  : evento.hora + ":00"}
-                              </span>
+                                    : evento.hora + ":00"}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </a>
-                    ))}
+                        </a>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
                 )}
 
@@ -552,7 +569,7 @@ export default function AgendaPublica() {
                 seldate.toString() !== "" &&
                 horario !== "" && (
                   <>
-                    <div className="form-group" style={{ paddingBottom: 10 }}>
+                    <div className="form-group">
                       <div className="col-md-12">
                         <strong>Horário: </strong>
                         <span>
@@ -576,11 +593,11 @@ export default function AgendaPublica() {
                       <div className="col-md-12">
                         <button
                           type="button"
-                          class="btn btn-default"
+                          className="btn btn-success"
                           data-toggle="modal"
                           data-target="#modal-default"
                         >
-                          Agendar e Confirmar
+                          Agendar
                         </button>
                       </div>
                     </div>
@@ -616,131 +633,94 @@ export default function AgendaPublica() {
             <div className="modal-body">
               <form className="form-horizontal">
                 <div className="box-body">
-                  {/* <div className="form-group">
-                    <label htmlFor="inputNome3" className="col-sm-2 control-label">Nome</label>
-                    <div className="col-sm-10">
-                      <input
-                        className="form-control"
-                        id="inputNome3"
-                        placeholder="Seu Nome"
-                        required
-                        maxLength={40}
-                        value={nome}
-                        onChange={event => setNome(event.target.value)}
-                      />
-                    </div>
-                  </div> */}
 
-                  {/* <div className="form-group">
-                    <label htmlFor="inputEmail3" className="col-sm-2 control-label">E-mail</label>
-                    <div className="col-sm-10">
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="inputEmail3"
-                        placeholder="Seu Email"
-                        required
-                        maxLength={40}
-                        value={email}
-                        onChange={event => setEmail(event.target.value)}
-                      />
-                    </div>
-                  </div> */}
-
-                  {etapa === "1" ? (
-                    <>
-                     <div class="form-group">
-                     <label
-                       htmlFor="inputTel3"
-                       className="col-sm-2 control-label"
-                     >
-                       Nome
+                  
+                    
+                      <div className="form-group">
+                        <label
+                          htmlFor="inputTel3"
+                          className="col-sm-2 control-label"
+                        >
+                          Nome
                      </label>
-                     <div className="col-sm-10">
-                       <div class="input-group">
-                         <div class="input-group-addon">
-                           <i class="fa fa-user"></i>
-                         </div>
+                        <div className="col-sm-10">
+                          <div className="input-group">
+                            <div className="input-group-addon">
+                              <i className="fa fa-user"></i>
+                            </div>
 
-                         <input
-                           type="text"
-                           className="form-control"
-                           id="inputNome"
-                           placeholder="Seu Nome"
-                           required
-                           value={nome}
-                           onChange={(event) =>
-                             setNome(event.target.value)
-                           }
-                         />
-                       </div>
-                     </div>
-                   </div>
-
-                    <div class="form-group">
-                      <label
-                        htmlFor="inputTel3"
-                        className="col-sm-2 control-label"
-                      >
-                        Celular
-                      </label>
-                      <div className="col-sm-10">
-                        <div class="input-group">
-                          <div class="input-group-addon">
-                            <i class="fa fa-phone"></i>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="inputNome"
+                              placeholder="Seu Nome"
+                              required
+                              value={nome}
+                              onChange={(event) =>
+                                setNome(event.target.value)
+                              }
+                            />
                           </div>
-
-                          <InputMask
-                            type="text"
-                            className="form-control"
-                            id="inputTel3"
-                            placeholder="(11) 99999-9999"
-                            required
-                            mask="(99) 99999-9999"
-                            value={telefone}
-                            onChange={(event) =>
-                              setTelefone(event.target.value)
-                            }
-                          />
                         </div>
                       </div>
-                    </div>
 
-                    <div class="form-group">
-                     <label
-                       htmlFor="inputTel3"
-                       className="col-sm-2 control-label"
-                     >
-                       E-mail
-                     </label>
-                     <div className="col-sm-10">
-                       <div class="input-group">
-                         <div class="input-group-addon">
-                           <i class="fa fa-envelope"></i>
-                         </div>
+                      <div className="form-group">
+                        <label
+                          htmlFor="inputTel3"
+                          className="col-sm-2 control-label"
+                        >
+                          Celular
+                      </label>
+                        <div className="col-sm-10">
+                          <div className="input-group">
+                            <div className="input-group-addon">
+                              <i className="fa fa-phone"></i>
+                            </div>
 
-                         <input
-                           type="text"
-                           className="form-control"
-                           id="inputEmail"
-                           placeholder="seuemail@nome.com.br"
-                           required
-                           value={email}
-                           onChange={(event) =>
-                             setEmail(event.target.value)
-                           }
-                         />
-                       </div>
-                     </div>
-                   </div>
-                    </>
-                  ) : (
-                    <div class="form-group">
-                      <div className="col-sm-10">
-                        Olá {nome}, confirme seu agendamento !
+                            <InputMask
+                              type="text"
+                              className="form-control"
+                              id="inputTel3"
+                              placeholder="(11) 99999-9999"
+                              required
+                              mask="(99) 99999-9999"
+                              value={telefone}
+                              onChange={(event) =>
+                                setTelefone(event.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  )}
+
+                      <div className="form-group">
+                        <label
+                          htmlFor="inputTel3"
+                          className="col-sm-2 control-label"
+                        >
+                          E-mail
+                     </label>
+                        <div className="col-sm-10">
+                          <div className="input-group">
+                            <div className="input-group-addon">
+                              <i className="fa fa-envelope"></i>
+                            </div>
+
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="inputEmail"
+                              placeholder="seuemail@nome.com.br"
+                              required
+                              value={email}
+                              onChange={(event) =>
+                                setEmail(event.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                  
 
                   <h3>Resumo:</h3>
 
@@ -808,6 +788,13 @@ export default function AgendaPublica() {
         </div>
         {/* /.modal-dialog */}
       </div>
+
+      <footer className="footer">
+        <strong style={{marginLeft:30}}>EloyAqui © 2020</strong>
+      </footer>
+
+
+
     </div>
   );
 }
