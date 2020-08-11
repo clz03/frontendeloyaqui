@@ -51,6 +51,9 @@ export default function AgendaPublica({ history }) {
     const response = await api.get(query);
     const data = await response.data;
     setProfissionais(data);
+    if(data.length === 1){
+      setProfissional(data[0]._id);
+    };
   }
 
   async function loadProf() {
@@ -76,6 +79,13 @@ export default function AgendaPublica({ history }) {
     const response = await api.get(query);
     const data = await response.data;
     setServicos(data);
+  }
+
+  async function loadServico(id) {
+    const query = "/servicos/" + id
+    const response = await api.get(query);
+    const data = await response.data;
+    setServico(data);
   }
 
   async function loadEvento(date) {
@@ -189,23 +199,26 @@ export default function AgendaPublica({ history }) {
     setProfissional("1");
     setSeldate("");
     setServico("");
+    setHorario("");
   }
 
   function handleServico() {
     setServico("");
     setSeldate("");
+    setHorario("");
     setProgress(25);
     //setProgressText("Selecione um serviço");
   }
 
   function handleCalendar() {
     setSeldate("");
+    setHorario("");
     setProgress(50);
     //setProgressText("Selecione uma data");
   }
 
-  function handleHorario(hora) {
-    if (horario === "") {
+  function handleHorario(hora, status) {
+    if (horario === "" && status === "D") {
       setHorario(hora);
       setProgress(100);
       //setProgressText("Informações completas, por favor confirme e agende");
@@ -239,6 +252,7 @@ export default function AgendaPublica({ history }) {
       setProgress(25);
       //setProgressText("Selecione um serviço");
     } else {
+      loadServico();
       setProgress(50);
       //setProgressText("Selecione um dia no calendario");
     }
@@ -260,7 +274,7 @@ export default function AgendaPublica({ history }) {
               <i className="fa fa-calendar" />
               <h3 className="box-title">&nbsp;{estab.nome}</h3>
               <p>
-                {estab.fone1}<br></br>{estab.rua}, {estab.numero} {estab.complemento}
+                (11) {estab.fone1}<br></br>{estab.rua}, {estab.numero} {!estab.complemento ? '' : '(' + estab.complemento + ')'}
               </p>
 
               {loading && (
@@ -287,35 +301,6 @@ export default function AgendaPublica({ history }) {
                   {progress}% completo
                 </div>
               </div>
-
-
-              {/* {profissional === "1" && (
-                <div className="form-group">
-                  <label
-                    className="col-sm-2 control-label"
-                    htmlFor="profissional"
-                  >
-                    Profissional*
-                  </label>
-                  <div className="col-sm-4">
-                    <select
-                      id="profissional"
-                      value={profissionais}
-                      className="form-control select2"
-                      onChange={(event) => setProfissional(event.target.value)}
-                    >
-                      <option key={"1"} value={"1"}>
-                        {"Selecione Aqui"}
-                      </option>
-                      {profissionais.map((item) => (
-                        <option key={item._id} value={item._id}>
-                          {item.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )} */}
 
               {profissional === "1" && (
                 <div className="box box box-success box-solid">
@@ -350,6 +335,7 @@ export default function AgendaPublica({ history }) {
               )}
 
               {profissional !== "1" && (
+                <div className="row">
                 <div className="form-group">
                   <div className="col-md-12">
                     <strong>Profissional: </strong>
@@ -368,6 +354,7 @@ export default function AgendaPublica({ history }) {
                       </button>
                     </span>
                   </div>
+                </div>
                 </div>
               )}
 
@@ -388,7 +375,7 @@ export default function AgendaPublica({ history }) {
                             >
                               {item.nome}
                               <span className="label pull-right">
-                                <button className="btn btn-success" onClick={() => setServico(item._id)}>Selecionar</button>
+                                <button className="btn btn-success" onClick={() => loadServico(item._id)}>Selecionar</button>
                               </span>
                             </a>
                             <span className="product-description">
@@ -403,44 +390,13 @@ export default function AgendaPublica({ history }) {
                 </div>
               )}
 
-
-
-
-
-              {/* {profissional !== "1" && servico === "" && (
-                <div className="form-group">
-                  <label
-                    className="col-sm-2 control-label"
-                    htmlFor="idcategoria"
-                  >
-                    Serviço*
-                  </label>
-                  <div className="col-sm-4">
-                    <select
-                      id="servicos"
-                      value={servico}
-                      className="form-control select2"
-                      onChange={(event) => setServico(event.target.value)}
-                    >
-                      <option key={""} value={""}>
-                        {"Selecione Aqui"}
-                      </option>
-                      {servicos.map((item) => (
-                        <option key={item._id} value={item._id}>
-                          {item.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              )} */}
-
               {profissional !== "1" && servico !== "" && (
+                <div className="row">
                 <div className="form-group">
                   <div className="col-md-12">
                     <strong>Serviço: </strong>
                     <span>
-                      {servicos[0].nome}{" "}
+                      {servico[0].nome}{" "}
                       <button
                         style={{
                           backgroundColor: "#fff",
@@ -454,6 +410,7 @@ export default function AgendaPublica({ history }) {
                       </button>
                     </span>
                   </div>
+                </div>
                 </div>
               )}
 
@@ -495,6 +452,7 @@ export default function AgendaPublica({ history }) {
               {profissional !== "1" &&
                 servico !== "" &&
                 seldate.toString() !== "" && (
+                  <div className="row">
                   <div className="form-group">
                     <div className="col-md-12">
                       <strong>Data: </strong>
@@ -518,6 +476,7 @@ export default function AgendaPublica({ history }) {
                       </span>
                     </div>
                   </div>
+                  </div>
                 )}
 
               {profissional !== "1" &&
@@ -533,7 +492,7 @@ export default function AgendaPublica({ history }) {
                     <div className="box-body">
                       {evento.map((evento) => (
                         <a
-                          onClick={() => handleHorario(evento.hora)}
+                          onClick={() => handleHorario(evento.hora, evento.status)}
                           style={{ cursor: "pointer" }}
                           key={evento.hora}
                         >
@@ -568,12 +527,18 @@ export default function AgendaPublica({ history }) {
                 servico !== "" &&
                 seldate.toString() !== "" &&
                 horario !== "" && (
-                  <>
+                  <div className="row">
+                  
                     <div className="form-group">
                       <div className="col-md-12">
                         <strong>Horário: </strong>
                         <span>
-                          {horario}{" "}
+                          {
+                            horario.toString().indexOf(".5") > -1
+                              ? horario.toString().replace(".5", "") +
+                              ":30"
+                            : horario + ":00"
+                          }{" "}
                           <button
                             style={{
                               backgroundColor: "#fff",
@@ -601,7 +566,7 @@ export default function AgendaPublica({ history }) {
                         </button>
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
             </div>
           </div>
@@ -761,6 +726,15 @@ export default function AgendaPublica({ history }) {
                             seldate.toISOString().substring(0, 4)}{" "}
                           as {horario}
                         </span>
+                      </div>
+                    </div>
+                  )}
+
+                {servicos.length > 0 && (
+                    <div className="form-group" style={{ marginBottom: 5 }}>
+                      <div className="col-md-12">
+                        <strong>Valor: </strong>
+                        <span>R$ {servicos[0].preco} (pagamento no local)</span>
                       </div>
                     </div>
                   )}
